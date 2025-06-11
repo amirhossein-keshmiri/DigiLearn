@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{12D5729F-F69D-4500-8224-0EF98C467AD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{0E2DAB0E-4582-45C3-B11C-B64FD89AA39C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{33B45816-1818-466E-A8CC-863364A96A93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EndPoints", "EndPoints", "{ADED2A0B-D909-4A29-98EC-9CC30AA10735}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{F68C697A-5B87-4F08-A374-BE2E25D324C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{4A29C200-3FF1-40CB-8FD3-A188E4D2D4C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogModule", "src\Modules\Blog\BlogModule\BlogModule.csproj", "{DC215A81-D386-4D8A-AF24-89D31FC95770}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC215A81-D386-4D8A-AF24-89D31FC95770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC215A81-D386-4D8A-AF24-89D31FC95770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC215A81-D386-4D8A-AF24-89D31FC95770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC215A81-D386-4D8A-AF24-89D31FC95770}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{33B45816-1818-466E-A8CC-863364A96A93} = {12D5729F-F69D-4500-8224-0EF98C467AD4}
+		{ADED2A0B-D909-4A29-98EC-9CC30AA10735} = {12D5729F-F69D-4500-8224-0EF98C467AD4}
+		{F68C697A-5B87-4F08-A374-BE2E25D324C2} = {12D5729F-F69D-4500-8224-0EF98C467AD4}
+		{4A29C200-3FF1-40CB-8FD3-A188E4D2D4C5} = {F68C697A-5B87-4F08-A374-BE2E25D324C2}
+		{DC215A81-D386-4D8A-AF24-89D31FC95770} = {4A29C200-3FF1-40CB-8FD3-A188E4D2D4C5}
+	EndGlobalSection
+EndGlobal
