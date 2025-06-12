@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Application", "src\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Infrastructure", "src\Common\Common.Infrastructure\Common.Infrastructure.csproj", "{5EE23688-43BE-4E17-9A60-B01E10BF4943}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogModule.UnitTests", "src\Modules\Blog\BlogModule.UnitTests\BlogModule.UnitTests.csproj", "{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{5EE23688-43BE-4E17-9A60-B01E10BF4943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EE23688-43BE-4E17-9A60-B01E10BF4943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EE23688-43BE-4E17-9A60-B01E10BF4943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,5 +64,6 @@ Global
 		{312070B7-309C-4B16-9A64-2D690061D912} = {33B45816-1818-466E-A8CC-863364A96A93}
 		{0E811AC0-CBE5-420F-9CEA-104A161C4198} = {33B45816-1818-466E-A8CC-863364A96A93}
 		{5EE23688-43BE-4E17-9A60-B01E10BF4943} = {33B45816-1818-466E-A8CC-863364A96A93}
+		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C} = {4A29C200-3FF1-40CB-8FD3-A188E4D2D4C5}
 	EndGlobalSection
 EndGlobal

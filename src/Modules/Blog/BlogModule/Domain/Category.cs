@@ -2,7 +2,7 @@
 
 namespace BlogModule.Domain
 {
-  class Category : BaseEntity
+  public class Category : BaseEntity
   {
     public string Title { get; set; }
     public string Slug { get; set; }
