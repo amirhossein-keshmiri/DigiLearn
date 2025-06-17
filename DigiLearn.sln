@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{12D5729F-F69D-4500-8224-0EF98C467AD4}"
 EndProject
@@ -24,6 +24,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Infrastructure", "src\Common\Common.Infrastructure\Common.Infrastructure.csproj", "{5EE23688-43BE-4E17-9A60-B01E10BF4943}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogModule.UnitTests", "src\Modules\Blog\BlogModule.UnitTests\BlogModule.UnitTests.csproj", "{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ticket", "Ticket", "{C15B4AFF-9EDC-407A-B87B-EEA5902A74C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketModule", "src\Modules\Ticket\TicketModule\TicketModule.csproj", "{FB51658F-4454-4594-92A2-23F0A6F263EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,10 @@ Global
 		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB51658F-4454-4594-92A2-23F0A6F263EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB51658F-4454-4594-92A2-23F0A6F263EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB51658F-4454-4594-92A2-23F0A6F263EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB51658F-4454-4594-92A2-23F0A6F263EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +73,7 @@ Global
 		{0E811AC0-CBE5-420F-9CEA-104A161C4198} = {33B45816-1818-466E-A8CC-863364A96A93}
 		{5EE23688-43BE-4E17-9A60-B01E10BF4943} = {33B45816-1818-466E-A8CC-863364A96A93}
 		{69D1A960-A5D8-4938-9EBA-0BA0D4B2B66C} = {4A29C200-3FF1-40CB-8FD3-A188E4D2D4C5}
+		{C15B4AFF-9EDC-407A-B87B-EEA5902A74C0} = {F68C697A-5B87-4F08-A374-BE2E25D324C2}
+		{FB51658F-4454-4594-92A2-23F0A6F263EB} = {C15B4AFF-9EDC-407A-B87B-EEA5902A74C0}
 	EndGlobalSection
 EndGlobal
