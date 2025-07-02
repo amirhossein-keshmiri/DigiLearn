@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserModule.Core", "src\Modu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Query", "src\Common\Common.Query\Common.Query.csproj", "{2ECC4A05-DB01-49E4-AC44-3CD03A5C0A7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigiLearn.Web", "src\EndPoints\DigiLearn.Web\DigiLearn.Web.csproj", "{89072738-C231-4554-8055-03D74E4DC18B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{2ECC4A05-DB01-49E4-AC44-3CD03A5C0A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ECC4A05-DB01-49E4-AC44-3CD03A5C0A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ECC4A05-DB01-49E4-AC44-3CD03A5C0A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89072738-C231-4554-8055-03D74E4DC18B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89072738-C231-4554-8055-03D74E4DC18B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89072738-C231-4554-8055-03D74E4DC18B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89072738-C231-4554-8055-03D74E4DC18B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,5 +105,6 @@ Global
 		{B98BC755-79AF-4BA5-95C2-433FA3FCC607} = {0361EE05-ACDF-4A96-A05D-D289358F879F}
 		{F331B02E-AAE8-48C6-A866-BC774D453BA8} = {0361EE05-ACDF-4A96-A05D-D289358F879F}
 		{2ECC4A05-DB01-49E4-AC44-3CD03A5C0A7A} = {33B45816-1818-466E-A8CC-863364A96A93}
+		{89072738-C231-4554-8055-03D74E4DC18B} = {ADED2A0B-D909-4A29-98EC-9CC30AA10735}
 	EndGlobalSection
 EndGlobal

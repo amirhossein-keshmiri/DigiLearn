@@ -1,0 +1,130 @@
+/* -------------------------------------------------------------- */
+/* Default Colors
+----------------------------------------------------------------- */
+$primary-color: 						    #2a41e8;	//#2a41e8;
+$secondary-color: 						    #f1f3f4;
+$body-font-color:							#666;
+$body-heading-color:						#333;
+$body-background-color:               #f9fafb;
+$global-container-width:                    1110px ;
+$header-text-color :   #9b3b5a;
+
+
+/* -------------------------------------------------------------- */
+/* Typography
+----------------------------------------------------------------- */ 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+$primary-font: 								Inter , "Open Sans", sans-serif !important;
+$body-font-size: 							15px;
+$body-line-height: 							27px;
+$body-sub-line-height: 						26px;
+
+$homepage-heading-font-size: 				26px;
+$single-page-heading-font-size: 			20px;
+$listing-heading-font-size: 				18px;
+
+$global-border-radius:						4px;
+
+
+/* -------------------------------------------------------------- */
+/* Header Settings for Desktop Devices
+----------------------------------------------------------------- */
+$header-height: 							72px;
+$header-box-shadow: 					    0 1px 0 0 rgba(139, 141, 157, 0.05), 10px 1px 7px 0 rgba(65, 71, 108, 0.15);
+$navigation-top-offset: 					22px;
+$logo-height: 								32px;
+$header-bg: 								white;
+
+
+
+/* -------------------------------------------------------------- */
+/* Sidebar
+----------------------------------------------------------------- */
+$sidebar-width: 					        300px;
+$sidebar-width-collapse:				    80px;
+$sidebar-bg: 		    			       white;
+ 
+/* -------------------------------------------------------------- */
+/* tabs
+----------------------------------------------------------------- */
+
+// colors
+
+$color-1:  #25283D; // YANKEES BLUE
+$color-2: #8F3985; // PLUM
+$color-3: #777777; // WHITE
+$color-4: #ECF0F1; // ANTI-FLASH WHITE
+
+$color-5: #fff ;
+// fonts 
+
+
+// header size
+
+$secondary-nav-height-small: 50px;
+$secondary-nav-height: 68px;
+
+// center vertically and/or horizontally an absolute positioned element
+
+@mixin center($xy:xy) {
+    @if $xy == xy {
+      left: 50%;
+      top: 50%;
+      bottom: auto;
+      right: auto;
+      transform: translateX(-50%) translateY(-50%);
+    }
+    @else if $xy == x {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+    @else if $xy == y {
+      top: 50%;
+      bottom: auto;
+      transform: translateY(-50%);
+    }
+  }
+  
+  // border radius
+  
+  @mixin border-radius($radius:.25em) {
+    border-radius: $radius;
+  }
+  
+  // antialiasing mode font rendering
+  
+  @mixin font-smoothing {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  // clearfix
+  
+  @mixin clearfix {
+    &::after {
+      clear: both;
+      content: "";
+      display: block;
+    }
+  }
+  
+  // color tint and shade
+  
+  @function shade(
+      $color,
+      $percent
+    ) {
+  
+    @return mix(#000, $color, $percent);
+  }
+  @function tint(
+      $color,
+      $percent
+    ) {
+  
+    @return mix(#fff, $color, $percent);
+  }
+  

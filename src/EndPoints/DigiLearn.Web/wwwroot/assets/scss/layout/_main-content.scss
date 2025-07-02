@@ -1,0 +1,34 @@
+
+@media (min-width: 1024px) {
+  .main_content {
+    margin-left: $sidebar-width;  
+    margin-top: 0;
+  } 
+  .main_content .container {
+      max-width: 1024px;
+      padding: 30px 60px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+  .horizontal .container {
+   padding-top: 20px;
+  }
+  .page-spacer {
+   margin-top: 60px;
+  }
+}
+
+
+@media (max-width: 1024px) {
+ 
+ .main_content .container ,  .horizontal .container {
+    padding: 20px;
+ }  
+}
+@media (max-width: 767px) {
+  
+ .main_content .container.p-0 ,  .horizontal .container.p-0 {
+   padding: 0;
+ }
+
+}

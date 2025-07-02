@@ -1,0 +1,149 @@
+  
+.cd-secondary-nav {
+	position: relative;
+	z-index: 1;
+	clear: both;
+	width: 100%;
+	height: $secondary-nav-height-small; 
+	/* Force Hardware Acceleration */
+	transform: translateZ(0);
+	will-change: transform;
+	transition: transform .5s;
+
+	&::afterr {
+		/* gradient on the right - to indicate it's possible to scroll */
+		content: '';
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 35px;
+		background: transparent;
+		background: linear-gradient(to left, #25283D, rgba(#25283D, 0));
+		pointer-events: none;
+		transition: opacity .2s;
+	}
+
+	&.nav-end::after {
+		opacity: 0;
+	}
+
+	ul, li, a {
+		height: 100%;
+	}
+
+	ul {
+		/* enables a flex context for all its direct children */
+		display: flex;
+		padding: 0 15px;
+		@include clearfix;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	li {
+		display: inline-block;
+		float: left;
+		/* do not shrink - elements float on the right of the element */
+		flex-shrink: 0;
+
+		&:last-of-type {
+			padding-right: 20px;
+		}
+
+		&.active a , &.uk-active a {
+			border-bottom: 3px solid $primary-color !important;
+		}
+		
+		&.active a , &.uk-active a , &:hover a{
+			color: $primary-color !important;
+		}
+	}
+	a {
+		display: block; 
+		line-height: $secondary-nav-height-small;
+        //padding: 0 1em;
+		font-weight: 500;
+		color: #8c8d90;
+		font-size: 15px;
+		
+		span {
+			padding: 5px 9px;
+			background: rgba($primary-color, 0.08);
+			border-radius: 30px;
+			font-weight: 500;
+			font-size: 12px;
+			margin-left: 3px;
+			color:$primary-color;
+			line-height: .75rem;
+		}
+	}
+
+
+
+    &.is_light li { 
+		a {
+            color: #ffffff9c;
+        }
+		&.active a , &.uk-active a , &:hover a{
+			color: white;
+		}
+		&.active a , &.uk-active a{
+			border-bottom: 3px solid white;
+		}
+	}
+	&.extanded ul{
+		display: flex;
+		text-align: center;
+
+		li {
+			flex: 1 1 0%;
+			padding: 0 !important;
+		}
+		li a{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	&.nav-small {
+		height: 57px !important;
+		li a{
+			line-height: 55px !important;
+		}
+	}
+
+	@media only screen and (min-width: 1024px) {
+		height: $secondary-nav-height;
+		overflow: visible;
+
+		ul {
+			/* reset mobile style */
+			display: block;
+			padding: 0;
+			//text-align: center;
+		}
+ 
+		li {
+			/* reset mobile style */
+			float: none;
+			flex-shrink: 1; 
+			
+		}
+
+		a {
+            line-height: $secondary-nav-height;
+            font-size: 15px;
+        }
+        
+	}
+}
+
+
+ 
+.cd-secondary-nav ul li:not(:last-child) {
+    padding-right: 10px;
+}
+ 
