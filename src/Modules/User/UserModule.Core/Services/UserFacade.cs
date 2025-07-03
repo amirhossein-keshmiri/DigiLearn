@@ -14,7 +14,7 @@ namespace UserModule.Core.Services
       _mediator = mediator;
     }
 
-    public async Task<OperationResult<Guid>> RegisterSale(RegisterUserCommand command)
+    public async Task<OperationResult<Guid>> RegisterUser(RegisterUserCommand command)
     {
       return await _mediator.Send(command);
     }

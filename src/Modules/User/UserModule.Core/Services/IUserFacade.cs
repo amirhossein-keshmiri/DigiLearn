@@ -6,7 +6,7 @@ namespace UserModule.Core.Services
 {
   public interface IUserFacade
   {
-    Task<OperationResult<Guid>> RegisterSale(RegisterUserCommand command);
+    Task<OperationResult<Guid>> RegisterUser(RegisterUserCommand command);
     Task<UserDto?> GetUserByPhoneNumber(string phoneNumber);
   }
 }
