@@ -11,14 +11,14 @@
   <div class="text-danger col-12" asp-validation-summary="All"></div>
   <div>
     <label class="mb-0" for="phoneNumber"> Phone Number </label>
-    <input type="text" placeholder="PhoneNumber" asp-for="PhoneNumber" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
+    <input type="text" placeholder="PhoneNumber" asp-for="LoginRequest.PhoneNumber" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
   </div>
   <div>
     <label class="mb-0" for="password"> Password </label>
-    <input type="password" placeholder="******" asp-for="Password" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
+    <input type="password" placeholder="******" asp-for="LoginRequest.Password" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
   </div>
   <div class="checkbox">
-    <input type="checkbox" id="chekcbox1" asp-for="isRememberMe" value="true" checked="">
+    <input type="checkbox" id="chekcbox1" asp-for="LoginRequest.IsRememberMe" value="true" checked="">
     <label for="chekcbox1">
       <span class="checkbox-icon"></span> Remember Me!
     </label>

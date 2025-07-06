@@ -1,0 +1,6 @@
+@DigiLearn.Api_HostAddress = http://localhost:5030
+
+GET {{DigiLearn.Api_HostAddress}}/users/
+Accept: application/json
+
+###
