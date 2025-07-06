@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace UserModule.Core.Queries._DTOs
+﻿namespace UserModule.Core.Queries._DTOs
 {
   public class UserDto
   {
@@ -20,5 +18,6 @@ namespace UserModule.Core.Queries._DTOs
 
     public string Avatar { get; set; }
 
+    public List<RoleDto> Roles { get; set; } = [];
   }
 }

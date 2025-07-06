@@ -7,12 +7,17 @@ namespace UserModule.Core.Commands.Users.Register
   {
     public RegisterUserCommandValidator()
     {
+      RuleFor(r => r.PhoneNumber)
+          .NotEmpty()
+          .NotNull()
+          .MinimumLength(11)
+          .MaximumLength(11)
+          .WithMessage(ValidationMessages.InvalidPhoneNumber);
+
       RuleFor(r => r.Password)
           .NotEmpty()
           .NotNull()
-          .MinimumLength(6)
-          .MaximumLength(11)
-          .WithMessage(ValidationMessages.MaxLength);
+          .MinimumLength(6);
     }
   }
 }

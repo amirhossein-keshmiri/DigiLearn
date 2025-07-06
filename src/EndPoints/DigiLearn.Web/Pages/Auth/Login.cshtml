@@ -4,26 +4,28 @@
   Layout = "Shared/_Auth";
   ViewData["title"] = "Login";
 }
-<form class="lg:p-10 p-6 space-y-3 relative bg-white shadow-xl rounded-md">
+<form method="post" class="lg:p-10 p-6 space-y-3 relative bg-white shadow-xl rounded-md">
 
   <h1 class="lg:text-2xl text-xl font-semibold mb-6"> @ViewData["title"] </h1>
 
+  <div class="text-danger col-12" asp-validation-summary="All"></div>
   <div>
-    <label class="mb-0" for="username"> Username </label>
-    <input type="text" placeholder="Username" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
-  </div>
-  <div>
-    <label class="mb-0" for="email"> Email Address </label>
-    <input type="email" placeholder="Info@example.com" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
+    <label class="mb-0" for="phoneNumber"> Phone Number </label>
+    <input type="text" placeholder="PhoneNumber" asp-for="PhoneNumber" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
   </div>
   <div>
     <label class="mb-0" for="password"> Password </label>
-    <input type="password" placeholder="******" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
+    <input type="password" placeholder="******" asp-for="Password" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full">
   </div>
-
+  <div class="checkbox">
+    <input type="checkbox" id="chekcbox1" asp-for="isRememberMe" value="true" checked="">
+    <label for="chekcbox1">
+      <span class="checkbox-icon"></span> Remember Me!
+    </label>
+  </div>
   <div>
-    <button type="button" class="bg-blue-600 font-semibold p-2.5 mt-5 rounded-md text-center text-white w-full">
-      Get Started
+    <button class="bg-blue-600 font-semibold p-2.5 mt-5 rounded-md text-center text-white w-full">
+      Login
     </button>
   </div>
 

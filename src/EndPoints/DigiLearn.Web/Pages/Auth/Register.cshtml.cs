@@ -17,6 +17,8 @@ namespace DigiLearn.Web.Pages.Auth
 
     [Display(Name = "PhoneNumber")]
     [Required(ErrorMessage = "Please Enter {0}")]
+    [MaxLength(11, ErrorMessage = "Phone Number Must Be 11 Digits")]
+    [MinLength(11, ErrorMessage = "Phone Number Must Be 11 Digits")]
     public string PhoneNumber { get; set; }
 
     [Display(Name = "Password")]
