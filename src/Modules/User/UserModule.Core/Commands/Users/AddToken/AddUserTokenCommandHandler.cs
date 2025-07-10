@@ -23,7 +23,14 @@ namespace UserModule.Core.Commands.Users.AddToken
 
       var activeTokenCount = _userContext.UserTokens.Where(x => x.UserId == request.UserId).Count(c => c.RefreshTokenExpireDate > DateTime.Now);
       if (activeTokenCount == 3)
-        return OperationResult.Error("امکان استفاده از 4 دستگاه همزمان وجود ندارد");
+      {
+        //return OperationResult.Error("امکان استفاده از 4 دستگاه همزمان وجود ندارد");
+        var oldActiveToken = _userContext.UserTokens
+                                          .Where(x => x.UserId == request.UserId && x.RefreshTokenExpireDate > DateTime.Now)
+                                          .OrderBy(x => x.RefreshTokenExpireDate)
+                                          .First();
+        _userContext.UserTokens.Remove(oldActiveToken);
+      }
 
       AddToken(user.Id, request.HashJwtToken, request.HashRefreshToken, request.TokenExpireDate, request.RefreshTokenExpireDate, request.Device);
 
