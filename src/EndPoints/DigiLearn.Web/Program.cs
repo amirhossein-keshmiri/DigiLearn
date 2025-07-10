@@ -1,3 +1,4 @@
+using Common.Application;
 using DigiLearn.Web.Infrastructure.JwtUtil;
 using UserModule.Core;
 
@@ -6,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.InitUserModule(builder.Configuration);
-
+CommonBootstrapper.RegisterCommonApplication(builder.Services);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
@@ -33,6 +34,16 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.Use(async (context, next) =>
+{
+  await next();
+  var status = context.Response.StatusCode;
+  if (status == 401)
+  {
+    var path = context.Request.Path;
+    context.Response.Redirect($"/auth/login?redirectTo={path}");
+  }
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,5 +1,6 @@
 ﻿using Common.Application;
 using Common.Application.SecurityUtil;
+using Common.Domain.Utils;
 using Microsoft.EntityFrameworkCore;
 using UserModule.Data.Entities;
 using UserModule.Data.Entities.Users;

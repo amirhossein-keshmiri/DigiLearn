@@ -1,4 +1,6 @@
-﻿namespace UserModule.Core.Queries._DTOs
+﻿using UserModule.Data.Entities.Users;
+
+namespace UserModule.Core.Queries._DTOs
 {
   public class UserDto
   {
@@ -19,5 +21,7 @@
     public string Avatar { get; set; }
 
     public List<RoleDto> Roles { get; set; } = [];
+
+    public List<UserToken> Tokens { get; } = [];
   }
 }

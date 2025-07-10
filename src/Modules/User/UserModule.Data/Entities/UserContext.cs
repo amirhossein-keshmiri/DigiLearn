@@ -12,5 +12,6 @@ namespace UserModule.Data.Entities
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<RolePermission> RolePermissions { get; set; }
+    public DbSet<UserToken> UserTokens { get; set; }
   }
 }

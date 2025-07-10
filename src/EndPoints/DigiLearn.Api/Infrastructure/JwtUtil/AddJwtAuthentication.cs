@@ -6,27 +6,36 @@ namespace DigiLearn.Api.Infrastructure.JwtUtil;
 
 public static class JwtAuthenticationConfig
 {
-    public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+  public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+  {
+    services.AddAuthentication(option =>
     {
-        services.AddAuthentication(option =>
+      option.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+      option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+      option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(option =>
+    {
+      option.TokenValidationParameters = new TokenValidationParameters()
+      {
+        IssuerSigningKey =
+                  new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfig:SignInKey"])),
+        ValidIssuer = configuration["JwtConfig:Issuer"],
+        ValidAudience = configuration["JwtConfig:Audience"],
+        ValidateLifetime = true,
+        ValidateIssuer = true,
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = true
+      };
+      option.SaveToken = true;
+      option.Events = new JwtBearerEvents()
+      {
+        OnTokenValidated = async context =>
         {
-            option.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-            option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(option =>
-        {
-            option.TokenValidationParameters = new TokenValidationParameters()
-            {
-                IssuerSigningKey =
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfig:SignInKey"])),
-                ValidIssuer = configuration["JwtConfig:Issuer"],
-                ValidAudience = configuration["JwtConfig:Audience"],
-                ValidateLifetime = true,
-                ValidateIssuer = true,
-                ValidateIssuerSigningKey = true,
-                ValidateAudience = true
-            };
-            option.SaveToken = true;
-        });
-    }
+          var customValidate = context.HttpContext.RequestServices
+              .GetRequiredService<CustomJwtValidation>();
+          await customValidate.Validate(context);
+        }
+      };
+    });
+  }
 }

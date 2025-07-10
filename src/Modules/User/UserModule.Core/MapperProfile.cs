@@ -9,6 +9,7 @@ namespace UserModule.Core
     public MapperProfile()
     {
       CreateMap<UserDto, User>().ReverseMap();
+      CreateMap<UserTokenDto, UserToken>().ReverseMap();
     }
   }
 }

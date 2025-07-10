@@ -1,4 +1,5 @@
 ﻿using Common.Domain;
+using Common.Domain.Exceptions;
 using System.ComponentModel.DataAnnotations;
 
 namespace UserModule.Data.Entities.Users
@@ -27,5 +28,7 @@ namespace UserModule.Data.Entities.Users
     public string Avatar { get; set; }
 
     public List<UserRole> UserRoles { get; set; }
+
+    public List<UserToken> Tokens { get; }
   }
 }

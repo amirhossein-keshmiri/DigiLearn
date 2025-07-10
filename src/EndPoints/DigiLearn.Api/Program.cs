@@ -1,9 +1,11 @@
+using Common.Application;
 using DigiLearn.Api.Infrastructure;
 using DigiLearn.Api.Infrastructure.JwtUtil;
 using DigiLearn.Api.Infrastructure.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using Shop.Api.Infrastructure;
 using UserModule.Core;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,8 +58,9 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
+builder.Services.RegisterApiDependency(builder.Configuration);
+CommonBootstrapper.RegisterCommonApplication(builder.Services);
 builder.Services.InitUserModule(builder.Configuration);
-
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();

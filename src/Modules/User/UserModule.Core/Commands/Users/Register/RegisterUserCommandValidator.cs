@@ -1,4 +1,5 @@
 ﻿using Common.Application.Validation;
+using Common.Domain.Utils;
 using FluentValidation;
 
 namespace UserModule.Core.Commands.Users.Register
@@ -8,16 +9,14 @@ namespace UserModule.Core.Commands.Users.Register
     public RegisterUserCommandValidator()
     {
       RuleFor(r => r.PhoneNumber)
-          .NotEmpty()
-          .NotNull()
-          .MinimumLength(11)
-          .MaximumLength(11)
+          .Must(x => x.IsValidPhoneNumber())
           .WithMessage(ValidationMessages.InvalidPhoneNumber);
 
       RuleFor(r => r.Password)
           .NotEmpty()
           .NotNull()
-          .MinimumLength(6);
+          .MinimumLength(5)
+          .WithMessage(ValidationMessages.MinLength);
     }
   }
 }

@@ -1,4 +1,5 @@
 ﻿using Common.Application;
+using Common.Application.Validation;
 using DigiLearn.Web.Infrastructure.RazorUtils;
 using Microsoft.AspNetCore.Mvc;
 using UserModule.Core.Commands.Users.Register;
@@ -22,21 +23,29 @@ namespace DigiLearn.Web.Pages.Auth
 
     public async Task<IActionResult> OnPost()
     {
-      var result = await _userFacade.RegisterUser(new RegisterUserCommand()
+      try
       {
-        Password = RegisterRequest.Password,
-        PhoneNumber = RegisterRequest.PhoneNumber,
-      });
+        var result = await _userFacade.RegisterUser(new RegisterUserCommand()
+        {
+          Password = RegisterRequest.Password,
+          PhoneNumber = RegisterRequest.PhoneNumber,
+        });
 
-      if (result.Status == OperationResultStatus.Success)
-      {
-        result.Message = "Registration was successful.";
+        if (result.Status == OperationResultStatus.Success)
+        {
+          result.Message = "Registration was successful.";
+        }
+        else
+        {
+          result.Message = "An error has occurred.";
+        }
+        return RedirectAndShowAlert(result, RedirectToPage("Login"));
       }
-      else
+      catch (InvalidCommandException ex)
       {
-        result.Message = "An error has occurred.";
+        ErrorAlert(ex.Message);
+        return Page();
       }
-      return RedirectAndShowAlert(result, RedirectToPage("Login"));
     }
   }
 }
