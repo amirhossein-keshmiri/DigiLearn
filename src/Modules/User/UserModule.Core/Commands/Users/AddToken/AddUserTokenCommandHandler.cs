@@ -21,7 +21,7 @@ namespace UserModule.Core.Commands.Users.AddToken
       if (user == null)
         return OperationResult.NotFound();
 
-      var activeTokenCount = _userContext.UserTokens.Count(c => c.RefreshTokenExpireDate > DateTime.Now);
+      var activeTokenCount = _userContext.UserTokens.Where(x => x.UserId == request.UserId).Count(c => c.RefreshTokenExpireDate > DateTime.Now);
       if (activeTokenCount == 3)
         return OperationResult.Error("امکان استفاده از 4 دستگاه همزمان وجود ندارد");
 

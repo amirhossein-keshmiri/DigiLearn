@@ -56,8 +56,6 @@ namespace DigiLearn.Api.Controllers
         return CommandResult(result);
       }
 
-      var token = JwtTokenBuilder.BuildToken(user, _configuration);
-
       var loginResult = await AddTokenAndGenerateJwt(user);
       return CommandResult(loginResult);
 
