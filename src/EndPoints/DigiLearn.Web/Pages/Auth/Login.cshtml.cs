@@ -38,7 +38,7 @@ namespace DigiLearn.Web.Pages.Auth
         return Page();
       }
 
-      var isComparedPassword = Sha256Hasher.IsCompare(user.Password, LoginRequest.PhoneNumber);
+      var isComparedPassword = Sha256Hasher.IsCompare(user.Password, LoginRequest.Password);
       if (isComparedPassword == false)
       {
         ErrorAlert("PassWord is Wrong!");

@@ -4,36 +4,79 @@
   Layout = "Shared/_Auth";
   ViewData["title"] = "Register";
 }
-<form method="post" class="lg:p-10 p-6 space-y-3 relative bg-white shadow-xl rounded-md">
 
-  <h1 class="lg:text-2xl text-xl font-semibold mb-6"> @ViewData["title"] </h1>
+<div class="col-md-6 login-wrap-bg">
+  <!-- Login -->
+  <div class="login-wrapper">
+    <div class="loginbox">
+      <div class="w-100">
+        <div class="d-flex align-items-center justify-content-between login-header">
+          <img src="/assets/img/logo.svg" class="img-fluid" alt="Logo">
+          <a asp-page="../Index" class="link-1">Back to Home</a>
+        </div>
+        <h1 class="fs-32 fw-bold topic">Sign up</h1>
+        <form method="post" class="mb-3 pb-3">
+          <div class="mb-3 position-relative">
+            <label class="form-label">PhoneNumber<span class="text-danger ms-1">*</span></label>
+            <div class="position-relative">
+              <input type="text" class="form-control form-control-lg" asp-for="RegisterRequest.PhoneNumber">
+              <span><i class="isax isax-user input-icon text-gray-7 fs-14"></i></span>
+              <span class="text-danger" asp-validation-for="RegisterRequest.PhoneNumber"></span>
+            </div>
+          </div>
+          <div class="mb-3 position-relative">
+            <label class="form-label">Password <span class="text-danger"> *</span></label>
+            <div class="position-relative" id="passwordInput">
+              <input type="password" id="password" class="pass-inputs form-control form-control-lg" asp-for="RegisterRequest.Password">
+              <span class="isax toggle-passwords isax-eye-slash text-gray-7 fs-14"></span>
+              <span class="pass-checked"></span>
+            </div>
+            <div class="password-strength" id="passwordStrength">
+              <span id="poor"></span>
+              <span id="weak"></span>
+              <span id="strong"></span>
+              <span id="heavy"></span>
+            </div>
+            <div class="mt-2" id="passwordInfo"></div>
+            <span class="text-danger" asp-validation-for="RegisterRequest.Password"></span>
+          </div>
+          <div class="mb-3 position-relative">
+            <label class="form-label">Confirm Password <span class="text-danger"> *</span></label>
+            <div class="position-relative">
+              <input type="password" class="pass-inputa form-control form-control-lg" asp-for="RegisterRequest.ConfirmPassword">
+              <span class="isax toggle-passworda isax-eye-slash text-gray-7 fs-14"></span>
+              <span class="text-danger" asp-validation-for="RegisterRequest.ConfirmPassword"></span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <div class="remember-me d-flex align-items-center">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label mb-0 d-inline-flex remember-me fs-14" for="flexCheckDefault">
+                I agree with <a href="javascript:void(0);" class="link-2 mx-2">Terms of Service</a> and <a href="javascript:void(0);" class="link-2 mx-2">Privacy Policy</a>
+              </label>
+            </div>
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-secondary btn-lg" type="submit">Sign Up <i class="isax isax-arrow-right-3 ms-1"></i></button>
+          </div>
+        </form>
 
-  <div>
-    <label class="mb-0"> PhoneNumber </label>
-    <input type="text" placeholder="PhoneNumber" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full" asp-for="RegisterRequest.PhoneNumber">
-    <span class="text-danger" asp-validation-for="RegisterRequest.PhoneNumber"></span>
-  </div>
-  <div>
-    <label class="mb-0"> Password </label>
-    <input type="password" placeholder="******" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full" asp-for="RegisterRequest.Password">
-    <span class="text-danger" asp-validation-for="RegisterRequest.Password"></span>
-  </div>
-  <div>
-    <label class="mb-0"> Confirm Password </label>
-    <input type="password" placeholder="******" class="bg-gray-100 h-12 mt-2 px-3 rounded-md w-full" asp-for="RegisterRequest.ConfirmPassword">
-    <span class="text-danger" asp-validation-for="RegisterRequest.ConfirmPassword"></span>
-  </div>
-  <div class="checkbox">
-    <input type="checkbox" id="chekcbox1" checked="">
-    <label for="chekcbox1">
-      <span class="checkbox-icon"></span> I agree to the <a href="pages-terms.html" target="_blank" class="uk-text-bold uk-text-small uk-link-reset"> Terms and Conditions </a>
-    </label>
-  </div>
+        <div class="d-flex align-items-center justify-content-center or fs-14 mb-3">
+          Or
+        </div>
 
-  <div>
-    <button class="bg-blue-600 font-semibold p-2 mt-5 rounded-md text-center text-white w-full">
-      Get Started
-    </button>
-  </div>
+        <div class="d-flex align-items-center justify-content-center mb-3">
+          <a href="javascript:void(0);" class="btn btn-light me-2"><img src="/assets/img/icons/google.svg" alt="img" class="me-2">Google</a>
+          <a href="javascript:void(0);" class="btn btn-light"><img src="/assets/img/icons/facebook.svg" alt="img" class="me-2">Facebook</a>
+        </div>
 
-</form>
+        <div class="fs-14 fw-normal d-flex align-items-center justify-content-center">
+          Already you have an account?<a asp-page="Login" class="link-2 ms-1"> Login</a>
+        </div>
+
+        <!-- /Login -->
+
+      </div>
+    </div>
+  </div>
+</div>

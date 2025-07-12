@@ -1,551 +1,509 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-  <!-- Basic Page Needs
-  ================================================== -->
-  <title>Courseplus Template</title>
+  <!-- Meta Tags -->
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Courseplus is - Professional A unique and beautiful collection of UI elements">
+  <meta name="description" content="Dreams LMS is a powerful Learning Management System template designed for educators, training institutions, and businesses. Manage courses, track student progress, conduct virtual classes, and enhance e-learning experiences with an intuitive and feature-rich platform.">
+  <meta name="keywords" content="LMS template, Learning Management System, e-learning software, online course platform, student management, education portal, virtual classroom, training management system, course tracking, online education">
+  <meta name="author" content="Dreams Technologies">
+  <meta name="robots" content="index, follow">
+
+  <title>Dreams LMS | Advanced Learning Management System Template</title>
 
   <!-- Favicon -->
-  <link href="../assets/images/favicon.png" rel="icon" type="image/png">
+  <link rel="shortcut icon" href="/assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
 
-  <!-- icons
-  ================================================== -->
-  <link rel="stylesheet" href="../assets/css/icons.css">
+  <!-- Theme Settings Js -->
+  <script src="/assets/js/theme-script.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
 
-  <!-- CSS
-  ================================================== -->
-  <link rel="stylesheet" href="../assets/css/uikit.css">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <link rel="stylesheet" href="../assets/css/tailwind.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+
+  <!-- iconsax css -->
+  <link rel="stylesheet" href="/assets/css/iconsax.css">
+
+  <!-- Slick CSS -->
+  <link rel="stylesheet" href="/assets/plugins/slick/slick.css">
+  <link rel="stylesheet" href="/assets/plugins/slick/slick-theme.css">
+
+  <!-- tabler icon css -->
+  <link rel="stylesheet" href="/assets/plugins/tabler-icons/tabler-icons.css">
+
+  <!-- aos css -->
+  <link rel="stylesheet" href="/assets/plugins/aos/aos.css">
+
+  <!-- fontawsome -->
+  <link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+
+  <!-- owl carousel css file -->
+  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+
+  <!-- style.css file -->
+  <link rel="stylesheet" href="/assets/css/style.css">
 
 </head>
-
 <body>
-
-  <div id="wrapper" class="is-verticle">
-
-    <!--  Header  -->
-    <header class="is-transparent is-dark border-b backdrop-filter backdrop-blur-2xl" uk-sticky="cls-inactive: is-dark is-transparent border-b">
-      <div class="header_inner">
-        <div class="left-side">
-
-          <!-- Logo -->
-          <div id="logo">
-            <a href="explore.html">
-              <img src="../assets/images/logo.png" alt="">
-              <img src="../assets/images/logo-light.png" class="logo_inverse" alt="">
-              <img src="../assets/images/logo-mobile.png" class="logo_mobile" alt="">
+  <div class="main-wrapper">
+    <!-- Header -->
+    <header class="header-two">
+      <div class="container">
+        <div class="header-nav">
+          <div class="navbar-header">
+            <a id="mobile_btn" href="javascript:void(0);">
+              <span class="bar-icon">
+                <i class="isax isax-menu"></i>
+              </span>
             </a>
-          </div>
-
-          <!-- icon menu for mobile -->
-          <div class="triger" uk-toggle="target: #wrapper ; cls: is-active">
-          </div>
-
-        </div>
-        <div class="right-side">
-
-          <!-- Header search box  -->
-          <div class="header_search">
-            <i class="uil-search-alt"></i>
-            <input value="" type="text" class="form-control" placeholder=" Quick search for anything.." autocomplete="off">
-            <div uk-drop="mode: click;offset:10" class="header_search_dropdown">
-
-              <h4 class="search_title"> Recently </h4>
-              <ul>
-                <li>
-                  <a href="#">
-                    <img src="../assets/images/avatars/avatar-1.jpg" alt="" class="list-avatar">
-                    <div class="list-name">  Erica Jones </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="../assets/images/avatars/avatar-2.jpg" alt="" class="list-avatar">
-                    <div class="list-name">  Coffee  Addicts </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="../assets/images/avatars/avatar-3.jpg" alt="" class="list-avatar">
-                    <div class="list-name"> Mountain Riders </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="../assets/images/avatars/avatar-4.jpg" alt="" class="list-avatar">
-                    <div class="list-name"> Property Rent And Sale  </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <img src="../assets/images/avatars/avatar-5.jpg" alt="" class="list-avatar">
-                    <div class="list-name">  Erica Jones </div>
-                  </a>
-                </li>
-              </ul>
-
+            <div class="navbar-logo">
+              <a class="logo-white header-logo" href="index.html">
+                <img src="/assets/img/logo.svg" class="logo" alt="Logo">
+              </a>
+              <a class="logo-dark header-logo" href="index.html">
+                <img src="/assets/img/logo-white.svg" class="logo" alt="Logo">
+              </a>
             </div>
           </div>
-
-          <div>
-
-            <!-- cart -->
-            <a href="#" class="header_widgets">
-              <ion-icon name="cart-outline" class="is-icon"></ion-icon>
-            </a>
-            <div uk-drop="mode: click" class="dropdown_cart">
-              <h4 class="cart-headline"> My Cart </h4>
-              <ul class="dropdown_cart_scrollbar" data-simplebar>
-                <li>
-                  <div class="cart_avatar">
-                    <img src="../assets/images/courses/img-1.jpg" alt="">
-                  </div>
-                  <div class="cart_text">
-                    <h4> Learn Angular Beginner to Advanced Fundamentals </h4>
-                  </div>
-                  <div class="cart_price">
-                    <span> $12.99 </span>
-                    <button class="type"> Remove</button>
-                  </div>
-                </li>
-                <li>
-                  <div class="cart_avatar">
-                    <img src="../assets/images/courses/img-1.jpg" alt="">
-                  </div>
-                  <div class="cart_text">
-                    <h4>  Become a Web Developer from Scratch to Advanced </h4>
-                  </div>
-                  <div class="cart_price">
-                    <span> $19.99 </span>
-                    <button class="type"> Remove</button>
-                  </div>
-                </li>
-                <li>
-                  <div class="cart_avatar">
-                    <img src="../assets/images/courses/img-2.jpg" alt="">
-                  </div>
-                  <div class="cart_text">
-                    <h4> Angular Fundamentals for Beginner to advance </h4>
-                  </div>
-                  <div class="cart_price">
-                    <span> $12.99 </span>
-                    <button class="type"> Remove</button>
-                  </div>
-                </li>
-                <li>
-                  <div class="cart_avatar">
-                    <img src="../assets/images/courses/img-3.jpg" alt="">
-                  </div>
-                  <div class="cart_text">
-                    <h4> Ultimate Web Developer Course for Beginners 2020</h4>
-                  </div>
-                  <div class="cart_price">
-                    <span> $14.99 </span>
-                    <button class="type"> Remove</button>
-                  </div>
-                </li>
-                <li>
-                  <div class="cart_avatar">
-                    <img src="../assets/images/courses/img-4.jpg" alt="">
-                  </div>
-                  <div class="cart_text">
-                    <h4> The Complete JavaScript From beginning to advance </h4>
-                  </div>
-                  <div class="cart_price">
-                    <span> $16.99 </span>
-                    <button class="type"> Remove</button>
-                  </div>
-                </li>
-                <li>
-                  <div class="cart_avatar">
-                    <img src="../assets/images/courses/img-5.jpg" alt="">
-                  </div>
-                  <div class="cart_text">
-                    <h4> Become a Web Developer from Scratch to Advanced</h4>
-                  </div>
-                  <div class="cart_price">
-                    <span> $12.99 </span>
-                    <button class="type"> Remove</button>
-                  </div>
-                </li>
-              </ul>
-
-              <div class="cart_footer">
-                <p> Subtotal : $ 320 </p>
-                <h1> Total :  <strong> $ 320</strong> </h1>
-              </div>
+          <div class="main-menu-wrapper">
+            <div class="menu-header">
+              <a href="index.html" class="menu-logo">
+                <img src="/assets/img/logo.svg" class="img-fluid" alt="Logo">
+              </a>
+              <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                <i class="fas fa-times"></i>
+              </a>
             </div>
+            <ul class="main-nav">
+              <li class="has-submenu megamenu active">
+                <a href="#">Home <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu mega-submenu">
+                  <li>
+                    <div class="megamenu-wrapper">
+                      <div class="row">
+                        <div class="col-lg-2">
+                          <div class="single-demo">
+                            <div class="demo-img">
+                              <a href="index.html" class="inner-demo-img"><img src="/assets/img/home/home-01.jpg" class="img-fluid " alt="img"></a>
+                            </div>
+                            <div class="demo-info">
+                              <a href="index.html" class="inner-demo-img">Home 1</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li class="has-submenu">
+                <a href="#">Courses <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu">
+                  <li class="has-submenu">
+                    <a href="javascript:void(0);">Courses</a>
+                    <ul class="submenu">
+                      <li><a href="course-grid.html">Course Grid</a></li>
+                      <li><a href="course-list.html">Course List</a></li>
+                    </ul>
+                  </li>
+                  <li class="has-submenu">
+                    <a href="javascript:void(0);">Course Category</a>
+                    <ul class="submenu">
+                      <li><a href="course-category.html">Course Category</a></li>
+                      <li><a href="course-category-2.html">Course Category 2</a></li>
+                      <li><a href="course-category-3.html">Course Category 3</a></li>
+                    </ul>
+                  </li>
+                  <li class="has-submenu">
+                    <a href="javascript:void(0);">Course Details</a>
+                    <ul class="submenu">
+                      <li><a href="course-details.html">Course Details</a></li>
+                      <li><a href="course-details-2.html">Course Details 2</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="course-resume.html">Course Resume</a></li>
+                  <li><a href="course-watch.html">Course Watch</a></li>
+                  <li><a href="cart.html">Course Cart</a></li>
+                  <li><a href="checkout.html">Course Checkout</a></li>
+                  <li><a href="add-course.html">Add New Course</a></li>
+                </ul>
+              </li>
+              <li class="has-submenu">
+                <a href="javascript:void(0);">Dashboard <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu">
+                  <li class="has-submenu">
+                    <a href="javascript:void(0);">Instructor Dashboard</a>
+                    <ul class="submenu">
+                      <li><a href="instructor-dashboard.html">Dashboard</a></li>
+                      <li><a href="instructor-profile.html">My Profile</a></li>
+                      <li><a href="instructor-course.html">Course</a></li>
+                      <li><a href="instructor-announcements.html">Announcements</a></li>
+                      <li><a href="instructor-assignment.html">Assignments</a></li>
+                      <li class="has-submenu">
+                        <a href="javascript:void(0);">Student</a>
+                        <ul class="submenu">
+                          <li><a href="students.html">Student Grid</a></li>
+                          <li><a href="student-list.html">Student List</a></li>
+                          <li><a href="student-details.html">Student Details</a></li>
+                        </ul>
+                      </li>
+                      <li><a href="instructor-quiz.html">Quiz</a></li>
+                      <li><a href="instructor-quiz-results.html">Quiz Results</a></li>
+                      <li><a href="instructor-certificate.html">Certificates</a></li>
+                      <li><a href="instructor-earnings.html">Earning</a></li>
+                      <li><a href="instructor-payout.html">Payout</a></li>
+                      <li><a href="instructor-statements.html">Statement</a></li>
+                      <li><a href="instructor-tickets.html">Support Tickets</a></li>
+                      <li><a href="instructor-settings.html">Settings</a></li>
+                    </ul>
+                  </li>
+                  <li class="has-submenu">
+                    <a href="javascript:void(0);">Student Dashboard</a>
+                    <ul class="submenu">
+                      <li><a href="student-dashboard.html">Student Dashboard</a></li>
+                      <li><a href="student-profile.html">My Profile</a></li>
+                      <li><a href="student-courses.html">Enrolled Courses</a></li>
+                      <li><a href="student-certificates.html">My Certificates</a></li>
+                      <li><a href="student-wishlist.html">Wishlist</a></li>
+                      <li><a href="student-reviews.html">Reviews</a></li>
+                      <li><a href="student-quiz.html">My Quiz Attempts</a></li>
+                      <li><a href="student-order-history.html">Order History</a></li>
+                      <li><a href="student-referral.html">Referrals</a></li>
+                      <li><a href="student-messages.html">Messages</a></li>
+                      <li><a href="student-tickets.html">Support Ticket</a></li>
+                      <li><a href="student-settings.html">Settings</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="has-submenu">
+                <a href="#">Pages <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu">
+                  <li class="has-submenu">
+                    <a href="#">Instructors</a>
+                    <ul class="submenu">
+                      <li><a href="instructor-grid.html">Instructor Grid</a></li>
+                      <li><a href="instructor-list.html">Instructor List</a></li>
+                      <li><a href="instructor-details.html">Instructor Details</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="about-us.html">About Us</a></li>
+                  <li><a href="contact-us.html">Contact us</a></li>
+                  <li><a href="notifications.html">Notifications</a></li>
+                  <li><a href="become-an-instructor.html">Become an Instructor</a></li>
+                  <li><a href="testimonials.html">Testimonials</a></li>
+                  <li class="has-submenu">
+                    <a href="#">Authentication</a>
+                    <ul class="submenu">
+                      <li><a href="login.html">Login</a></li>
+                      <li><a href="register.html">Register</a></li>
+                      <li><a href="forgot-password.html">Forgot Password</a></li>
+                      <li><a href="reset-password.html">Reset Password</a></li>
+                      <li><a href="set-password.html">Set Password</a></li>
+                      <li><a href="otp.html">OTP</a></li>
+                      <li><a href="lock-screen.html">Lock Screen</a></li>
+                    </ul>
+                  </li>
+                  <li class="has-submenu">
+                    <a href="#">Error</a>
+                    <ul class="submenu">
+                      <li><a href="error-404.html">404 Error</a></li>
+                      <li><a href="error-500.html">500 Error</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="pricing-plan.html">Pricing Plan</a></li>
+                  <li><a href="faq.html">FAQ</a></li>
+                  <li><a href="coming-soon.html">Coming Soon</a></li>
+                  <li><a href="under-construction.html">Under Construction</a></li>
+                  <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                  <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                  <li><a href="index-rtl.html">RTL</a></li>
+                </ul>
+              </li>
+              <li class="has-submenu">
+                <a href="#">Blog <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu">
+                  <li class="has-submenu">
+                    <a href="#">Blog Layouts</a>
+                    <ul class="submenu">
+                      <li><a href="blog-grid.html">Blog 1 Grid</a></li>
+                      <li><a href="blog-2-grid.html">Blog 2 Grid</a></li>
+                      <li><a href="blog-3-grid.html">Blog 3 Grid</a></li>
+                      <li><a href="blog-carousal.html">Blog Carousal</a></li>
+                      <li><a href="blog-masonry.html">Blog Mansory</a></li>
+                      <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                      <li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
+                    </ul>
+                  </li>
+                  <li class="has-submenu">
+                    <a href="#">Blog Details</a>
+                    <ul class="submenu">
+                      <li><a href="blog-details.html">Blog Details</a></li>
+                      <li><a href="blog-details-left-sidebar.html">Blog Details Left Sidebar</a></li>
+                      <li><a href="blog-details-right-sidebar.html">Blog Details Right Sidebar</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
 
-            <!-- notification -->
-            <a href="#" class="header_widgets">
-              <ion-icon name="mail-outline" class="is-icon"></ion-icon>
-            </a>
-            <div uk-drop="mode: click" class="header_dropdown">
-              <div class="drop_headline">
-                <h4>Notifications </h4>
-                <div class="btn_action">
-                  <div class="btn_action">
-                    <a href="#">
-                      <ion-icon name="settings-outline" uk-tooltip="title: Notifications settings ; pos: left"></ion-icon>
-                    </a>
-                    <a href="#">
-                      <ion-icon name="checkbox-outline" uk-tooltip="title: Mark as read all ; pos: left"></ion-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <ul class="dropdown_scrollbar" data-simplebar>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-1.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <p>
-                        <strong>Adrian Mohani</strong> Like Your Comment On Course
-                        <span class="text-link">Javascript Introduction </span>
-                      </p>
-                      <span class="time-ago"> 2 hours ago </span>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-2.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <p>
-                        <strong>Stella Johnson</strong> Replay Your Comments in
-                        <span class="text-link">Programming for Games</span>
-                      </p>
-                      <span class="time-ago"> 9 hours ago </span>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-3.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <p>
-                        <strong>Alex Dolgove</strong> Added New Review In Course
-                        <span class="text-link">Full Stack PHP Developer</span>
-                      </p>
-                      <span class="time-ago"> 12 hours ago </span>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-1.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <p>
-                        <strong>Jonathan Madano</strong> Shared Your Discussion On Course
-                        <span class="text-link">Css Flex Box </span>
-                      </p>
-                      <span class="time-ago"> Yesterday </span>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-              <a href="#" class="see-all">See all</a>
-            </div>
-
-            <!-- messages -->
-            <a href="#" class="header_widgets">
-              <ion-icon name="notifications-outline" class="is-icon"></ion-icon>
-              <span> 2 </span>
-            </a>
-            <div uk-drop="mode: click" class="header_dropdown">
-              <div class="drop_headline">
-                <h4>Messages </h4>
-                <div class="btn_action">
-                  <a href="#">
-                    <ion-icon name="settings-outline" uk-tooltip="title: Message settings ; pos: left"></ion-icon>
-                  </a>
-                  <a href="#">
-                    <ion-icon name="checkbox-outline" uk-tooltip="title: Mark as read all ; pos: left"></ion-icon>
+            <div class="menu-dropdown">
+              <div class="cart-item">
+                <h6>Cart & Wishlist</h6>
+                <div class="icon-btn">
+                  <a href="cart.html" class="position-relative">
+                    <i class="isax isax-shopping-cart5"></i>
+                    <span class="count-icon bg-success p-1 rounded-pill text-white fs-10 fw-bold">1</span>
                   </a>
                 </div>
               </div>
-              <ul class="dropdown_scrollbar" data-simplebar>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-1.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <strong> John menathon </strong> <span class="time"> 6:43 PM</span>
-                      <p> Lorem ipsum dolor sit amet, consectetur </p>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-2.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <strong> Zara Ali </strong> <span class="time">12:43 PM</span>
-                      <p> Lorem ipsum dolor sit amet, consectetur </p>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-3.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <strong> Mohamed Ali </strong> <span class="time"> Wed</span>
-                      <p> Lorem ipsum dolor sit amet, consectetur </p>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-1.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <strong> John menathon </strong> <span class="time"> Sun </span>
-                      <p> Lorem ipsum dolor sit amet, consectetur </p>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-2.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <strong> Zara Ali </strong> <span class="time"> Fri </span>
-                      <p> Lorem ipsum dolor sit amet, consectetur </p>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <div class="drop_avatar">
-                      <img src="../assets/images/avatars/avatar-3.jpg" alt="">
-                    </div>
-                    <div class="drop_content">
-                      <strong> Mohamed Ali </strong> <span class="time">1 Week ago</span>
-                      <p> Lorem ipsum dolor sit amet, consectetur </p>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-              <a href="#" class="see-all">See all</a>
+              <div class="dropdown flag-dropdown mb-2">
+                <a href="javascript:void(0);" class="dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="/assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
+                </a>
+                <ul class="dropdown-menu p-2 mt-2">
+                  <li>
+                    <a class="dropdown-item rounded d-flex align-items-center" href="javascript:void(0);">
+                      <img src="/assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item rounded d-flex align-items-center" href="javascript:void(0);">
+                      <img src="/assets/img/flags/arab-flag.svg" class="me-2" alt="flag">ARA
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item rounded d-flex align-items-center" href="javascript:void(0);">
+                      <img src="/assets/img/flags/france-flag.svg" class="me-2" alt="flag">FRE
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="dropdown mb-2">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  USD
+                </a>
+                <ul class="dropdown-menu p-2 mt-2">
+                  <li><a class="dropdown-item rounded" href="javascript:void(0);">USD</a></li>
+                  <li><a class="dropdown-item rounded" href="javascript:void(0);">YEN</a></li>
+                  <li><a class="dropdown-item rounded" href="javascript:void(0);">EURO</a></li>
+                </ul>
+              </div>
+              <div class="dropdown mb-2">
+                <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  Light
+                </a>
+                <ul class="dropdown-menu p-2 mt-2">
+                  <li><a class="dropdown-item rounded" href="javascript:void(0);">Light</a></li>
+                  <li><a class="dropdown-item rounded" href="javascript:void(0);">Dark</a></li>
+                </ul>
+              </div>
             </div>
-
-            <!-- profile -->
-            <a href="#">
-              <img src="../assets/images/avatars/placeholder.png" class="header_widgets_avatar" alt="">
-            </a>
-            <div uk-drop="mode: click;offset:5" class="header_dropdown profile_dropdown">
-              <ul>
-                <li>
-                  <a href="#" class="user">
-                    <div class="user_avatar">
-                      <img src="../assets/images/avatars/avatar-2.jpg" alt="">
-                    </div>
-                    <div class="user_name">
-                      <div> Stella Johnson </div>
-                      <span> @@Johnson </span>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <hr>
-                </li>
-                <li>
-                  <a href="#" class="is-link">
-                    <ion-icon name="rocket-outline" class="is-icon"></ion-icon> <span>  Upgrade Membership  </span>
-                  </a>
-                </li>
-                <li>
-                  <hr>
-                </li>
-                <li>
-                  <a href="page-setting.html">
-                    <ion-icon name="person-circle-outline" class="is-icon"></ion-icon>
-                    My Account
-                  </a>
-                </li>
-                <li>
-                  <a href="group-feed.html">
-                    <ion-icon name="card-outline" class="is-icon"></ion-icon>
-                    Subscriptions
-                  </a>
-                </li>
-                <li>
-                  <a href="group-feed.html">
-                    <ion-icon name="color-wand-outline" class="is-icon"></ion-icon>
-                    My Billing
-                  </a>
-                </li>
-                <li>
-                  <a href="group-feed.html">
-                    <ion-icon name="settings-outline" class="is-icon"></ion-icon>
-                    Account Settings
-                  </a>
-                </li>
-                <li>
-                  <hr>
-                </li>
-                <li>
-                  <a href="#" id="night-mode" class="btn-night-mode" onclick="UIkit.notification({ message: 'Hmm...  <strong> Night mode </strong> feature is not available yet. ' , pos: 'bottom-right'  })">
-                    <ion-icon name="moon-outline" class="is-icon"></ion-icon>
-                    Night mode
-                    <span class="btn-night-mode-switch">
-                      <span class="uk-switch-button"></span>
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <a asp-page="Auth/Logout">
-                    <ion-icon name="log-out-outline" class="is-icon"></ion-icon>
-                    Log Out
-                  </a>
-                </li>
-              </ul>
+            <div class="menu-login">
+              <a asp-page="Auth/Login" class="btn btn-primary w-100 mb-2"><i class="isax isax-user me-2"></i>Sign In</a>
+              <a asp-action="Auth/Register" class="btn btn-secondary w-100"><i class="isax isax-user-edit me-2"></i>Register</a>
             </div>
-
           </div>
-
+          <div class="header-btn d-flex align-items-center">
+            <div class="dropdown flag-dropdown icon-btn">
+              <a href="javascript:void(0);" class="d-inline-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/img/flags/us-flag.svg" alt="flag">
+              </a>
+              <ul class="dropdown-menu p-2 mt-2">
+                <li>
+                  <a class="dropdown-item rounded d-flex align-items-center" href="javascript:void(0);">
+                    <img src="/assets/img/flags/us-flag.svg" class="me-2" alt="flag">ENG
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item rounded d-flex align-items-center" href="javascript:void(0);">
+                    <img src="/assets/img/flags/arab-flag.svg" class="me-2" alt="flag">ARA
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item rounded d-flex align-items-center" href="javascript:void(0);">
+                    <img src="/assets/img/flags/france-flag.svg" class="me-2" alt="flag">FRE
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown icon-btn">
+              <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="isax isax-dollar-circle4"></i>
+              </a>
+              <ul class="dropdown-menu p-2 mt-2">
+                <li><a class="dropdown-item rounded" href="javascript:void(0);">USD</a></li>
+                <li><a class="dropdown-item rounded" href="javascript:void(0);">YEN</a></li>
+                <li><a class="dropdown-item rounded" href="javascript:void(0);">EURO</a></li>
+              </ul>
+            </div>
+            <div class="icon-btn me-2">
+              <a href="javascript:void(0);" id="dark-mode-toggle" class="theme-toggle activate">
+                <i class="isax isax-sun-15"></i>
+              </a>
+              <a href="javascript:void(0);" id="light-mode-toggle" class="theme-toggle">
+                <i class="isax isax-moon"></i>
+              </a>
+            </div>
+            <div class="icon-btn me-3">
+              <a href="cart.html" class="position-relative">
+                <i class="isax isax-shopping-cart5"></i>
+                <span class="count-icon bg-success p-1 rounded-pill text-white fs-10 fw-bold">1</span>
+              </a>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+              <a asp-page="Auth/Logout" class="btn btn-light d-inline-flex align-items-center me-2">
+                <i class="isax isax-lock-circle me-2"></i>Log Out
+              </a>
+            }
+            else{
+              <a asp-page="Auth/Login" class="btn btn-light d-inline-flex align-items-center me-2">
+                <i class="isax isax-lock-circle me-2"></i>Sign In
+              </a>
+              <a asp-page="Auth/Register" class="btn btn-secondary me-0">
+                <i class="isax isax-user-edit me-2"></i>Register
+              </a>
+            }
+          </div>
         </div>
       </div>
     </header>
+    <!-- /Header -->
+    @await RenderSectionAsync("Slideshow", required: false)
+    @RenderBody()
 
-    <!-- Main Contents -->
-    <div class="main_content">
-
-      @await RenderSectionAsync("Slideshow", required: false)
-
-      @RenderBody()
-
-    </div>
-
-    <!-- sidebar -->
-    <div class="sidebar">
-      <div class="sidebar_inner" data-simplebar>
-
-        <ul class="side-colored">
-          <li class="active">
-            <a href="explore.html">
-              <ion-icon name="compass" class="bg-gradient-to-br from-purple-300 p-1 rounded-md side-icon text-opacity-80 text-white to-blue-500">
-              </ion-icon>
-              <span> Explore</span>
-            </a>
-          </li>
-          <li>
-            <a href="courses.html">
-              <ion-icon name="play-circle" class="bg-gradient-to-br from-yellow-300 p-1 rounded-md side-icon text-opacity-80 text-white to-red-500">
-              </ion-icon>
-              <span> Courses</span>
-            </a>
-          </li>
-          <li>
-            <a href="categories.html">
-              <ion-icon name="albums" class="bg-gradient-to-br from-green-300 p-1 rounded-md side-icon text-opacity-80 text-white to-green-500">
-              </ion-icon>
-              <span> Categories </span>
-            </a>
-          </li>
-          <li>
-            <a href="episodes.html">
-              <ion-icon name="film" class="bg-gradient-to-br from-pink-300 p-1 rounded-md side-icon text-opacity-80 text-white to-red-500">
-              </ion-icon>
-              <span> Episodes </span>
-            </a>
-          </li>
-          <li>
-            <a href="books.html">
-              <ion-icon name="book" class="bg-gradient-to-br from-yellow-300 p-1 rounded-md side-icon text-opacity-80 text-white to-red-500">
-              </ion-icon>
-              <span> Books </span>
-            </a>
-          </li>
-          <li>
-            <a href="blogs.html">
-              <ion-icon name="newspaper" class="bg-gradient-to-br from-purple-300 p-1 rounded-md side-icon text-opacity-80 text-white to-blue-500">
-              </ion-icon>
-              <span> Articles</span>
-            </a>
-          </li>
-        </ul>
-
-
-
-
-        <ul class="side_links" data-sub-title="Pages">
-          <li><a href="page-pricing.html"> <ion-icon name="card-outline" class="side-icon"></ion-icon> Pricing  </a></li>
-          <li><a href="page-help.html"> <ion-icon name="information-circle-outline" class="side-icon"></ion-icon> Help </a></li>
-          <li><a href="page-faq.html"> <ion-icon name="albums-outline" class="side-icon"></ion-icon> Faq </a></li>
-          <li><a href="#"> <ion-icon name="albums-outline" class="side-icon"></ion-icon> Forum  <span class="soon">soon</span> </a></li>
-          <li><a href="page-term.html"> <ion-icon name="document-outline" class="side-icon"></ion-icon> Term </a></li>
-          <li><a href="page-privacy.html"> <ion-icon name="document-text-outline" class="side-icon"></ion-icon> Privacy </a></li>
-          <li><a href="page-setting.html"> <ion-icon name="settings-outline" class="side-icon"></ion-icon> Setting </a></li>
-          <li>
-            <a href="#"> Development  </a>
-            <ul>
-              <li><a href="development-elements.html"> Elements  </a></li>
-              <li><a href="development-components.html"> Compounents </a></li>
-              <li><a href="development-plugins.html"> Plugins </a></li>
-              <li><a href="development-icons.html"> Icons </a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#"> Authentication  </a>
-            <ul>
-              <li><a href="form-login.html">form login </a></li>
-              <li><a href="form-register.html">form register</a></li>
-            </ul>
-          </li>
-        </ul>
-
-        <div class="side_foot_links">
-          <a href="#">About</a>
-          <a href="#">Blog </a>
-          <a href="#">Careers</a>
-          <a href="#">Support</a>
-          <a href="#">Contact Us </a>
-          <a href="#">Developer</a>
-          <a href="#">Terms of service</a>
-        </div>
-
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-bg">
+        <img src="/assets/img/bg/footer-bg-01.png" class="footer-bg-1" alt="">
+        <img src="/assets/img/bg/footer-bg-02.png" class="footer-bg-2" alt="">
       </div>
-
-      <div class="side_overly" uk-toggle="target: #wrapper ; cls: is-collapse is-active"></div>
-    </div>
+      <div class="footer-top">
+        <div class="container">
+          <div class="row row-gap-4">
+            <div class="col-lg-4">
+              <div class="footer-about">
+                <div class="footer-logo">
+                  <img src="/assets/img/logo.svg" alt="">
+                </div>
+                <p>Platform designed to help organizations, educators, and learners manage, deliver, and track learning and training activities.</p>
+                <div class="d-flex align-items-center">
+                  <a href="#" class="me-2"><img src="/assets/img/icon/appstore.svg" alt=""></a>
+                  <a href="#"><img src="/assets/img/icon/googleplay.svg" alt=""></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="row row-gap-4">
+                <div class="col-lg-3">
+                  <div class="footer-widget footer-menu">
+                    <h5 class="footer-title">For Instructor</h5>
+                    <ul>
+                      <li><a href="course-grid.html">Search Mentors</a></li>
+                      <li><a href="login.html">Login</a></li>
+                      <li><a href="register.html">Register</a></li>
+                      <li><a href="course-list.html">Booking</a></li>
+                      <li><a href="student-dashboard.html">Students Dashboard</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="footer-widget footer-menu">
+                    <h5 class="footer-title">For Student</h5>
+                    <ul>
+                      <li><a href="javascript:void(0);">Appointments</a></li>
+                      <li><a href="instructor-message.html">Chat</a></li>
+                      <li><a href="login.html">Login</a></li>
+                      <li><a href="register.html">Register</a></li>
+                      <li><a href="instructor-dashboard.html">Instructor Dashboard</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="footer-widget footer-contact">
+                    <h5 class="footer-title">Newsletter</h5>
+                    <div class="subscribe-input">
+                      <form action="javascript:void(0);">
+                        <input type="email" class="form-control" placeholder="Enter your Email Address">
+                        <button type="submit" class="btn btn-primary btn-sm inline-flex align-items-center"><i class="isax isax-send-2 me-1"></i>Subscribe</button>
+                      </form>
+                    </div>
+                    <div class="footer-contact-info">
+                      <div class="footer-address d-flex align-items-center">
+                        <img src="/assets/img/icon/icon-20.svg" alt="Img" class="img-fluid me-2">
+                        <p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
+                      </div>
+                      <div class="footer-address d-flex align-items-center">
+                        <img src="/assets/img/icon/icon-19.svg" alt="Img" class="img-fluid me-2">
+                        <p><a href="https://dreamslms.dreamstechnologies.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8aeef8efebe7f9e6e7f9caeff2ebe7fae6efa4e9e5e7">[email&#160;protected]</a></p>
+                      </div>
+                      <div class="footer-address d-flex align-items-center">
+                        <img src="/assets/img/icon/icon-21.svg" alt="Img" class="img-fluid me-2">
+                        <p>+19 123-456-7890</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row row-gap-2">
+            <div class="col-md-6">
+              <div class="text-center text-md-start">
+                <p class="text-white">Copyright &copy; 2025 DreamsLMS. All rights reserved.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div>
+                <ul class="d-flex align-items-center justify-content-center justify-content-md-end footer-link">
+                  <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+                  <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- /Footer -->
 
   </div>
 
-  <!-- Javascript
-  ================================================== -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-  <script src="../assets/js/uikit.js"></script>
-  <script src="../assets/js/tippy.all.min.js"></script>
-  <script src="../assets/js/simplebar.js"></script>
-  <script src="../assets/js/custom.js"></script>
-  <script src="../assets/js/bootstrap-select.min.js"></script>
-  <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-  @*   <script src="~/lib/jquery/dist/jquery.min.js"></script>
-  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="~/js/site.js" asp-append-version="true"></script> *@
+  <!-- import jquery -->
+  <script data-cfasync="false" src="/assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="/assets/js/jquery-3.7.1.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/js/jquery.waypoints.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/js/jquery.counterup.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+
+  <!-- import bootstrap bundle -->
+  <script src="/assets/js/bootstrap.bundle.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+
+  <!-- import aos -->
+  <script src="/assets/plugins/aos/aos.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+
+  <!-- Slick Slider -->
+  <script src="/assets/plugins/slick/slick.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+
+  <!-- import font awsome -->
+  <script src="/assets/plugins/fontawesome/js/fontawesome.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+
+  <!-- import owl carousel js -->
+  <script src="/assets/js/owl.carousel.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+
+  <!-- import script.js -->
+  <script src="/assets/js/script.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+
+  <script src="/assets/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="f0de12f7ccfa137ab179a43e-|49" defer></script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"95d3ad785e78f787","version":"2025.6.2","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"3ca157e612a14eccbb30cf6db6691c29","b":1}' crossorigin="anonymous"></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>
 
