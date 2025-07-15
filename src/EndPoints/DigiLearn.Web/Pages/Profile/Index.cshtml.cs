@@ -1,12 +1,26 @@
-using Microsoft.AspNetCore.Mvc;
+using DigiLearn.Web.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using UserModule.Core.Queries._DTOs;
+using UserModule.Core.Services;
 
 namespace DigiLearn.Web.Pages.Profile
 {
-    public class IndexModel : PageModel
+  [Authorize]
+  public class IndexModel : PageModel
+  {
+    private readonly IUserFacade _userFacade;
+
+    public IndexModel(IUserFacade userFacade)
     {
-        public void OnGet()
-        {
-        }
+      _userFacade = userFacade;
     }
+
+    public UserDto UserDto { get; set; }
+
+    public async void OnGet()
+    {
+      UserDto = await _userFacade.GetUserByPhoneNumber(User.GetPhoneNumber());
+    }
+  }
 }

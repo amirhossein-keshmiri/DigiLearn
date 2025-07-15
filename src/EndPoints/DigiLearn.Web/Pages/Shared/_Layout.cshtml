@@ -46,6 +46,7 @@
 
   <!-- style.css file -->
   <link rel="stylesheet" href="/assets/css/style.css">
+  @await RenderSectionAsync("meta", false)
 
 </head>
 <body>
@@ -357,15 +358,15 @@
             </div>
             @if (User.Identity.IsAuthenticated)
             {
-              <a asp-page="Auth/Logout" class="btn btn-light d-inline-flex align-items-center me-2">
+              <a href="/auth/logout" class="btn btn-light d-inline-flex align-items-center me-2">
                 <i class="isax isax-lock-circle me-2"></i>Log Out
               </a>
             }
             else{
-              <a asp-page="Auth/Login" class="btn btn-light d-inline-flex align-items-center me-2">
+              <a href="/auth/login" class="btn btn-light d-inline-flex align-items-center me-2">
                 <i class="isax isax-lock-circle me-2"></i>Sign In
               </a>
-              <a asp-page="Auth/Register" class="btn btn-secondary me-0">
+              <a href="/auth/register" class="btn btn-secondary me-0">
                 <i class="isax isax-user-edit me-2"></i>Register
               </a>
             }
