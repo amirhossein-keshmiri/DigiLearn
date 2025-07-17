@@ -1,9 +1,8 @@
-﻿@using DigiLearn.Web.Infrastructure
+﻿@model UserDto
+@using DigiLearn.Web.Infrastructure
 @using UserModule.Core
-@using UserModule.Core.Services
-@inject IUserFacade _userFacade
+@using UserModule.Core.Queries._DTOs
 @{
-  var user = await _userFacade.GetUserByPhoneNumber(User.GetPhoneNumber());
 }
 <div class="profile-card overflow-hidden bg-blue-gradient2 mb-5 p-5">
   <div class="profile-card-bg">
@@ -13,12 +12,12 @@
     <div class="col-lg-6">
       <div class="d-flex align-items-center">
         <span class="avatar avatar-xxl avatar-rounded me-3 border border-white border-2 position-relative">
-          <img src="@UserModuleDirectories.GetUserAvatar(user!.Avatar)" alt="">
+          <img src="@UserModuleDirectories.GetUserAvatar(@Model!.Avatar)" alt="">
           <span class="verify-tick"><i class="isax isax-verify5"></i></span>
         </span>
         <div>
-          <h5 class="mb-1 text-white d-inline-flex align-items-center"><a href="student-details.html">@user.Name @user.Family</a><a href="/profile/edit" class="link-light fs-16 ms-2"><i class="isax isax-edit-2"></i></a></h5>
-          <p class="text-light">@user.PhoneNumber</p>
+          <h5 class="mb-1 text-white d-inline-flex align-items-center"><a href="student-details.html">@Model.Name @Model.Family</a><a href="/profile/edit" class="link-light fs-16 ms-2"><i class="isax isax-edit-2"></i></a></h5>
+          <p class="text-light">@Model.PhoneNumber</p>
         </div>
       </div>
     </div>

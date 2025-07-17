@@ -24,7 +24,7 @@
 <div class="content">
   <div class="container">
     <!-- profile box -->
-    <partial name="Shared/_ProfileBox" />
+    <partial name="Shared/_ProfileBox" model="Model.UserDto"/>
     <!-- profile box -->
     <div class="row">
       <partial name="Shared/_ProfileSideBar" />
@@ -366,3 +366,9 @@
     </div>
   </div>
 </div>
+
+@section SideBarScripts {
+  <!-- Sticky Sidebar JS -->
+  <script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+  <script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+}

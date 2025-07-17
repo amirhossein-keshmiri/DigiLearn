@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
 
   <!-- Theme Settings Js -->
-  <script src="/assets/js/theme-script.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/js/theme-script.js"></script>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -356,8 +356,11 @@
                 <span class="count-icon bg-success p-1 rounded-pill text-white fs-10 fw-bold">1</span>
               </a>
             </div>
-            @if (User.Identity.IsAuthenticated)
+            @if (User.Identity!.IsAuthenticated)
             {
+              <a href="/profile" class="btn btn-secondary me-0">
+                <i class="isax isax-lock-circle me-2"></i>Profile
+              </a>
               <a href="/auth/logout" class="btn btn-light d-inline-flex align-items-center me-2">
                 <i class="isax isax-lock-circle me-2"></i>Log Out
               </a>
@@ -481,30 +484,31 @@
 
   <!-- import jquery -->
   <script data-cfasync="false" src="/assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-  <script src="/assets/js/jquery-3.7.1.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
-  <script src="/assets/js/jquery.waypoints.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
-  <script src="/assets/js/jquery.counterup.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/js/jquery-3.7.1.min.js"></script>
+  <script src="/assets/js/jquery.waypoints.js"></script>
+  <script src="/assets/js/jquery.counterup.min.js"></script>
 
   <!-- import bootstrap bundle -->
-  <script src="/assets/js/bootstrap.bundle.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+  @await RenderSectionAsync("SideBarScripts", required: false)
 
   <!-- import aos -->
-  <script src="/assets/plugins/aos/aos.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/plugins/aos/aos.js"></script>
 
   <!-- Slick Slider -->
-  <script src="/assets/plugins/slick/slick.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/plugins/slick/slick.js"></script>
 
   <!-- import font awsome -->
-  <script src="/assets/plugins/fontawesome/js/fontawesome.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/plugins/fontawesome/js/fontawesome.min.js"></script>
 
   <!-- import owl carousel js -->
-  <script src="/assets/js/owl.carousel.min.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/js/owl.carousel.min.js"></script>
 
   <!-- import script.js -->
-  <script src="/assets/js/script.js" type="f0de12f7ccfa137ab179a43e-text/javascript"></script>
+  <script src="/assets/js/script.js"></script>
 
   <script src="/assets/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="f0de12f7ccfa137ab179a43e-|49" defer></script>
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"95d3ad785e78f787","version":"2025.6.2","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"3ca157e612a14eccbb30cf6db6691c29","b":1}' crossorigin="anonymous"></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>
 
