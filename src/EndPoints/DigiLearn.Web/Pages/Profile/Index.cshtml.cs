@@ -20,7 +20,7 @@ namespace DigiLearn.Web.Pages.Profile
 
     public async Task OnGet()
     {
-      UserDto = await _userFacade.GetUserByPhoneNumber(User.GetPhoneNumber());
+      //UserDto = await _userFacade.GetUserByPhoneNumber(User.GetPhoneNumber());
     }
   }
 }

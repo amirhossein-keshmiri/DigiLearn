@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Dreams LMS is a powerful Learning Management System template designed for educators, training institutions, and businesses. Manage courses, track student progress, conduct virtual classes, and enhance e-learning experiences with an intuitive and feature-rich platform.">
+	<meta name="keywords" content="LMS template, Learning Management System, e-learning software, online course platform, student management, education portal, virtual classroom, training management system, course tracking, online education">
+	<meta name="author" content="Dreams Technologies">
+	<meta name="robots" content="index, follow">
+
+	<title>Dreams LMS | Advanced Learning Management System Template</title>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="/assets/img/favicon.png">
+	<link rel="apple-touch-icon" href="/assets/img/apple-icon.png">
+
+	<!-- Theme Settings Js -->
+	<script src="/assets/js/theme-script.js" type="c8ca827904a4fe834bf07f9f-text/javascript"></script>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+
+	<!-- Fontawesome CSS -->
+	<link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+	<link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+
+	<!-- Feather CSS -->
+	<link rel="stylesheet" href="/assets/css/feather.css">
+
+	<!-- Iconsax CSS -->
+	<link rel="stylesheet" href="/assets/css/iconsax.css">
+
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+<body>
+
+	<!-- Main Wrapper -->
+	<div class="main-wrapper">
+
+		<!-- Header -->
+		<partial name="_Header" />
+		<!-- /Header -->
+
+		<!-- Breadcrumb -->
+		<partial name="_ProfileBreadcrumb" />
+		<!-- /Breadcrumb -->
+
+		<div class="content">
+			<div class="container">
+				<!-- profile box -->
+				@await Component.InvokeAsync("UserInfo")
+				<!-- profile box -->
+
+				<div class="row">
+
+					<!-- sidebar -->
+					<partial name="_ProfileSideBar" />
+					<!-- sidebar -->
+
+					@RenderBody()
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<partial name="_Footer" />
+		<!-- /Footer -->
+
+	</div>
+	<!-- /Main Wrapper -->
+	<!-- jQuery -->
+	<script data-cfasync="false" src="/assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+	<script src="/assets/js/jquery-3.7.1.min.js"></script>
+
+	<!-- Bootstrap Core JS -->
+	<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Sticky Sidebar JS -->
+	<script src="/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+	<script src="/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+
+	<!-- Custom JS -->
+	<script src="/assets/js/script.js"></script>
+
+	<script src="/assets/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="c8ca827904a4fe834bf07f9f-|49" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+﻿@model UserModule.Core.Queries._DTOs.UserDto
+
+@if (Model != null)
+{
+  <partial name="_ProfileBox" model="Model" />
+}
+else
+{
+  <p>User not logged in.</p>
+}

@@ -2,6 +2,7 @@
 using Common.Application.SecurityUtil;
 using MediatR;
 using UserModule.Core.Commands.Users.AddToken;
+using UserModule.Core.Commands.Users.EditProfile;
 using UserModule.Core.Commands.Users.Register;
 using UserModule.Core.Commands.Users.RemoveToken;
 using UserModule.Core.Queries._DTOs;
@@ -36,6 +37,10 @@ namespace UserModule.Core.Services
         return OperationResult.Error();
 
       return OperationResult.Success();
+    }
+    public async Task<OperationResult> EditUserProfile(EditUserProfileCommand command)
+    {
+      return await _mediator.Send(command);
     }
 
     public async Task<UserDto?> GetUserByPhoneNumber(string phoneNumber)
