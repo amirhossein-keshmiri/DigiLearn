@@ -34,6 +34,8 @@
 	<!-- Iconsax CSS -->
 	<link rel="stylesheet" href="/assets/css/iconsax.css">
 
+	@await RenderSectionAsync("ProfileSectionMeta", false)
+
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="/assets/css/style.css">
 
@@ -80,6 +82,8 @@
 
 	<!-- Bootstrap Core JS -->
 	<script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+	@await RenderSectionAsync("ProfileSectionScripts", false)
 
 	<!-- Sticky Sidebar JS -->
 	<script src="/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>

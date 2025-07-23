@@ -1,11 +1,14 @@
-﻿<!-- sidebar -->
+﻿@{
+  var currentPath = ViewContext.HttpContext.Request.Path.Value?.ToLower();
+}
+<!-- sidebar -->
 <div class="col-lg-3 theiaStickySidebar">
   <div class="settings-sidebar">
     <div>
       <h6 class="mb-3">Main Menu</h6>
       <ul class="mb-3 pb-1">
         <li>
-          <a href="/profile" class="d-inline-flex align-items-center active"><i class="isax isax-grid-35 me-2"></i>Dashboard</a>
+          <a href="/profile" class="d-inline-flex align-items-center @(currentPath == "/profile" ? "active" : "")"><i class="isax isax-grid-35 me-2"></i>Dashboard</a>
         </li>
         <li>
           <a href="student-profile.html" class="d-inline-flex align-items-center"><i class="fa-solid fa-user me-2"></i>My Profile</a>
@@ -36,7 +39,7 @@
       <h6 class="mb-3">Account Settings</h6>
       <ul>
         <li>
-          <a href="/profile/settings" class="d-inline-flex align-items-center"><i class="isax isax-setting-25 me-2"></i>Settings</a>
+          <a href="/profile/settings/index" class="d-inline-flex align-items-center  @(currentPath?.StartsWith("/profile/settings") == true ? "active" : "")"><i class="isax isax-setting-25 me-2"></i>Settings</a>
         </li>
         <li>
           <a href="/auth/logout" class="d-inline-flex align-items-center"><i class="isax isax-logout5 me-2"></i>Logout</a>

@@ -1,0 +1,12 @@
+﻿@model bool
+@{
+    var id = Guid.NewGuid();
+}
+<fieldset>
+    <div class="checkbox">
+     
+        <input type="checkbox" class="checkbox-input" asp-for="@Model">
+        <label asp-for="@Model">
+        </label>
+    </div>
+</fieldset>

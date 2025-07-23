@@ -1,0 +1,12 @@
+﻿@model string
+@* <div class="form-element-row">
+    <label class="mb-0" asp-for="@Model">
+    </label>
+    <input type="email" asp-for="@Model" class="form-control">
+    <span asp-validation-for="@Model"></span>
+</div> *@
+<div class="form-element-row">
+  <label class="form-label" asp-for="@Model"> <span class="text-danger"> *</span></label>
+  <input type="email" class="form-control" asp-for="@Model">
+  <span asp-validation-for="@Model"></span>
+</div>
