@@ -1,6 +1,5 @@
 ﻿@{
   Layout = "Shared/_ProfileLayout";
-  // var currentPage = ViewContext.HttpContext.Request.Path.Value?.ToLower();
   var settingsPath = ViewContext.HttpContext.Request.Path.Value?.ToLowerInvariant();
   var settingsRoute = settingsPath?.Replace("/profile/settings/", "");
 }
@@ -11,10 +10,6 @@
   <ul class="settings-nav d-flex align-items-center flex-wrap border bg-light-900 rounded">
     <li><a href="/profile/settings/index" class="@(settingsRoute == "index" || string.IsNullOrEmpty(settingsRoute) ? "active" : "")">Edit Profile</a></li>
     <li><a href="/profile/settings/changepassword" class="@(settingsRoute == "changepassword" ? "active" : "")">Security</a></li>
-    <li><a href="student-social-profile.html">Social Profiles</a></li>
-    <li><a href="student-linked-accounts.html">Linked Accounts</a></li>
-    <li><a href="student-notifications.html">Notifications</a></li>
-    <li><a href="student-billing-address.html">Billing Address</a></li>
   </ul>
   @RenderBody()
 </div>

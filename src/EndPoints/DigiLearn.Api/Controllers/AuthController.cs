@@ -16,11 +16,11 @@ using UserModule.Core.Commands.Users.RemoveToken;
 
 namespace DigiLearn.Api.Controllers
 {
-  public class UsersController : ApiController
+  public class AuthController : ApiController
   {
     private readonly IUserFacade _userFacade;
     private readonly IConfiguration _configuration;
-    public UsersController(IUserFacade userFacade, IConfiguration configuration)
+    public AuthController(IUserFacade userFacade, IConfiguration configuration)
     {
       _userFacade = userFacade;
       _configuration = configuration;

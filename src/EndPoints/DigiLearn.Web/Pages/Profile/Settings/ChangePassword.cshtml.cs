@@ -1,7 +1,10 @@
-﻿using DigiLearn.Web.Infrastructure.RazorUtils;
+﻿using DigiLearn.Web.Infrastructure;
+using DigiLearn.Web.Infrastructure.RazorUtils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+using UserModule.Core.Commands.Users.ChangePassword;
+using UserModule.Core.Models.Requests;
+using UserModule.Core.Services;
 
 namespace DigiLearn.Web.Pages.Profile.Settings
 {
@@ -9,22 +12,28 @@ namespace DigiLearn.Web.Pages.Profile.Settings
   [BindProperties]
   public class ChangePassword : BaseRazor
   {
-    [Display(Name = "نام")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
-    public string Name { get; set; }
+    private readonly IUserFacade _userFacade;
 
-    [Display(Name = "نام خانوادگی")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
+    public ChangePassword(IUserFacade userFacade)
+    {
+      _userFacade = userFacade;
+    }
 
-    public string Family { get; set; }
-
-    [Display(Name = "ایمیل")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
-    [DataType(DataType.EmailAddress)]
-    public string Email { get; set; }
+    public ChangePasswordRequest ChangePasswordRequest { get; set; }
 
     public void OnGet()
     {
+    }
+
+    public async Task<IActionResult> OnPost()
+    {
+      var result = await _userFacade.ChangePassword(new ChangeUserPasswordCommand()
+      {
+        CurrentPassword = ChangePasswordRequest.CurrentPassword,
+        NewPassword = ChangePasswordRequest.NewPassword,
+        UserId = User.GetUserId()
+      });
+      return RedirectAndShowAlert(result, RedirectToPage("Index"));
     }
   }
 }

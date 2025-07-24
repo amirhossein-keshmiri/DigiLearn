@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using UserModule.Core.Commands.Users.EditProfile;
+using UserModule.Core.Models.Requests;
 using UserModule.Core.Services;
 
 namespace DigiLearn.Web.Pages.Profile.Settings
@@ -19,29 +20,18 @@ namespace DigiLearn.Web.Pages.Profile.Settings
       _userFacade = userFacade;
     }
 
-    [Display(Name = "First Name")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
-    [MinLength(3, ErrorMessage = "The Lenght is too short and must be greater than 3")]
-    public string Name { get; set; }
-
-    [Display(Name = "Last Name")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
-    [MinLength(3, ErrorMessage = "The Lenght is too short and must be greater than 3")]
-    public string Family { get; set; }
-
-    [Display(Name = "Email")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
-    [DataType(DataType.EmailAddress)]
-    public string Email { get; set; }
+    public EditUserProfileRequest EditUserProfile { get; set; }
 
     public async Task OnGet()
     {
       var user = await _userFacade.GetUserByPhoneNumber(User.GetPhoneNumber());
+
+      EditUserProfile = new EditUserProfileRequest();
       if (user != null)
       {
-        Name = user.Name;
-        Family = user.Family;
-        Email = user.Email;
+        EditUserProfile.Name = user.Name;
+        EditUserProfile.Family = user.Family;
+        EditUserProfile.Email = user.Email;
       }
     }
 
@@ -55,9 +45,9 @@ namespace DigiLearn.Web.Pages.Profile.Settings
       var result = await _userFacade.EditUserProfile(new EditUserProfileCommand()
       {
         UserId = User.GetUserId(),
-        Name = Name,
-        Family = Family,
-        Email = Email
+        Name = EditUserProfile.Name,
+        Family = EditUserProfile.Family,
+        Email = EditUserProfile.Email
       });
 
       return RedirectAndShowAlert(result, RedirectToPage("Index"));
