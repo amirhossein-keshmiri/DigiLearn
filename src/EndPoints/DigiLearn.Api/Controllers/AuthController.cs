@@ -49,7 +49,7 @@ namespace DigiLearn.Api.Controllers
         return CommandResult(result);
       }
 
-      var isComparedPassword = Sha256Hasher.IsCompare(user.Password, loginRequest.PhoneNumber);
+      var isComparedPassword = Sha256Hasher.IsCompare(user.Password, loginRequest.Password);
       if (isComparedPassword == false)
       {
         var result = OperationResult<LoginResponse?>.Error("PassWord is Wrong!");
