@@ -20,6 +20,8 @@ namespace TicketModule.Data.Entities
 
     public TicketStatus Status { get; set; }
 
+    public TicketPriority Priority { get; set; }
+
     public List<TicketMessage> Messages { get; set; }
   }
 }

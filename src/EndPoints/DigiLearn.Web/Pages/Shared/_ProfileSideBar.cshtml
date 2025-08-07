@@ -32,14 +32,14 @@
           <a href="/profile/notifications" class="d-inline-flex align-items-center"><i class="isax isax-messages-35 me-2"></i>Messages</a>
         </li>
         <li>
-          <a href="/profile/ticket" class="d-inline-flex align-items-center"><i class="isax isax-ticket5 me-2"></i>Support Tickets</a>
+          <a href="/profile/tickets" class="d-inline-flex align-items-center @(currentPath?.StartsWith("/profile/tickets") == true ? "active" : "")"><i class="isax isax-ticket5 me-2"></i>Support Tickets</a>
         </li>
       </ul>
       <hr>
       <h6 class="mb-3">Account Settings</h6>
       <ul>
         <li>
-          <a href="/profile/settings/index" class="d-inline-flex align-items-center  @(currentPath?.StartsWith("/profile/settings") == true ? "active" : "")"><i class="isax isax-setting-25 me-2"></i>Settings</a>
+          <a href="/profile/settings/index" class="d-inline-flex align-items-center @(currentPath?.StartsWith("/profile/settings") == true ? "active" : "")"><i class="isax isax-setting-25 me-2"></i>Settings</a>
         </li>
         <li>
           <a href="/auth/logout" class="d-inline-flex align-items-center"><i class="isax isax-logout5 me-2"></i>Logout</a>

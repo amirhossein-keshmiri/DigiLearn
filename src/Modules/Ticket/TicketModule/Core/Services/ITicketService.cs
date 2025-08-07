@@ -9,6 +9,7 @@ namespace TicketModule.Core.Services
     Task<OperationResult> SendMessageInTicket(SendTicketMessageCommand sendTicketMessageCommand);
     Task<OperationResult> CloseTicket(Guid ticketId);
 
-    Task<TicketDto> GetTicket(Guid ticketId);
+    Task<TicketDto?> GetTicket(Guid ticketId);
+    Task<TicketFilterResult> GetTicketsByFilter(TicketFilterParams filterParams);
   }
 }

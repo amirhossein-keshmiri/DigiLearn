@@ -24,22 +24,45 @@ function changePageId(pageId) {
 
     window.location.replace(new_url);
 }
-$("form").submit(
-    function () {
-        var isOk = $(".input-validation-error");
-        if (isOk.length == 0) {
-            $(".loading").fadeIn();
-            $("form button[type=submit]").attr("disabled", "true");
-            setTimeout(function () {
-                var s = $(".input-validation-error");
-                if (s.length > 0) {
-                    $(".loading").fadeOut();
-                    $("form button[type=submit]").removeAttr("disabled");
-                }
-            }, 100, 1);
-        } else {
-        }
-    });
+//$("form").submit(function (e) {
+//  const $form = $(this);
+//  const $submitBtns = $form.find("button[type=submit]");
+
+//  var isOk = $form.find(".input-validation-error");
+//  if (isOk.length === 0) {
+//    $(".loading").fadeIn();
+//    $submitBtns.attr("disabled", "true");
+
+//    setTimeout(function () {
+//      $(".loading").fadeOut();
+//      $submitBtns.removeAttr("disabled"); // ✅ Only re-enable buttons in this form
+//    }, 100);
+//  }
+//});
+
+//$("form").submit(
+//  function () {
+//    var isOk = $(".input-validation-error");
+//    if (isOk.length == 0) {
+//      $(".loading").fadeIn();
+//      $("form button[type=submit]").attr("disabled", "true");
+//      setTimeout(function () {
+//        var s = $(".input-validation-error");
+//        if (s.length > 0) {
+//          $(".loading").fadeOut();
+//          $("form button[type=submit]").removeAttr("disabled");
+//        }
+//      }, 100, 1);
+//    } else {
+//    }
+//  });
+
+$(document).on('submit', 'form', function (e) {
+  const $form = $(this);
+  const $btns = $form.find('button[type=submit]');
+  $btns.prop('disabled', true);
+  setTimeout(() => $btns.prop('disabled', false), 100);
+});
 function deleteItem(url, description) {
     if (description == null || description == "") {
         description = "آیا از حذف اطمینان دارید ؟";
@@ -579,13 +602,27 @@ function loadCkeditor4() {
     }, 500);
 }
 
+//function loadSelect2() {
+//    try {
+//        $(".select2").select2();
+//    } catch (ex) {
+//        console.log(ex);
+//    }
+//}
+
 function loadSelect2() {
-    try {
-        $(".select2").select2();
-    } catch (ex) {
-        console.log(ex);
-    }
+  try {
+    // Change from .select2 to .select to match your HTML
+    $(".select").select2({
+      placeholder: "Select",
+      allowClear: true,
+      width: '100%'
+    });
+  } catch (ex) {
+    console.error("Select2 failed to initialize:", ex);
+  }
 }
+
 function loadDataTable() {
     try {
         if ($(".data-table")) {

@@ -34,6 +34,9 @@ namespace TicketModule.Core.Services
         return OperationResult.NotFound();
       }
 
+      if (string.IsNullOrWhiteSpace(sendTicketMessageCommand.Text))
+        return OperationResult.Error("Please Enter Ticket Text!");
+
       var message = new TicketMessage()
       {
         TicketId = ticket.Id,
@@ -74,13 +77,48 @@ namespace TicketModule.Core.Services
       return OperationResult.Success();
     }
 
-    public async Task<TicketDto> GetTicket(Guid ticketId)
+    public async Task<TicketDto?> GetTicket(Guid ticketId)
     {
       var ticket = await _ticketContext.Tickets
                                        .Include(f => f.Messages)
                                        .FirstOrDefaultAsync(f => f.Id == ticketId);
 
       return _mapper.Map<TicketDto>(ticket);
+    }
+
+    public async Task<TicketFilterResult> GetTicketsByFilter(TicketFilterParams filterParams)
+    {
+      var result = _ticketContext.Tickets.OrderByDescending(x => x.CreationDate).AsQueryable();
+
+      if (filterParams.UserId != null)
+        result = result.Where(r => r.UserId == filterParams.UserId);
+
+      if (string.IsNullOrWhiteSpace(filterParams.Title) == false)
+        result = result.Where(r => r.Title.Contains(filterParams.Title));
+
+      if (filterParams.Status != null)
+        result = result.Where(r => r.Status == filterParams.Status);
+
+      if (filterParams.Priority != null)
+        result = result.Where(r => r.Priority == filterParams.Priority);
+
+      var skip = (filterParams.PageId - 1) * filterParams.Take;
+      var data = new TicketFilterResult()
+      {
+        Data = await result.Skip(skip).Take(filterParams.Take)
+              .Select(n => new TicketFilterData
+              {
+                Id = n.Id,
+                UserId = n.UserId,
+                Title = n.Title,
+                Status = n.Status,
+                Priority = n.Priority,
+                CreationDate = n.CreationDate,
+                OwnerFullName = n.OwnerFullName
+              }).ToListAsync()
+      };
+      data.GeneratePaging(result, filterParams.Take, filterParams.PageId);
+      return data;
     }
   }
 }

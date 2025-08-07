@@ -1,4 +1,6 @@
-﻿namespace TicketModule.Core.DTOs.Tickets
+﻿using TicketModule.Data.Entities;
+
+namespace TicketModule.Core.DTOs.Tickets
 {
   public class CreateTicketCommand
   {
@@ -11,5 +13,6 @@
     public string Title { get; set; }
 
     public string Text { get; set; }
+    public TicketPriority Priority { get; set; }
   }
 }
