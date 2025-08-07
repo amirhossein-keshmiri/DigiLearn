@@ -46,7 +46,8 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
       FilterResult = await _ticketService.GetTicketsByFilter(new TicketFilterParams()
       {
         UserId = User.GetUserId(),
-        Take = FilterParams.Take,
+        Take = int.TryParse(Request.Query["FilterParams.Take"], out var take) ? take : 10,
+        //Take = FilterParams.Take,
         PageId = FilterParams.PageId,
         Priority = TicketFilterParams?.Priority,
         Status = TicketFilterParams?.Status,
@@ -60,7 +61,7 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
       public int CurrentPage { get; set; }
       public int TotalPages { get; set; }
       public long TotalCount { get; set; }
-      public int Take { get; set; }
+      public int Take { get; set; } = 10;
     }
 
     public async Task<IActionResult> OnGetFilter()
@@ -72,7 +73,7 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
         Priority = Enum.TryParse<TicketPriority>(Request.Query["TicketFilterParams.Priority"], out var p) ? (TicketPriority?)p : null,
         Title = Request.Query["TicketFilterParams.Title"],
         PageId = int.TryParse(Request.Query["filterParams.pageId"], out var page) ? page : 1,
-        Take = 10
+        Take = int.TryParse(Request.Query["FilterParams.Take"], out var take) ? take : 10
       };
 
       var result = await _ticketService.GetTicketsByFilter(filterParams);

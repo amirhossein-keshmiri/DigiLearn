@@ -20,7 +20,7 @@
           <div class="card-body">
             <div class="d-flex align-items-center">
               <span class="icon-box bg-primary-transparent me-3 flex-shrink-0">
-                <img src="assets/img/icon/graduation.svg" alt="">
+                <img src="/assets/img/icon/graduation.svg" alt="">
               </span>
               <div>
                 <span class="d-block">Total Tickets</span>
@@ -34,7 +34,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex align-items-center">
-              <span class="icon-box bg-secondary-transparent me-3 flex-shrink-0"><img src="assets/img/icon/book.svg" alt=""></span>
+              <span class="icon-box bg-secondary-transparent me-3 flex-shrink-0"><img src="/assets/img/icon/book.svg" alt=""></span>
               <div>
                 <span class="d-block">Opened Tickets</span>
                 <h4 class="fs-24 mt-1">30</h4>
@@ -47,7 +47,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex align-items-center">
-              <span class="icon-box bg-success-transparent me-3 flex-shrink-0"><img src="assets/img/icon/bookmark.svg" alt=""></span>
+              <span class="icon-box bg-success-transparent me-3 flex-shrink-0"><img src="/assets/img/icon/bookmark.svg" alt=""></span>
               <div>
                 <span class="d-block">Closed Tickets</span>
                 <h4 class="fs-24 mt-1">25</h4>
@@ -112,12 +112,29 @@
             </div>
           </div>
 
+          <!-- Take Per Page Filter -->
+          <div class="mb-3">
+            <div class="dropdown me-3">
+              <a href="javascript:void(0);" class="dropdown-toggle text-gray-6 btn rounded border d-inline-flex align-items-center"
+                 data-bs-toggle="dropdown" aria-expanded="false">
+                Show: <span id="takeFilterLabel">10</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" id="takeFilter">
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="10">10</a></li>
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="20">20</a></li>
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="30">30</a></li>
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="50">50</a></li>
+              </ul>
+            </div>
+          </div>
+
           <!-- Clear Filter -->
           <div class="mb-3">
             <div class="me-3">
               <a href="javascript:void(0)" class="btn btn-sm btn-secondary rounded-pill" onclick="clearFilters()">Clear Filters</a>
             </div>
           </div>
+
         </div>
       </div>
       <!-- Search Box -->
@@ -557,7 +574,7 @@
             case 'Closed':     cls = 'bg-danger'; text = 'Closed';     break;
             default:           cls = 'bg-gray';    text = 'Unknown';    break;
         }
-        return `<span class="badge badge-sm ${cls} d-inline-flex align-items-center">
+        return `<span class="badge badge-sm ${cls} d-inline-flex align-items-center" data-status="${text}">
                     <i class="fa-solid fa-circle fs-5 me-1"></i>${text}
                 </span>`;
     }
@@ -702,6 +719,7 @@
         const status = $('#statusFilter .dropdown-item.active').data('value') || '';
         const priority = $('#priorityFilter .dropdown-item.active').data('value') || '';
         const title = $('#searchInput').val().trim();
+        const take = $('#takeFilter .dropdown-item.active').data('value') || '10'; // Default: 10
 
         // Build URL
         const url = new URL(window.location.href);
@@ -713,6 +731,7 @@
         if (title) params.set('TicketFilterParams.Title', title); else params.delete('TicketFilterParams.Title');
 
         // Always reset to page 1 on filter change
+        params.set('FilterParams.Take', take); // ✅ Set items per page
         params.set('FilterParams.PageId', 1);
 
         // Update browser URL
@@ -856,8 +875,9 @@
                         // ✅ Update UI: change status to Closed
                         $('#detail-status-text').text('Closed');
                         $('#detail-status-badge')
-                            .removeClass('bg-success bg-warning')
-                            .addClass(getStatusClass('Closed'));
+                            .removeClass('bg-success bg-warning bg-danger')
+                            .addClass(getStatusClass('Closed'))
+                            .html('<i class="fa-solid fa-circle fs-5 me-1"></i> Closed');
 
                         // Hide Close Ticket button
                         $('#closeTicketBtn').addClass('d-none');
@@ -876,11 +896,11 @@
                      // ✅ Update badge dynamically
                      const $statusBadge = $ticketRow.find('.badge[data-status]');
                      $statusBadge.removeClass('bg-gray bg-warning bg-success bg-danger')
-                                 .addClass('bg-danger')
+                                 .addClass(getStatusClass('Closed'))
                                  .html('<i class="fa-solid fa-circle fs-5 me-1"></i> Closed');
                                  // .text('Closed');
 
-                        Success("Ticket Closed", "The ticket has been successfully closed.");
+                     Success("Ticket Closed", "The ticket has been successfully closed.");
                     } else {
                         ErrorAlert("Failed", res.message || "Could not close the ticket.");
                     }
@@ -1054,10 +1074,21 @@
             applyFilters();
         });
 
-          // Apply filters on search
-          $('#searchInput').on('input', function () {
-              applyFilters();
-          });
+        // Apply filters on search
+        $('#searchInput').on('input', function () {
+            applyFilters();
+        });
+
+        // Handle "Take" (items per page) selection
+        $('#takeFilter .dropdown-item').on('click', function () {
+            $('#takeFilter .dropdown-item').removeClass('active');
+            $(this).addClass('active');
+
+            const value = $(this).data('value');
+            $('#takeFilterLabel').text(value); // Update label
+
+            applyFilters(); // Re-apply filters with new take
+        });
 
         // Set initial active class from URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -1082,6 +1113,11 @@
         if (title) {
             $('#searchInput').val(title);
         }
+
+        // Initialize Take
+        const take = urlParams.get('FilterParams.Take') || '10';
+        $('#takeFilter .dropdown-item[data-value="' + take + '"]').addClass('active');
+        $('#takeFilterLabel').text(take);
 
         // Initial load
         applyFilters();
