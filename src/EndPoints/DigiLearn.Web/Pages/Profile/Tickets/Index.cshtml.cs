@@ -1,4 +1,4 @@
-using Common.Application;
+﻿using Common.Application;
 using Common.Application.DateUtil;
 using DigiLearn.Web.Infrastructure;
 using DigiLearn.Web.Infrastructure.RazorUtils;
@@ -11,6 +11,7 @@ using TicketModule.Core.Models.Request;
 using TicketModule.Core.Services;
 using TicketModule.Data.Entities;
 using UserModule.Core.Services;
+using ClosedXML.Excel;
 
 namespace DigiLearn.Web.Pages.Profile.Tickets
 {
@@ -38,6 +39,15 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
     [BindProperty(SupportsGet = true)]
     public int PageId { get; set; } = 1;
 
+    public class FilterResultDto
+    {
+      public List<TicketFilterData> Data { get; set; }
+      public int CurrentPage { get; set; }
+      public int TotalPages { get; set; }
+      public long TotalCount { get; set; }
+      public int Take { get; set; } = 10;
+    }
+
     public async Task OnGet()
     {
       // Use PageId from query string
@@ -53,15 +63,6 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
         Status = TicketFilterParams?.Status,
         Title = TicketFilterParams?.Title
       });
-    }
-
-    public class FilterResultDto
-    {
-      public List<TicketFilterData> Data { get; set; }
-      public int CurrentPage { get; set; }
-      public int TotalPages { get; set; }
-      public long TotalCount { get; set; }
-      public int Take { get; set; } = 10;
     }
 
     public async Task<IActionResult> OnGetFilter()
@@ -281,5 +282,53 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
       return new JsonResult(new { success = false, message = result.Message });
     }
 
+    public async Task<IActionResult> OnGetExportToExcel()
+    {
+      var exportType = Request.Query["ExportType"];
+      var filterParams = new TicketFilterParams
+      {
+        UserId = User.GetUserId(),
+        Status = Enum.TryParse<TicketStatus>(Request.Query["TicketFilterParams.Status"], out var s) ? (TicketStatus?)s : null,
+        Priority = Enum.TryParse<TicketPriority>(Request.Query["TicketFilterParams.Priority"], out var p) ? (TicketPriority?)p : null,
+        Title = Request.Query["TicketFilterParams.Title"],
+        PageId = exportType == "all" ? 1 : (int.TryParse(Request.Query["FilterParams.PageId"], out var page) ? page : 1),
+        Take = exportType == "all" ? int.MaxValue : (int.TryParse(Request.Query["FilterParams.Take"], out var take) ? take : 10)
+      };
+
+      var result = await _ticketService.GetTicketsByFilter(filterParams);
+
+      var exportData = result.Data.Select(t => new
+      {
+        TicketID = t.Id.ToString().ToUpper().Substring(0, 8),
+        Subject = t.Title,
+        Priority = t.Priority.ToString(),
+        Status = t.Status switch
+        {
+          TicketStatus.Pending => "Inprogress",
+          TicketStatus.Answered => "Opened",
+          TicketStatus.Closed => "Closed",
+          _ => "Unknown"
+        },
+        CreationDate = t.CreationDate.ToPersianDateTime()
+      }).ToList();
+
+      // Create Excel workbook
+      using var workbook = new XLWorkbook();
+      var worksheet = workbook.Worksheets.Add("Tickets");
+      worksheet.Cell(1, 1).InsertTable(exportData, "TicketsTable", true);
+      worksheet.Columns().AdjustToContents();
+
+      // ✅ Save to memory stream
+      using var stream = new MemoryStream();
+      workbook.SaveAs(stream);
+
+      // ✅ Convert to byte array
+      var fileBytes = stream.ToArray();
+
+      var fileName = $"Tickets_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+      var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+      return File(fileBytes, contentType, fileName);
+    }
   }
 }
