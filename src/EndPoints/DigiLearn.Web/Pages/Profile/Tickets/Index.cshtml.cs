@@ -31,8 +31,6 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
     [BindProperty]
     public AddTicketRequest AddTicketRequest { get; set; }
 
-    //public TicketDto Ticket { get; set; }
-
     [BindProperty(SupportsGet = true)]
     public TicketFilterParams? TicketFilterParams { get; set; }
 

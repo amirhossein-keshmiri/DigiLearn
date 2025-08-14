@@ -15,6 +15,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -22,10 +23,6 @@
 	  <ProjectReference Include="..\..\..\Common\Common.Domain\Common.Domain.csproj" />
 	  <ProjectReference Include="..\..\..\Common\Common.Infrastructure\Common.Infrastructure.csproj" />
 	  <ProjectReference Include="..\..\..\Common\Common.Query\Common.Query.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Core\Models\Response\" />
 	</ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Common.Application;
+using Common.Application.DateUtil;
 using Common.Application.SecurityUtil;
 using Microsoft.EntityFrameworkCore;
 using TicketModule.Core.DTOs.Tickets;
+using TicketModule.Core.Models.Response;
 using TicketModule.Data.Context;
 using TicketModule.Data.Entities;
 
@@ -26,16 +28,16 @@ namespace TicketModule.Core.Services
 
       return OperationResult<Guid>.Success(ticket.Id);
     }
-    public async Task<OperationResult> SendMessageInTicket(SendTicketMessageCommand sendTicketMessageCommand)
+    public async Task<OperationResult<AddTicketReplyResponse>> SendMessageInTicket(SendTicketMessageCommand sendTicketMessageCommand)
     {
       var ticket = await _ticketContext.Tickets.FirstOrDefaultAsync(f => f.Id == sendTicketMessageCommand.TicketId);
       if (ticket == null)
       {
-        return OperationResult.NotFound();
+        return OperationResult<AddTicketReplyResponse>.NotFound();
       }
 
       if (string.IsNullOrWhiteSpace(sendTicketMessageCommand.Text))
-        return OperationResult.Error("Please Enter Ticket Text!");
+        return OperationResult<AddTicketReplyResponse>.Error("Please Enter Ticket Text!");
 
       var message = new TicketMessage()
       {
@@ -58,7 +60,16 @@ namespace TicketModule.Core.Services
       _ticketContext.Tickets.Update(ticket);
       await _ticketContext.SaveChangesAsync();
 
-      return OperationResult.Success();
+      var result = new AddTicketReplyResponse()
+      {
+        UserId = message.UserId,
+        Text = message.Text,
+        UserFullName = message.UserFullName,
+        CreateDateTime = message.CreationDate,
+        PersinaCreateDateTime = message.CreationDate.ToPersianDateTime()
+      };
+
+      return OperationResult<AddTicketReplyResponse>.Success(result);
     }
 
     public async Task<OperationResult> CloseTicket(Guid ticketId)

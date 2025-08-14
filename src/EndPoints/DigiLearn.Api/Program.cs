@@ -6,13 +6,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Shop.Api.Infrastructure;
+using TicketModule;
 using UserModule.Core;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers()
+   .AddJsonOptions(options =>
+   {
+     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+   })
     .ConfigureApiBehaviorOptions(option =>
     {
       option.InvalidModelStateResponseFactory = (context =>
@@ -34,6 +40,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
+  option.SchemaFilter<EnumSchemaFilter>();
   var jwtSecurityScheme = new OpenApiSecurityScheme
   {
     Scheme = "bearer",
@@ -58,9 +65,11 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.RegisterApiDependency(builder.Configuration);
 CommonBootstrapper.RegisterCommonApplication(builder.Services);
 builder.Services.InitUserModule(builder.Configuration);
+builder.Services.InitTicketModule(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();

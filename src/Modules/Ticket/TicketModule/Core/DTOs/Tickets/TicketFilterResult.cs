@@ -16,6 +16,7 @@ namespace TicketModule.Core.DTOs.Tickets
     public TicketStatus Status { get; set; }
     public TicketPriority Priority { get; set; }
     public DateTime CreationDate { get; set; }
+    public string PersianCreationDate { get; set; }
   }
 
   public class TicketFilterParams : BaseFilterParam
