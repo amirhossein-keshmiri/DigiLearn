@@ -61,8 +61,10 @@ namespace DigiLearn.Api.Controllers
           OwnerFullName = t.OwnerFullName,
           PersianCreationDate = t.CreationDate.ToPersianDate(),
           CreationDate = t.CreationDate,
-          Status = t.Status,
-          Priority = t.Priority
+          //Status = t.Status,
+          //Priority = t.Priority,
+          StatusName = t.Status.ToString(),
+          PriorityName = t.Priority.ToString(),
         }).ToList(),
         CurrentPage = result.CurrentPage,
         TotalPages = result.PageCount,
@@ -219,7 +221,7 @@ namespace DigiLearn.Api.Controllers
         return CommandResult(result);
       }
 
-      if (ticket.Status == TicketStatus.Closed)
+      if (ticket.Status.ToString() == TicketStatus.Closed.ToString())
       {
         var result = OperationResult.Error("Ticket is already closed.");
         return CommandResult(result);
@@ -273,13 +275,7 @@ namespace DigiLearn.Api.Controllers
         TicketID = t.Id.ToString().ToUpper().Substring(0, 8),
         Subject = t.Title,
         Priority = t.Priority.ToString(),
-        Status = t.Status switch
-        {
-          TicketStatus.Pending => "Pending",
-          TicketStatus.Answered => "Answered",
-          TicketStatus.Closed => "Closed",
-          _ => "Unknown"
-        },
+        Status = t.Status.ToString(),
         CreationDate = t.CreationDate.ToPersianDateTime()
       }).ToList();
 

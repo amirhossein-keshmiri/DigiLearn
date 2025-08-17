@@ -15,6 +15,8 @@ namespace TicketModule.Core.DTOs.Tickets
     public string OwnerFullName { get; set; }
     public TicketStatus Status { get; set; }
     public TicketPriority Priority { get; set; }
+    public string StatusName { get; set; }
+    public string PriorityName { get; set; }
     public DateTime CreationDate { get; set; }
     public string PersianCreationDate { get; set; }
   }

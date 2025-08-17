@@ -613,17 +613,19 @@
     function updateTicketTable(result) {
         const $tbody = $('table tbody');
         $tbody.empty();
+        // $tbody.empty(result);
 
         if (result.data && result.data.length > 0) {
+
             let counter = result.currentPage * result.take - result.take + 1;
             result.data.forEach(item => {
-                const statusBadge = getStatusBadge(item.status);
-                const priorityBadge = getPriorityBadge(item.priority);
+                const statusBadge = getStatusBadge(item.statusName);
+                const priorityBadge = getPriorityBadge(item.priorityName);
 
                 $tbody.append(`
                     <tr data-ticket-id="${item.id}">
                         <td><a href="javascript:void(0)" class="text-primary" onclick="loadTicketDetails('${item.id}')">#${counter++}</a></td>
-                        <td>${item.creationDate}</td>
+                        <td>${item.persianCreationDate}</td>
                         <td>${item.title}</td>
                         <td>${priorityBadge}</td>
                         <td>${statusBadge}</td>
@@ -709,7 +711,7 @@
         const url = new URL(window.location.href);
         // url.searchParams.set('filterParams.pageId', pageId); // ✅ lowercase
         url.searchParams.set('FilterParams.PageId', pageId); // Use consistent param name
-        console.log(pageId);
+
         window.history.replaceState({}, '', url.toString());
         await loadTickets(url.toString());
     }
@@ -765,7 +767,7 @@
     // console.log('loadTicketDetails is defined:', typeof loadTicketDetails !== 'undefined');
     function loadTicketDetails(ticketId) {
         currentTicketId = ticketId;
-        console.log(currentTicketId);
+        
         $.ajax({
             url: '?handler=TicketById',
             type: 'GET',
@@ -792,7 +794,7 @@
 
                     // ✅ Update other fields...
                     $('#detail-ticket-id').text('#' + t.id.substr(0,6).toUpperCase());
-                    $('#ticketCreationDate').text(t.creationDate);
+                    $('#ticketCreationDate').text(t.persianCreationDate);
                     $('#ticketTitle').text(t.title);
                     $('#ticketDescription').html(t.text);
 
@@ -816,7 +818,7 @@
                                     <div class="message-content">
                                         <div class="message-user-name">${msg.userFullName}</div>
                                         <div class="message-user-text">${msg.text}</div>
-                                        <div class="message-timestamp">${msg.creationDate}</div>
+                                        <div class="message-timestamp">${msg.persianCreationDate}</div>
                                     </div>
                                 </div>
                             `);
@@ -1025,7 +1027,7 @@
             },
             success: function (response) {
                 if (response.success) {
-                    console.log(response);
+                    
                     const newMessage = response.message;
                     const $msgContainer = $('#messages-container');
 

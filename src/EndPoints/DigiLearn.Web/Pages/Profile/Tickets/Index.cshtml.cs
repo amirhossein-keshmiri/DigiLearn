@@ -37,15 +37,6 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
     [BindProperty(SupportsGet = true)]
     public int PageId { get; set; } = 1;
 
-    public class FilterResultDto
-    {
-      public List<TicketFilterData> Data { get; set; }
-      public int CurrentPage { get; set; }
-      public int TotalPages { get; set; }
-      public long TotalCount { get; set; }
-      public int Take { get; set; } = 10;
-    }
-
     public async Task OnGet()
     {
       // Use PageId from query string
@@ -55,7 +46,6 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
       {
         UserId = User.GetUserId(),
         Take = int.TryParse(Request.Query["FilterParams.Take"], out var take) ? take : 10,
-        //Take = FilterParams.Take,
         PageId = FilterParams.PageId,
         Priority = TicketFilterParams?.Priority,
         Status = TicketFilterParams?.Status,
@@ -80,20 +70,22 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
       var dto = new
       {
         success = true,
-        filterResult = new
+        filterResult = new PagedResult<TicketFilterData>
         {
-          data = result.Data.Select(t => new
+          Data = result.Data.Select(t => new TicketFilterData
           {
-            id = t.Id,
-            title = t.Title,
-            creationDate = t.CreationDate.ToPersianDate(),
-            status = t.Status.ToString(),
-            priority = t.Priority.ToString()
+            Id = t.Id,
+            Title = t.Title,
+            CreationDate = t.CreationDate,
+            PersianCreationDate = t.CreationDate.ToPersianDate(),
+            StatusName = t.Status.ToString(),
+            PriorityName = t.Priority.ToString(),
+            OwnerFullName = t.OwnerFullName,
           }).ToList(),
-          currentPage = result.CurrentPage,
-          totalPages = result.PageCount,
-          totalCount = result.EntityCount,
-          take = result.Take
+          CurrentPage = result.CurrentPage,
+          TotalPages = result.PageCount,
+          TotalCount = result.EntityCount,
+          Take = result.Take
         }
       };
 
@@ -134,24 +126,25 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
       }
 
       // Map TicketDto to a simplified DTO for JSON serialization
-      var ticketDetails = new
+      var ticketDetails = new TicketDto
       {
         Id = ticket.Id,
         Title = ticket.Title,
         Text = ticket.Text,
-        CreationDate = ticket.CreationDate.ToPersianDateTime(),
+        CreationDate = ticket.CreationDate,
+        PersianCreationDate = ticket.CreationDate.ToPersianDateTime(),
         Priority = ticket.Priority.ToString(),
         Status = ticket.Status.ToString(),
-        Category = "Mailing Issues", // Replace with actual category logic
         Messages = ticket.Messages?
         .OrderBy(m => m.CreationDate)
-        .Select(m => new
+        .Select(m => new TicketMessageDto
         {
           UserId = m.UserId,
           UserFullName = m.UserFullName,
           Text = m.Text,
-          CreationDate = m.CreationDate.ToPersianDateTime()
-        }).ToList()
+          CreationDate = m.CreationDate,
+          PersianCreationDate = m.CreationDate.ToPersianDateTime()
+        }).ToList() ?? new List<TicketMessageDto>()
       };
 
       return new JsonResult(new { success = true, ticket = ticketDetails });
@@ -266,7 +259,7 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
       if (ticket == null || ticket.UserId != User.GetUserId())
         return new JsonResult(new { success = false, message = "Ticket not found or access denied." });
 
-      if (ticket.Status == TicketStatus.Closed)
+      if (ticket.Status.ToString() == TicketStatus.Closed.ToString())
       {
         return new JsonResult(new { success = false, message = "Ticket is already closed." });
       }
@@ -300,13 +293,7 @@ namespace DigiLearn.Web.Pages.Profile.Tickets
         TicketID = t.Id.ToString().ToUpper().Substring(0, 8),
         Subject = t.Title,
         Priority = t.Priority.ToString(),
-        Status = t.Status switch
-        {
-          TicketStatus.Pending => "Inprogress",
-          TicketStatus.Answered => "Opened",
-          TicketStatus.Closed => "Closed",
-          _ => "Unknown"
-        },
+        Status = t.Status.ToString(),
         CreationDate = t.CreationDate.ToPersianDateTime()
       }).ToList();
 

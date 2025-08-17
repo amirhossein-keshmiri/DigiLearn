@@ -1,6 +1,4 @@
-﻿using TicketModule.Data.Entities;
-
-namespace TicketModule.Core.DTOs.Tickets
+﻿namespace TicketModule.Core.DTOs.Tickets
 {
   public class TicketDto
   {
@@ -16,9 +14,13 @@ namespace TicketModule.Core.DTOs.Tickets
 
     public string Text { get; set; }
 
-    public TicketStatus Status { get; set; }
+    //public TicketStatus Status { get; set; }
 
-    public TicketPriority Priority { get; set; }
+    //public TicketPriority Priority { get; set; }
+
+    public string Status { get; set; }
+
+    public string Priority { get; set; }
 
     public DateTime CreationDate { get; set; }
     public string PersianCreationDate { get; set; }
