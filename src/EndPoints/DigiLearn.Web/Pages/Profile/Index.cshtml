@@ -169,6 +169,48 @@
     </div>
   </div>
   <div>
+    <div class="row">
+      <div class="col-xl-7">
+        <div class="card">
+          <div class="card-body">
+            <div class="page-title d-flex align-items-center justify-content-between">
+              <h5>New Notifications</h5>
+              <a asp-page="Notifications" class="fs-14 btn btn-sm btn-info d-inline-flex align-items-center">
+                <i class="isax isax-eye me-1"></i>Show All
+              </a>
+            </div>
+            @if (Model.NewNotifications.Any())
+            {
+              foreach (var item in Model.NewNotifications)
+              {
+                <div class="d-flex align-items-center justify-content-between flex-wrap row-gap-2 mb-3">
+                  <div>
+                    <h6 class="mb-1">@Model.Truncate(item.Title, 50)</h6>
+                    <div class="d-flex align-items-center">
+                      <p class="small">@Html.Raw(Model.Truncate(item.Text, 100))</p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <span class="badge fw-normal bg-success d-inline-flex align-items-center me-1"><i class="fa-solid fa-circle fs-5 me-1"></i>@item.PersianCreationDate</span>
+                    @* <span class="badge fw-normal bg-info d-inline-flex align-items-center me-1"><i class="fa-solid fa-circle fs-5 me-1"></i>Show</span> *@
+                  </div>
+                </div>
+              }
+            }
+            else
+            {
+              <div class="d-flex align-items-center justify-content-between flex-wrap row-gap-2 mb-3">
+                <div>
+                  <h6 class="mb-1">You Haven't New Notifications.</h6>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
 
     <div class="row">
       <div class="col-xl-7">

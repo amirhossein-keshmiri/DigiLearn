@@ -1,0 +1,866 @@
+﻿@page
+@model DigiLearn.Web.Pages.Profile.NotificationsModel
+@{
+  Layout = "Shared/_ProfileLayout";
+  ViewData["BreadcrumbTitle"] = "Notifications";
+  var counter = 1;
+}
+<div class="col-lg-9">
+  <div class="tickets">
+    <div class="d-flex align-items-center justify-content-between flex-wrap page-title">
+      <h5>Notifications</h5>
+      <div class="row align-items-center mb-2">
+        <div class="col-md-12">
+          <div class="d-flex align-items-center flex-wrap">
+
+            <div class="me-3">
+              <a href="javascript:void(0)" class="btn btn-secondary rounded-pill" onclick="deleteAllNotifications()"><i class="isax isax-add-circle me-2 fs-10"></i>Delete All</a>
+            </div>
+
+            <div>
+              <a href="javascript:void(0)" class="btn btn-success rounded-pill" onclick="seenAllNotifications()"><i class="isax isax-add-circle me-2 fs-10"></i>Read All</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center mb-2">
+      <div class="col-md-8">
+        <div class="d-flex align-items-center flex-wrap">
+
+          <!-- Take Per Page Filter -->
+          <div class="mb-3">
+            <div class="dropdown me-3">
+              <a href="javascript:void(0);" class="dropdown-toggle text-gray-6 btn rounded border d-inline-flex align-items-center"
+                 data-bs-toggle="dropdown" aria-expanded="false">
+                Show: <span id="takeFilterLabel">10</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" id="takeFilter">
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="10">10</a></li>
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="20">20</a></li>
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="30">30</a></li>
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="50">50</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- Status Filter -->
+          <div class="mb-3">
+            <div class="dropdown me-3">
+              <a href="javascript:void(0);"
+                 class="dropdown-toggle text-gray-6 btn rounded border d-inline-flex align-items-center"
+                 data-bs-toggle="dropdown"
+                 aria-expanded="false">
+                Status: <span id="statusFilterLabel">All</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" id="statusFilter">
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="">All</a></li>
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="false">New</a></li>
+                <li><a href="javascript:void(0);" class="dropdown-item" data-value="true">Read</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Clear Filter -->
+          <div class="mb-3">
+            <div class="me-3">
+              <a href="javascript:void(0)" class="btn btn-sm btn-secondary rounded-pill" onclick="clearFilters()">Clear Filters</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- Search Box -->
+      <div class="col-md-4">
+        <div class="input-icon mb-3">
+          <span class="input-icon-addon">
+            <i class="isax isax-search-normal-14"></i>
+          </span>
+          <input type="text" class="form-control form-control-md" id="searchInput" placeholder="Search By Title ...">
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive custom-table">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th>Notification ID</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (Model.FilterResult.EntityCount == 0)
+          {
+            <tr>
+              <td colspan="4">
+                <span>You Have No Notification.</span>
+              </td>
+            </tr>
+          }
+          @foreach (var item in Model.FilterResult.Data)
+          {
+            <tr data-notif-id="@item.Id">
+              <td>#@counter</td>
+              <td>
+                <p>@Model.Truncate(item.Title, 40)</p>
+                <p>@Model.Truncate(item.Text, 60)</p>
+              </td>
+              <td>
+                @if (item.IsSeen)
+                {
+                  <span class="badge badge-success">Read</span>
+                }
+                else
+                {
+                  <span class="badge badge-danger">New</span>
+                }
+              </td>
+              <td>@item.PersianCreationDate</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <a href="javascript:void(0)" class="d-inline-flex fs-14 me-1 action-icon"
+                     onclick="loadNotificationDetails('@item.Id')">
+                    <i class="isax isax-eye"></i>
+                  </a>
+                  @if (item.IsSeen == false)
+                  {
+                    @Html.AntiForgeryToken()
+                    <button type="button" class="btn btn-danger btn-sm rounded-pill me-2" id="readNotifBtn">
+                      <i class="isax isax-tick-circle"></i>
+                    </button>
+                  }
+
+                  <a href="#" class="d-inline-flex fs-14 action-icon" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="isax isax-trash"></i></a>
+                </div>
+              </td>
+            </tr>
+            counter += 1;
+          }
+        </tbody>
+      </table>
+    </div>
+    <div id="pagination-container">
+      <!-- Pagination will be injected here -->
+    </div>
+  </div>
+</div>
+
+<!-- Notification Details Modal -->
+<div class="modal fade" id="notification_details">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="d-inline-flex align-items-center">
+          Notification Details <span class="text-primary fs-14 ms-2" id="detail-notif-id">#Loading...</span>
+        </h5>
+        <div class="d-flex align-items-center justify-content-end">
+          <span class="badge badge-sm d-inline-flex align-items-center me-2" id="detail-status-badge">
+            <i class="fa-solid fa-circle fs-5 me-1"></i> <span id="detail-status-text">Loading...</span>
+          </span>
+
+          <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="isax isax-close-circle5"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="mb-3">
+              <h6 class="mb-1">Date</h6>
+              <p id="notifCreationDate">-</p>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <h6 class="mb-1">Title</h6>
+              <p id="notifTitle">-</p>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div>
+              <h6 class="mb-1">Text</h6>
+              <p id="notifDescription" class="ticket-description">-</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" id="readNotifFooter">
+        @Html.AntiForgeryToken()
+        <button type="button" class="btn btn-success btn-sm rounded-pill me-2" id="readNotifBtn">
+          <i class="isax isax-tick-circle"></i> Read Notification
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Notification Details Modal -->
+<!-- Delete Modal -->
+<div class="modal fade" id="delete_modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center custom-modal-body">
+        <span class="avatar avatar-lg bg-danger-transparent rounded-circle mb-2">
+          <i class="isax isax-trash fs-24 text-danger"></i>
+        </span>
+        <div>
+          <h4 class="mb-2">Delete Notification</h4>
+          <p class="mb-3">Are you sure you want to delete notification?</p>
+          <div class="d-flex align-items-center justify-content-center">
+            <a href="#" class="btn bg-gray-100 rounded-pill me-2" data-bs-dismiss="modal">Cancel</a>
+            <a href="#" class="btn btn-secondary rounded-pill" id="deleteNotifBtn">Yes, Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Delete Modal -->
+@section ProfileSectionMeta {
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
+}
+
+@section ProfileSectionScripts {
+  <!-- Select2 JS -->
+  <script src="/assets/plugins/select2/js/select2.min.js"></script>
+
+  <script>
+    // Global variable to track currentNotificationId for modal
+    let currentNotificationId = null;
+
+    // 🎨 Helper: Get Status Badge HTML
+    function getStatusBadge(seenStatus) {
+        let cls, text;
+        switch (seenStatus) {
+            case true:   cls = 'bg-success';  text = 'Read';     break;
+            case false:     cls = 'bg-danger'; text = 'New';     break;
+            default:           cls = 'bg-gray';    text = 'Unknown';    break;
+        }
+        return `<span class="badge badge-sm ${cls} d-inline-flex align-items-center" data-status="${text}">
+                    <i class="fa-solid fa-circle fs-5 me-1"></i>${text}
+                </span>`;
+    }
+
+    function updateNotifTable(result) {
+        const $tbody = $('table tbody');
+        $tbody.empty();
+
+        if (result.data && result.data.length > 0) {
+
+            let counter = result.currentPage * result.take - result.take + 1;
+            result.data.forEach(item => {
+                const seenStatusBadge = getStatusBadge(item.isSeen);
+
+                $tbody.append(`
+                    <tr data-notif-id="${item.id}">
+                        <td><a href="javascript:void(0)" class="text-primary" onclick="loadNotificationDetails('${item.id}')">#${counter++}</a></td>
+                        <td>${item.title}</td>
+                        <td>${seenStatusBadge}</td>
+                        <td>${item.persianCreationDate}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <a href="javascript:void(0)" class="d-inline-flex fs-14 me-1 action-icon" onclick="loadNotificationDetails('${item.id}')"><i class="isax isax-eye"></i></a>
+                                <a href="javascript:void(0)" class="d-inline-flex fs-14 me-1 action-icon seen-notification-btn" onclick="seenNotificationFromList('${item.id}')"><i class="isax isax-tick-circle"></i></a>
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:void(0)" class="d-inline-flex fs-14 action-icon" onclick="deleteNotificationFromList('${item.id}')"><i class="isax isax-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                `);
+
+                // ✅ Now hide/show the correct button in this row
+                const $row = $tbody.find(`tr[data-notif-id="${item.id}"]`);
+                const $btn = $row.find('.seen-notification-btn');
+
+                if (item.isSeen === true) {
+                    $btn.addClass('d-none');
+                } else {
+                    $btn.removeClass('d-none');
+                }
+
+            });
+
+            updatePagination(result);
+        } else {
+            $tbody.append('<tr><td colspan="6" class="text-center">You Have No Notification</td></tr>');
+        }
+    }
+
+    function updatePagination(result) {
+        const $container = $('#pagination-container');
+        $container.empty();
+
+        if (result.totalPages <= 1) return;
+
+        const totalPages = result.totalPages;
+        const currentPage = result.currentPage;
+
+        let html = `
+            <div class="row align-items-center mt-4">
+                <div class="col-md-2">
+                    <p class="pagination-text">Page ${currentPage} of ${totalPages}</p>
+                </div>
+                <div class="col-md-10">
+                    <ul class="pagination lms-page justify-content-center justify-content-md-end mt-2 mt-md-0">
+        `;
+
+        // Prev
+        if (currentPage > 1) {
+            html += `
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" onclick="changePageAjax(${currentPage - 1})">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+            `;
+        }
+
+        // Pages
+        const start = Math.max(1, currentPage - 2);
+        const end = Math.min(totalPages, currentPage + 2);
+
+        for (let i = start; i <= end; i++) {
+            if (i === currentPage) {
+                html += `<li class="page-item active"><a class="page-link" href="javascript:void(0)">${i}</a></li>`;
+            } else {
+                html += `<li class="page-item"><a class="page-link" href="javascript:void(0)" onclick="changePageAjax(${i})">${i}</a></li>`;
+            }
+        }
+
+        // Next
+        if (currentPage < totalPages) {
+            html += `
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" onclick="changePageAjax(${currentPage + 1})">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+            `;
+        }
+
+        html += `
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        $container.html(html);
+    }
+
+    // 🔢 Change Page (AJAX version)
+    async function changePageAjax(pageId) {
+        const url = new URL(window.location.href);
+
+        url.searchParams.set('FilterParams.PageId', pageId); // Use consistent param name
+
+        window.history.replaceState({}, '', url.toString());
+        await loadNotification(url.toString());
+    }
+
+    // 📦 Load Notification via AJAX
+    async function loadNotification(url) {
+        try {
+            const response = await fetch(url + (url.includes('?') ? '&' : '?') + 'handler=Filter');
+            const data = await response.json();
+
+            if (data.success) {
+                updateNotifTable(data.filterResult);
+                updatePagination(data.filterResult);
+            } else {
+                ErrorAlert("Error", "Failed to load notifications.");
+            }
+        } catch (err) {
+            console.error("Fetch error:", err);
+            ErrorAlert("Error", "Network error.");
+        }
+    }
+
+    // 🔁 Apply Filters: Update URL + Load Data
+    async function applyFilters() {
+        const isSeen = $('#statusFilter .dropdown-item.active').data('value'); // "true", "false", or undefined
+        const title = $('#searchInput').val().trim();
+        const take = $('#takeFilter .dropdown-item.active').data('value') || '10'; // Default: 10
+
+        // Build URL
+        const url = new URL(window.location.href);
+        const params = url.searchParams;
+
+        // ✅ Set IsSeen filter (convert "true"/"false" string to boolean or remove)
+        if (isSeen === true) {
+            params.set('NotificationFilterParams.IsSeen', 'true');
+        } else if (isSeen === false) {
+            params.set('NotificationFilterParams.IsSeen', 'false');
+        } else {
+            params.delete('NotificationFilterParams.IsSeen');
+        }
+
+        // Update all filters
+        if (title) params.set('NotificationFilterParams.Title', title); else params.delete('NotificationFilterParams.Title');
+
+        // Always reset to page 1 on filter change
+        params.set('FilterParams.Take', take); // ✅ Set items per page
+        params.set('FilterParams.PageId', 1);
+
+        // Update browser URL
+        const newUrl = url.toString();
+        window.history.replaceState({}, '', newUrl);
+
+        // Load filtered data
+        await loadNotification(newUrl);
+    }
+
+  </script>
+
+  <script>
+     function loadNotificationDetails(notificationId) {
+       console.log(notificationId);
+         currentNotificationId = notificationId;
+
+         $.ajax({
+             url: '?handler=NotificationById',
+             type: 'GET',
+             data: { notificationId: notificationId },
+             dataType: 'json',
+             beforeSend: function () {
+                 $('#detail-notif-id').text('#Loading...');
+                 $('#notifCreationDate').text('-');
+                 $('#notifTitle').text('-');
+                 $('#notifDescription').text('-');
+             },
+             success: function (response) {
+               console.log(response);
+                 if (response.success) {
+                     const t = response.notification;
+
+                     // ✅ Update status badge
+                     $('#detail-status-text').text(getStatusText(t.isSeen));
+                        console.log(getStatusText(t.isSeen));
+                     $('#detail-status-badge')
+                         .removeClass('bg-warning bg-purple bg-success bg-danger')
+                         .addClass(getStatusClass(t.isSeen))
+                          .html(`<i class="fa-solid fa-circle fs-5 me-1"></i> ${getStatusText(t.isSeen)}`);
+
+                     // ✅ Update other fields...
+                     $('#detail-notif-id').text('#' + t.id.substr(0,6).toUpperCase());
+                     $('#notifCreationDate').text(t.persianCreationDate);
+                     $('#notifTitle').text(t.title);
+                     $('#notifDescription').html(t.text);
+
+                     // ✅ Show/hide Read button
+                     if (getStatusText(t.isSeen) === 'Read') {
+                         $('#readNotifFooter').addClass('d-none');
+                     } else {
+                         $('#readNotifFooter').removeClass('d-none');
+                     }
+
+                     // ✅ Show modal
+                     var modal = new bootstrap.Modal($('#notification_details'));
+                     modal.show();
+                 } else {
+                     ErrorAlert("Notification Not Found", "Could not load notification details.");
+                 }
+             },
+             error: function () {
+                 ErrorAlert("Error", "Failed to load notification data.");
+             }
+         });
+     }
+
+      // Handle Read Notification button click
+     $(document).on('click', '#readNotifBtn', function () {
+         const notificationId = currentNotificationId;
+         console.log(notificationId);
+         console.log(currentNotificationId);
+         if (!notificationId) return;
+
+         Swal.fire({
+             title: "Read Notification?",
+             text: "Are you sure you want to Mark this Notification As Read?",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonText: "Yes, Read It",
+             cancelButtonText: "Cancel",
+             reverseButtons: true
+         }).then(async (result) => {
+             if (result.isConfirmed) {
+               $('#readNotifBtn').prop('disabled', true).text('Read...');
+
+                 try {
+                     const token = $('input[name="__RequestVerificationToken"]').val();
+                     console.log(token);
+                     const res = await $.ajax({
+                         url: '?handler=SeenNotification',
+                         type: 'POST',
+                         data: {
+                             notificationId: notificationId,
+                             __RequestVerificationToken: token
+                         }
+                     });
+
+                     if (res.success) {
+                         // ✅ Update UI: change status to Read
+                         $('#detail-status-text').text('Read');
+                         $('#detail-status-badge')
+                             .removeClass('bg-success bg-warning bg-danger')
+                             .addClass(getStatusClass(true))
+                             .html('<i class="fa-solid fa-circle fs-5 me-1"></i> Read');
+
+                         // Hide Read Notification button
+                         $('#readNotifFooter').addClass('d-none');
+
+                         // ✅ Update main table
+
+                         $(`tr[data-notif-id="${notificationId}"] .seen-notification-btn`).addClass('d-none'); // ✅ Hide only this row's read button
+                         const $notificationRow = $(`tr[data-notif-id="${notificationId}"]`);
+
+                          // ✅ Update badge dynamically
+                          const $statusBadge = $notificationRow.find('.badge[data-status]');
+                          $statusBadge.removeClass('bg-gray bg-warning bg-success bg-danger')
+                                  .addClass(getStatusClass(true))
+                                  .html('<i class="fa-solid fa-circle fs-5 me-1"></i> Read');
+
+                          Success("Notification Read", "The notification has been successfully Read.");
+                     } else {
+                         ErrorAlert("Failed", res.message || "Could not read the notification.");
+                     }
+                 } catch (err) {
+                     console.error("Read notification error:", err);
+                     ErrorAlert("Error", "Failed to read notification. Please try again.");
+                 } finally {
+                     $('#readNotifBtn').prop('disabled', false).text('Read Notification');
+                 }
+             }
+         });
+     });
+
+     let notifId = null;
+
+     // Handle Read Notification From List
+     function seenNotificationFromList(notificationId) {
+         notifId = notificationId;
+
+         if (!notifId) return;
+
+         Swal.fire({
+             title: "Read Notification?",
+             text: "Are you sure you want to Mark this Notification As Read?",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonText: "Yes, Read It",
+             cancelButtonText: "Cancel",
+             reverseButtons: true
+             }).then(async (result) => {
+             if (result.isConfirmed) {
+
+                 try {
+                     const token = $('input[name="__RequestVerificationToken"]').val();
+                     console.log(token);
+                     const res = await $.ajax({
+                         url: '?handler=SeenNotification',
+                         type: 'POST',
+                         data: {
+                             notificationId: notifId,
+                             __RequestVerificationToken: token
+                         }
+                     });
+
+                     if (res.success) {
+
+                      // ✅ Hide only this row's button
+                      $(`tr[data-notif-id="${notificationId}"] .seen-notification-btn`).addClass('d-none');
+
+                      // ✅ Update main table
+                      const $notificationRow = $(`tr[data-notif-id="${notifId}"]`);
+
+                      // ✅ Update badge dynamically
+                      const $statusBadge = $notificationRow.find('.badge[data-status]');
+                      $statusBadge.removeClass('bg-gray bg-warning bg-success bg-danger')
+                                  .addClass(getStatusClass(true))
+                                  .html('<i class="fa-solid fa-circle fs-5 me-1"></i> Read');
+
+                      Success("Notification Read", "The notification has been successfully Read.");
+                     } else {
+                         ErrorAlert("Failed", res.message || "Could not read the notification.");
+                     }
+                 } catch (err) {
+                     console.error("Read notification error:", err);
+                     ErrorAlert("Error", "Failed to read notification. Please try again.");
+                 }
+             }
+         });
+     };
+
+     // Handle delete Notification From List
+     function deleteNotificationFromList(notificationId) {
+         notifId = notificationId;
+         console.log(notifId);
+
+         if (!notifId) return;
+
+         Swal.fire({
+             title: "Delete Notification?",
+             text: "Are you sure you want to Delete this Notification?",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonText: "Yes, Delete It",
+             cancelButtonText: "Cancel",
+             reverseButtons: true
+         }).then(async (result) => {
+             if (result.isConfirmed) {
+
+                 try {
+                     const token = $('input[name="__RequestVerificationToken"]').val();
+                     console.log(token);
+                     const res = await $.ajax({
+                         url: '?handler=DeleteNotification',
+                         type: 'POST',
+                         data: {
+                             id: notifId,
+                             __RequestVerificationToken: token
+                         }
+                     });
+
+                     if (res.success) {
+                      const url = new URL(window.location.href);
+                      const newUrl = url.toString();
+                      window.history.replaceState({}, '', newUrl);
+
+                      // Load filtered data
+                      await loadNotification(newUrl);
+
+                      Success("Notification Deleted", "The notification has been successfully deleted.");
+                     } else {
+                         ErrorAlert("Failed", res.message || "Could not delete the notification.");
+                     }
+                 } catch (err) {
+                     console.error("Delete notification error:", err);
+                     ErrorAlert("Error", "Failed to delete notification. Please try again.");
+                 }
+             }
+         });
+     };
+
+     // Handle delete all Notifications
+     function deleteAllNotifications() {
+
+         Swal.fire({
+             title: "Delete All Notifications?",
+             text: "Are you sure you want to Delete All Notifications?",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonText: "Yes, Delete All",
+             cancelButtonText: "Cancel",
+             reverseButtons: true
+         }).then(async (result) => {
+             if (result.isConfirmed) {
+
+                 try {
+                     const token = $('input[name="__RequestVerificationToken"]').val();
+                     console.log(token);
+                     const res = await $.ajax({
+                         url: '?handler=DeleteAll',
+                         type: 'POST',
+                         data: {
+                             __RequestVerificationToken: token
+                         }
+                     });
+
+                     if (res.success) {
+                      const url = new URL(window.location.href);
+                      const newUrl = url.toString();
+                      window.history.replaceState({}, '', newUrl);
+
+                      // Load filtered data
+                      await loadNotification(newUrl);
+
+                      Success("Notifications Deleted", "All notifications has been successfully deleted.");
+                     } else {
+                         ErrorAlert("Failed", res.message || "Could not delete the notifications.");
+                     }
+                 } catch (err) {
+                     console.error("Delete notifications error:", err);
+                     ErrorAlert("Error", "Failed to delete notifications. Please try again.");
+                 }
+             }
+         });
+     };
+
+     // Handle Read All Notifications
+     function seenAllNotifications() {
+        Swal.fire({
+            title: "Read All Notifications?",
+            text: "Are you sure you want to mark all notifications as read?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Read All",
+            cancelButtonText: "Cancel",
+            reverseButtons: true,
+            preConfirm: () => {
+                // Disable button during request
+                const btn = document.querySelector('[onclick="seenAllNotifications()"]');
+                if (btn) btn.disabled = true;
+
+                const token = $('input[name="__RequestVerificationToken"]').val();
+
+                return $.ajax({
+                    url: '?handler=SeenAll',
+                    type: 'POST',
+                    data: {
+                        __RequestVerificationToken: token
+                    }
+                }).then(response => {
+                    if (!response.success) {
+                        Swal.showValidationMessage(response.message || "Could not mark all as read.");
+                    }
+                    return response;
+                }).catch(err => {
+                    console.error("Read all error:", err);
+                    Swal.showValidationMessage("Request failed. Please try again.");
+                });
+            }
+        }).then(async (result) => {
+            const btn = document.querySelector('[onclick="seenAllNotifications()"]');
+            if (btn) btn.disabled = false;
+
+            if (result.isConfirmed) {
+                const res = result.value;
+
+                if (res.success) {
+                    // ✅ Update all notification badges in the table
+                    $('tr[data-notif-id] .badge[data-status]')
+                        .removeClass('bg-gray bg-warning bg-success bg-danger')
+                        .addClass(getStatusClass(true))
+                        .html('<i class="fa-solid fa-circle fs-5 me-1"></i> Read');
+
+                    // ✅ Refresh data (optional, if want to reload filtered list)
+                    const url = new URL(window.location.href);
+                    await loadNotification(url.toString());
+
+                    Success("All Notifications Read", "All notifications have been marked as read.");
+                } else {
+                    ErrorAlert("Failed", res.message || "Could not mark all notifications as read.");
+                }
+            }
+        });
+    }
+
+     // Helper: Get status class
+     function getStatusClass(status) {
+         switch (status) {
+             case true: return 'bg-success';
+             case false: return 'bg-danger';
+             default: return 'bg-gray';
+         }
+     }
+
+    // Helper: Get status Text
+     function getStatusText(status) {
+         switch (status) {
+             case true: return 'Read';
+             case false: return 'New';
+             default: return 'bg-gray';
+         }
+     }
+
+     // Reset on close
+     $('#notification_details').on('hidden.bs.modal', function () {
+         currentNotificationId = null;
+
+         // Remove any "notification read" message
+         $('.text-muted:contains("closed")').remove();
+         $('.closed-notice').remove(); // Remove closed notice
+
+         // Reset badges
+         $('#detail-status-badge').removeClass('bg-warning bg-danger bg-success').addClass('bg-gray');
+     });
+  </script>
+
+  <script>
+    $(function () {
+        // Update Status Label
+        $('#statusFilter .dropdown-item').on('click', function () {
+            $('#statusFilter .dropdown-item').removeClass('active');
+            $(this).addClass('active');
+
+            const value = $(this).data('value');
+            const label = value === true ? 'Read' :
+                     value === false ? 'New' : 'All';
+            $('#statusFilterLabel').text(label);
+
+            // Trigger filter
+            applyFilters();
+        });
+
+        // Apply filters on search
+        $('#searchInput').on('input', function () {
+            applyFilters();
+        });
+
+        // Handle "Take" (items per page) selection
+        $('#takeFilter .dropdown-item').on('click', function () {
+            $('#takeFilter .dropdown-item').removeClass('active');
+            $(this).addClass('active');
+
+            const value = $(this).data('value');
+            $('#takeFilterLabel').text(value); // Update label
+
+            applyFilters(); // Re-apply filters with new take
+        });
+
+        // Set initial active class from URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const isSeen = urlParams.get('NotificationFilterParams.IsSeen');
+        const title = urlParams.get('NotificationFilterParams.Title');
+
+        // Restore Status
+        if (isSeen !== null) {
+        $('#statusFilter .dropdown-item[data-value="' + isSeen + '"]').addClass('active');
+        $('#statusFilterLabel').text(isSeen === 'true' ? 'Read' : isSeen === 'false' ? 'New' : 'All');
+        }
+
+        // Restore Search
+        if (title) {
+            $('#searchInput').val(title);
+        }
+
+        // Initialize Take
+        const take = urlParams.get('FilterParams.Take') || '10';
+        $('#takeFilter .dropdown-item[data-value="' + take + '"]').addClass('active');
+        $('#takeFilterLabel').text(take);
+
+        // Initial load
+        applyFilters();
+    });
+  </script>
+
+  <script>
+        function clearFilters() {
+        $('#statusFilter .dropdown-item').removeClass('active');
+        $('#statusFilterLabel').text('All');
+        $('#searchInput').val('');
+
+        const url = new URL(window.location.href);
+        url.searchParams.delete('NotificationFilterParams.IsSeen');
+        url.searchParams.delete('NotificationFilterParams.Title');
+        url.searchParams.set('FilterParams.PageId', 1);
+
+        window.history.replaceState({}, '', url.toString());
+        loadNotification(url.toString());
+    }
+  </script>
+}
+
+@section Scripts {
+
+  <!-- Validation -->
+  <script src="/assets/js/validation.js" type="text/javascript"></script>
+
+  <!-- Validation Scripts Partial -->
+  <partial name="_ValidationScriptsPartial" />
+}

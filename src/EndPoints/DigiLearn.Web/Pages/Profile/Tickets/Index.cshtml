@@ -439,7 +439,8 @@
       </div>
     </div>
   </div>
-  <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" />
+  @Html.AntiForgeryToken()
+  @* <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken()" /> *@
 </div>
 <!-- /Ticket Details Modal -->
 <!-- Delete Modal -->
@@ -880,7 +881,7 @@
 
                 try {
                     const token = $('input[name="__RequestVerificationToken"]').val();
-
+                    console.log(token);
                     const res = await $.ajax({
                         url: '?handler=CloseTicket',
                         type: 'POST',

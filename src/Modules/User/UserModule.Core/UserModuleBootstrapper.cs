@@ -19,7 +19,10 @@ namespace UserModule.Core
       });
 
       services.AddMediatR(typeof(UserModuleBootstrapper).Assembly);
+
       services.AddScoped<IUserFacade, UserFacade>();
+      services.AddScoped<INotificationFacade, NotificationFacade>();
+
       services.AddAutoMapper(typeof(UserModuleBootstrapper).Assembly);
       services.AddValidatorsFromAssembly(typeof(RegisterUserCommandValidator).Assembly);
 
