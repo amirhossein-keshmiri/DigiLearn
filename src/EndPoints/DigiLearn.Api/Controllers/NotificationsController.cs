@@ -1,4 +1,5 @@
 ﻿using Common.Application;
+using Common.Application.DateUtil;
 using DigiLearn.Api.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,7 @@ namespace DigiLearn.Api.Controllers
         Data = result.Data.Select(t => new NotificationFilterData
         {
           Id = t.Id,
+          UserId = t.UserId,
           Title = t.Title,
           Text = t.Text,
           IsSeen = t.IsSeen,
@@ -71,17 +73,18 @@ namespace DigiLearn.Api.Controllers
       var dto = new NotificationDto
       {
         Id = notification.Id,
+        UserId = notification.UserId,
         Title = notification.Title,
         Text = notification.Text,
         CreationDate = notification.CreationDate,
-        PersianCreationDate = notification.PersianCreationDate,
+        PersianCreationDate = notification.CreationDate.ToPersianDateTime(),
         IsSeen = notification.IsSeen
       };
 
       return QueryResult(dto);
     }
 
-    [HttpPost("{notificationId:guid}/delete")]
+    [HttpDelete("{notificationId:guid}/delete")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(401)]
@@ -113,7 +116,7 @@ namespace DigiLearn.Api.Controllers
       }
     }
 
-    [HttpPost("/deleteAll")]
+    [HttpDelete("/deleteAll")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(401)]
