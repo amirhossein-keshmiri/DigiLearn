@@ -4,7 +4,6 @@ using DigiLearn.Web.Infrastructure;
 using DigiLearn.Web.Infrastructure.RazorUtils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TicketModule.Core.DTOs.Tickets;
 using UserModule.Core.Commands.Notifications.Delete;
 using UserModule.Core.Commands.Notifications.DeleteAll;
 using UserModule.Core.Commands.Notifications.Seen;
