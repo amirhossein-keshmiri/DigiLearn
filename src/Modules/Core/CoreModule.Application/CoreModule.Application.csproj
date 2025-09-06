@@ -7,9 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Teachers\AcceptRequest\" />
-    <Folder Include="Teachers\RejectRequest\" />
-    <Folder Include="Teachers\Register\" />
+    <Folder Include="Categories\Create\" />
+    <Folder Include="Categories\Edit\" />
+    <Folder Include="Categories\Delete\" />
+    <Folder Include="Courses\Create\" />
+    <Folder Include="Courses\Edit\" />
+    <Folder Include="Courses\Episodes\AddEpisode\" />
+    <Folder Include="Courses\Episodes\EditEpisode\" />
+    <Folder Include="Courses\Episodes\DeleteEpisode\" />
+    <Folder Include="Courses\Episodes\AcceptEpisode\" />
+    <Folder Include="Courses\Sections\AddSection\" />
+    <Folder Include="Courses\Sections\EditSection\" />
+    <Folder Include="Courses\Sections\DeleteSection\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\CoreModule.Domain\CoreModule.Domain.csproj" />
   </ItemGroup>
 
 </Project>
