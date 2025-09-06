@@ -32,7 +32,6 @@ namespace CoreModule.Domain.Courses.Models
 
       Sections = new();
     }
-
     public Guid TeacherId { get; private set; }
     public Guid CategoryId { get; private set; }
     public Guid SubCategoryId { get; private set; }
@@ -50,6 +49,30 @@ namespace CoreModule.Domain.Courses.Models
 
     public List<Section> Sections { get; private set; }
 
+    public void Edit(string title, string description, string imageName, string? videoName, int price,
+        SeoData seoData, CourseLevel courseLevel, CourseStatus status, Guid categoryId, Guid subCategoryId, string slug,
+        ICourseDomainService domainService)
+    {
+      Guard(title, description, imageName, slug);
+
+      if (Slug != slug)
+        if (domainService.SlugIsExist(slug))
+          throw new InvalidDomainDataException("Slug is Exist");
+
+      Title = title;
+      Description = description;
+      ImageName = imageName;
+      VideoName = videoName;
+      Price = price;
+      LastUpdate = DateTime.Now;
+      SeoData = seoData;
+      CourseLevel = courseLevel;
+      CategoryId = categoryId;
+      SubCategoryId = subCategoryId;
+      Slug = slug;
+      CourseStatus = status;
+    }
+
     public void AddSection(int displayOrder, string title)
     {
       if (Sections.Any(f => f.Title == title))
@@ -59,24 +82,27 @@ namespace CoreModule.Domain.Courses.Models
     }
     public void EditSection(Guid sectionId, int displayOrder, string title)
     {
-      var section = Sections.FirstOrDefault(f => f.Id == sectionId);
-      if (section == null) throw new InvalidDomainDataException("Section NotFound");
+      //var section = Sections.FirstOrDefault(f => f.Id == sectionId);
+      //if (section == null) throw new InvalidDomainDataException("Section NotFound");
 
+      var section = Sections.FirstOrDefault(f => f.Id == sectionId) ?? throw new InvalidDomainDataException("Section NotFound");
       section.Edit(displayOrder, title);
     }
     public void RemoveSection(Guid sectionId)
     {
-      var section = Sections.FirstOrDefault(f => f.Id == sectionId);
-      if (section == null) throw new InvalidDomainDataException("Section NotFound");
+      //var section = Sections.FirstOrDefault(f => f.Id == sectionId);
+      //if (section == null) throw new InvalidDomainDataException("Section NotFound");
 
+      var section = Sections.FirstOrDefault(f => f.Id == sectionId) ?? throw new InvalidDomainDataException("Section NotFound");
       Sections.Remove(section);
     }
 
     public Episode AddEpisode(Guid sectionId, string title, string englishTitle, Guid token, TimeSpan timeSpan, string videoExtension, string? attachmentExtension, bool isActive)
     {
-      var section = Sections.FirstOrDefault(f => f.Id == sectionId);
-      if (section == null) throw new InvalidDomainDataException("Section NotFound");
+      //var section = Sections.FirstOrDefault(f => f.Id == sectionId);
+      //if (section == null) throw new InvalidDomainDataException("Section NotFound");
 
+      var section = Sections.FirstOrDefault(f => f.Id == sectionId) ?? throw new InvalidDomainDataException("Section NotFound");
       var episodeCount = Sections.Sum(s => s.Episodes.Count());
       var episodeTitle = $"{episodeCount + 1}_{englishTitle}";
 
@@ -99,10 +125,11 @@ namespace CoreModule.Domain.Courses.Models
     }
     public void AcceptEpisode(Guid episodeId)
     {
-      var section = Sections.FirstOrDefault(f => f.Episodes.Any(e => e.Id == episodeId && e.IsActive == false));
-      if (section == null)
-        throw new InvalidDomainDataException();
+      //var section = Sections.FirstOrDefault(f => f.Episodes.Any(e => e.Id == episodeId && e.IsActive == false));
+      //if (section == null)
+      //  throw new InvalidDomainDataException();
 
+      var section = Sections.FirstOrDefault(f => f.Episodes.Any(e => e.Id == episodeId && e.IsActive == false)) ?? throw new InvalidDomainDataException();
       var episode = section.Episodes.First(f => f.Id == episodeId);
 
       episode.ToggleStatus();
