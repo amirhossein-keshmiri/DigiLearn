@@ -1,4 +1,4 @@
-﻿namespace CoreModule.Domain.Teacher.Enums
+﻿namespace CoreModule.Domain.Teachers.Enums
 {
   public enum TeacherStatus
   {

@@ -1,7 +1,7 @@
 ﻿using Common.Domain.Repository;
-using CoreModule.Domain.Category.Models;
+using CoreModule.Domain.Categories.Models;
 
-namespace CoreModule.Domain.Category.Repositories
+namespace CoreModule.Domain.Categories.Repositories
 {
   public interface ICourseCategoryRepository : IBaseRepository<CourseCategory>
   {

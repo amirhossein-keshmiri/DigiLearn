@@ -1,7 +1,7 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
 
-namespace CoreModule.Domain.Course.Models
+namespace CoreModule.Domain.Courses.Models
 {
   public class Section : BaseEntity
   {

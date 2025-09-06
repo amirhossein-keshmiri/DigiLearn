@@ -1,10 +1,10 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
 using Common.Domain.ValueObjects;
-using CoreModule.Domain.Course.DomainServices;
-using CoreModule.Domain.Course.Enums;
+using CoreModule.Domain.Courses.DomainServices;
+using CoreModule.Domain.Courses.Enums;
 
-namespace CoreModule.Domain.Course.Models
+namespace CoreModule.Domain.Courses.Models
 {
   public class Course : AggregateRoot
   {

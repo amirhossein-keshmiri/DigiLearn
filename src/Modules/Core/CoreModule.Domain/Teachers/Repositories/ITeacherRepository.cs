@@ -1,6 +1,6 @@
 ﻿using Common.Domain.Repository;
 
-namespace CoreModule.Domain.Teacher.Repositories
+namespace CoreModule.Domain.Teachers.Repositories
 {
   public interface ITeacherRepository : IBaseRepository<Models.Teacher>
   {

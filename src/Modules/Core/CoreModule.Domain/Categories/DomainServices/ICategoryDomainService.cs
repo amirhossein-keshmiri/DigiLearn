@@ -1,4 +1,4 @@
-﻿namespace CoreModule.Domain.Category.DomainServices
+﻿namespace CoreModule.Domain.Categories.DomainServices
 {
   public interface ICategoryDomainService
   {

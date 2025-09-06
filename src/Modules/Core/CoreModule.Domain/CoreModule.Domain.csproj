@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Course\Events\" />
-    <Folder Include="Course\Exceptions\" />
+    <Folder Include="Courses\Events\" />
+    <Folder Include="Courses\Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>

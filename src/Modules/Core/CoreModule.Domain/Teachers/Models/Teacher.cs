@@ -1,10 +1,10 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
 using Common.Domain.Utils;
-using CoreModule.Domain.Teacher.DomainServices;
-using CoreModule.Domain.Teacher.Enums;
+using CoreModule.Domain.Teachers.DomainServices;
+using CoreModule.Domain.Teachers.Enums;
 
-namespace CoreModule.Domain.Teacher.Models
+namespace CoreModule.Domain.Teachers.Models
 {
   public class Teacher : AggregateRoot
   {
