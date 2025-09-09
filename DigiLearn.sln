@@ -51,6 +51,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreModule.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreModule.Query", "src\Modules\Core\CoreModule.Query\CoreModule.Query.csproj", "{7E93F8AA-A693-4BE4-A92F-1CD5EC8C5E59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreModule.Facade", "src\Modules\Core\CoreModule.Facade\CoreModule.Facade.csproj", "{6436194E-6521-4D9D-8678-75BBBDC55B0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreModule.Config", "src\Modules\Core\CoreModule.Config\CoreModule.Config.csproj", "{0836BE9C-F81A-4C6F-A379-76C6759DEC40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +121,14 @@ Global
 		{7E93F8AA-A693-4BE4-A92F-1CD5EC8C5E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E93F8AA-A693-4BE4-A92F-1CD5EC8C5E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E93F8AA-A693-4BE4-A92F-1CD5EC8C5E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6436194E-6521-4D9D-8678-75BBBDC55B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6436194E-6521-4D9D-8678-75BBBDC55B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6436194E-6521-4D9D-8678-75BBBDC55B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6436194E-6521-4D9D-8678-75BBBDC55B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0836BE9C-F81A-4C6F-A379-76C6759DEC40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0836BE9C-F81A-4C6F-A379-76C6759DEC40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0836BE9C-F81A-4C6F-A379-76C6759DEC40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0836BE9C-F81A-4C6F-A379-76C6759DEC40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,5 +156,7 @@ Global
 		{9959E93B-0490-4997-9168-E977D946F944} = {43CDEABB-A4DB-417A-A3D3-757726713D53}
 		{7F9DC17A-FC74-4D28-854C-5CBA4D77C215} = {43CDEABB-A4DB-417A-A3D3-757726713D53}
 		{7E93F8AA-A693-4BE4-A92F-1CD5EC8C5E59} = {43CDEABB-A4DB-417A-A3D3-757726713D53}
+		{6436194E-6521-4D9D-8678-75BBBDC55B0B} = {43CDEABB-A4DB-417A-A3D3-757726713D53}
+		{0836BE9C-F81A-4C6F-A379-76C6759DEC40} = {43CDEABB-A4DB-417A-A3D3-757726713D53}
 	EndGlobalSection
 EndGlobal

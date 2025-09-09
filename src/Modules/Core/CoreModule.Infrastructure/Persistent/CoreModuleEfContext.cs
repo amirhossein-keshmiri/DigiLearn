@@ -2,6 +2,7 @@
 using CoreModule.Domain.Categories.Models;
 using CoreModule.Domain.Courses.Models;
 using CoreModule.Domain.Teachers.Models;
+using CoreModule.Infrastructure.Persistent.Courses;
 using CoreModule.Infrastructure.Persistent.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace CoreModule.Infrastructure.Persistent
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.HasDefaultSchema("dbo");
+      modelBuilder.ApplyConfigurationsFromAssembly(typeof(CourseConfig).Assembly);
       base.OnModelCreating(modelBuilder);
     }
   }

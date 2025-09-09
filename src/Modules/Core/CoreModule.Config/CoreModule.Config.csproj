@@ -7,17 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Common.Query\Common.Query.csproj" />
-    <ProjectReference Include="..\CoreModule.Domain\CoreModule.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Teachers\GetByFilter\" />
+    <ProjectReference Include="..\CoreModule.Facade\CoreModule.Facade.csproj" />
+    <ProjectReference Include="..\CoreModule.Infrastructure\CoreModule.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
