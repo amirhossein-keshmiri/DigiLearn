@@ -8,6 +8,10 @@ namespace CoreModule.Domain.Courses.Models
 {
   public class Course : AggregateRoot
   {
+    private Course()
+    {
+      
+    }
     public Course(Guid teacherId, Guid categoryId, Guid subCategoryId, string title, string slug, string description, string imageName, string? videoName, int price,
                   SeoData seoData, CourseLevel courseLevel, ICourseDomainService domainService)
     {

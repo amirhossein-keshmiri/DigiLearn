@@ -8,6 +8,10 @@ namespace CoreModule.Domain.Teachers.Models
 {
   public class Teacher : AggregateRoot
   {
+    private Teacher()
+    {
+      
+    }
     public Teacher(Guid userId, string userName, string cvFileName, ITeacherDomainService domainService)
     {
       Guard(userName, cvFileName);
@@ -19,7 +23,7 @@ namespace CoreModule.Domain.Teachers.Models
         throw new InvalidDomainDataException("UserName Is Exist");
 
       UserId = userId;
-      UserName = userName;
+      UserName = userName.ToLower();
       CvFileName = cvFileName;
       Status = TeacherStatus.Pending;
     }

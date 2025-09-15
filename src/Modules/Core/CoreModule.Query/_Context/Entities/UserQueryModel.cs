@@ -18,7 +18,7 @@ namespace CoreModule.Query._Context.Entities
 
     [MaxLength(110)]
 
-    public string Avatar { get; set; }
+    public string? Avatar { get; set; }
 
     [MaxLength(110)]
     public string? Email { get; set; }

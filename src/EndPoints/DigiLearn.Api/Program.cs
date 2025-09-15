@@ -9,8 +9,14 @@ using Shop.Api.Infrastructure;
 using TicketModule;
 using UserModule.Core;
 using System.Text.Json.Serialization;
+using CoreModule.Config;
+using Common.Application.FileUtil.Interfaces;
+using Common.Application.FileUtil.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<ILocalFileService, LocalFileService>();
+builder.Services.AddScoped<IFtpFileService, FtpFileService>();
 
 // Add services to the container.
 
@@ -70,6 +76,7 @@ builder.Services.RegisterApiDependency(builder.Configuration);
 CommonBootstrapper.RegisterCommonApplication(builder.Services);
 builder.Services.InitUserModule(builder.Configuration);
 builder.Services.InitTicketModule(builder.Configuration);
+builder.Services.InitCoreModule(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
