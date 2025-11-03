@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -34,6 +34,13 @@ public static class JwtAuthenticationConfig
           var customValidate = context.HttpContext.RequestServices
               .GetRequiredService<CustomJwtValidation>();
           await customValidate.Validate(context);
+        },
+        OnMessageReceived = context =>
+        {
+          context.Request.Cookies.TryGetValue("digi-token", out var accessToken);
+          if (!string.IsNullOrEmpty(accessToken))
+            context.Token = accessToken;
+          return Task.CompletedTask;
         }
       };
     });

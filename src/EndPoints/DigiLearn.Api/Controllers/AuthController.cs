@@ -56,35 +56,75 @@ namespace DigiLearn.Api.Controllers
         return CommandResult(result);
       }
 
-      var loginResult = await AddTokenAndGenerateJwt(user);
-      return CommandResult(loginResult);
+      var loginResult = await AddTokenAndGenerateJwt(user, loginRequest.IsRememberMe);
+      if (loginResult.Status != OperationResultStatus.Success)
+        return CommandResult(loginResult);
 
-      ////return CommandResult<LoginResponse>(
-      ////    OperationResult<LoginResponse>.Success
-      ////    (new LoginResponse { Token = token }));
+      var loginResponse = loginResult.Data!;
+
+      SetAuthCookies(loginResponse, loginRequest.IsRememberMe);
+
+      return CommandResult(OperationResult<LoginResponse?>.Success(new LoginResponse
+      {
+        Token = null,
+        RefreshToken = null
+      }));
+    }
+
+    //[Authorize]
+    //[HttpGet("Profile")]
+    //public IActionResult GetProfile()
+    //{
+    //  var userId = User.FindFirst("userId")?.Value;
+    //  return Ok(new { userId, message = "Authorized access" });
+    //}
+
+    [HttpGet("check")]
+    public IActionResult CheckAuth()
+    {
+      if (User.Identity?.IsAuthenticated == true)
+      {
+        Response.Headers.Add("Cache-Control", "private, max-age=5");
+        return Ok(new { isAuthenticated = true });
+      }
+
+      return Unauthorized(new { isAuthenticated = false });
     }
 
     [HttpPost("RefreshToken")]
-    public async Task<ApiResult<LoginResponse?>> RefreshToken(string refreshToken)
+    public async Task<ApiResult<LoginResponse?>> RefreshToken()
     {
-      var result = await _userFacade.GetUserTokenByRefreshToken(refreshToken);
+      var refreshToken = Request.Cookies["refresh-token"];
 
+      if (string.IsNullOrEmpty(refreshToken))
+        return CommandResult(OperationResult<LoginResponse?>.Error("Refresh token not found."));
+
+      var result = await _userFacade.GetUserTokenByRefreshToken(refreshToken);
       if (result == null)
         return CommandResult(OperationResult<LoginResponse?>.NotFound());
 
       if (result.TokenExpireDate > DateTime.Now)
-      {
-        return CommandResult(OperationResult<LoginResponse>.Error("توکن هنوز منقضی نشده است"));
-      }
+        return CommandResult(OperationResult<LoginResponse>.Error("Access token not yet expired."));
 
       if (result.RefreshTokenExpireDate < DateTime.Now)
-      {
-        return CommandResult(OperationResult<LoginResponse>.Error("زمان رفرش توکن به پایان رسیده است"));
-      }
+        return CommandResult(OperationResult<LoginResponse>.Error("Refresh token expired."));
+
       var user = await _userFacade.GetUserById(result.UserId);
       await _userFacade.RemoveToken(new RemoveUserTokenCommand(result.UserId, result.Id));
-      var loginResult = await AddTokenAndGenerateJwt(user);
-      return CommandResult(loginResult);
+
+      var newTokens = await AddTokenAndGenerateJwt(user, true);
+      if (newTokens.Status != OperationResultStatus.Success)
+        return CommandResult(OperationResult<LoginResponse?>.Error("Unable to generate new tokens."));
+
+      // ✅ Re-set new cookies (same as login)
+      SetAuthCookies(newTokens.Data!, true);
+
+      return CommandResult(OperationResult<LoginResponse?>.Success(new LoginResponse
+      {
+        Token = null,
+        RefreshToken = null,
+        TokenExpiryMinutes = newTokens.Data!.TokenExpiryMinutes,
+      }));
     }
 
     [Authorize]
@@ -96,11 +136,16 @@ namespace DigiLearn.Api.Controllers
       if (result == null)
         return CommandResult(OperationResult.NotFound());
 
-      await _userFacade.RemoveToken(new RemoveUserTokenCommand(result.UserId, result.Id));
+      var removeUserToken = await _userFacade.RemoveToken(new RemoveUserTokenCommand(result.UserId, result.Id));
+      if (removeUserToken.Status == OperationResultStatus.Success)
+      {
+        HttpContext.Response.Cookies.Delete("digi-token");
+        HttpContext.Response.Cookies.Delete("refresh-token");
+      }
       return CommandResult(OperationResult.Success());
     }
 
-    private async Task<OperationResult<LoginResponse?>> AddTokenAndGenerateJwt(UserDto user)
+    private async Task<OperationResult<LoginResponse?>> AddTokenAndGenerateJwt(UserDto user, bool isRememberMe = false)
     {
       var uaParser = Parser.GetDefault();
       var header = HttpContext.Request.Headers["user-agent"].ToString();
@@ -112,20 +157,69 @@ namespace DigiLearn.Api.Controllers
       }
 
       var token = JwtTokenBuilder.BuildToken(user, _configuration);
+      //var refreshToken = Guid.NewGuid().ToString();
       var refreshToken = Guid.NewGuid().ToString();
+
+      var refreshTokenExpiry = isRememberMe
+                  ? DateTime.Now.AddDays(int.Parse(_configuration["JwtConfig:RefreshTokenExpiryDays"]))
+                  : DateTime.Now.AddMinutes(int.Parse(_configuration["JwtConfig:AccessTokenExpiryMinutes"])); // Short if not rememberMe
 
       var hashJwt = Sha256Hasher.Hash(token);
       var hashRefreshToken = Sha256Hasher.Hash(refreshToken);
 
-      var tokenResult = await _userFacade.AddToken(new AddUserTokenCommand(user.Id, hashJwt, hashRefreshToken, DateTime.Now.AddMinutes(60), DateTime.Now.AddMinutes(65), device));
+      var tokenExpiry = DateTime.Now.AddMinutes(int.Parse(_configuration["JwtConfig:AccessTokenExpiryMinutes"]));
+
+      var tokenResult = await _userFacade.AddToken(new AddUserTokenCommand(
+          user.Id,
+          hashJwt,
+          hashRefreshToken,
+          tokenExpiry,
+          refreshTokenExpiry,
+          device));
+
       if (tokenResult.Status != OperationResultStatus.Success)
         return OperationResult<LoginResponse?>.Error();
 
       return OperationResult<LoginResponse?>.Success(new LoginResponse()
       {
         Token = token,
-        RefreshToken = refreshToken
+        RefreshToken = refreshToken,
+        TokenExpiryMinutes = (int)(tokenExpiry - DateTime.Now).TotalMinutes
+
       });
     }
+
+    private void SetAuthCookies(LoginResponse loginResponse, bool isRememberMe = false)
+    {
+      var accessOptions = new CookieOptions
+      {
+        HttpOnly = true,
+        Secure = true, // Enforce HTTPS
+        SameSite = SameSiteMode.None,
+        IsEssential = true
+      };
+
+      // Always set expiry for access cookie to match token lifetime (short)
+      accessOptions.Expires = DateTime.Now.AddMinutes(int.Parse(_configuration["JwtConfig:AccessTokenExpiryMinutes"])); // Or parse from config
+      HttpContext.Response.Cookies.Append("digi-token", loginResponse.Token, accessOptions);
+
+      var refreshOptions = new CookieOptions
+      {
+        HttpOnly = true,
+        Secure = true,
+        SameSite = SameSiteMode.None,
+        IsEssential = true
+      };
+
+      // Conditional expiry for refresh
+      if (isRememberMe)
+      {
+        refreshOptions.Expires = DateTime.Now.AddDays(int.Parse(_configuration["JwtConfig:RefreshTokenExpiryDays"])); // Persistent
+      }
+      // Else: Session cookie (no Expires, deletes on browser close)
+
+      HttpContext.Response.Cookies.Append("refresh-token", loginResponse.RefreshToken, refreshOptions);
+    }
+
   }
 }

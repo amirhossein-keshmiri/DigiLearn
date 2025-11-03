@@ -79,6 +79,21 @@ builder.Services.InitTicketModule(builder.Configuration);
 builder.Services.InitCoreModule(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
+// Add CORS configuration
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy("ReactAppPolicy", corsBuilder =>
+  {
+    var allowedOrigins = builder.Configuration.GetSection("CorsSettings:AllowedOrigins").Get<string[]>() ??
+                        new[] { "http://localhost:3001" };
+
+    corsBuilder.WithOrigins(allowedOrigins)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+  });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -88,7 +103,31 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
+app.Use(async (context, next) =>
+{
+  var token = context.Request.Cookies["digi-token"]?.ToString();
+  if (string.IsNullOrWhiteSpace(token) == false)
+  {
+    context.Request.Headers.Append("Authorization", $"Bearer {token}");
+  }
+  await next();
+});
+
 app.UseHttpsRedirection();
+
+// Enable CORS with the specified policy
+app.UseCors("ReactAppPolicy");
+
+app.Use(async (context, next) =>
+{
+  await next();
+  var status = context.Response.StatusCode;
+  if (status == 401)
+  {
+    //var path = context.Request.Path;
+    //context.Response.Redirect($"/auth/login?redirectTo={path}");
+  }
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

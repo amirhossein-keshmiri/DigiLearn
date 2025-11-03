@@ -34,8 +34,8 @@ namespace UserModule.Data.Entities.Users
       if (tokenExpireDate < DateTime.Now)
         throw new InvalidDomainDataException("Invalid Token ExpireDate");
 
-      if (refreshTokenExpireDate < tokenExpireDate)
-        throw new InvalidDomainDataException("Invalid RefreshToken ExpireDate");
+      //if (refreshTokenExpireDate < tokenExpireDate)
+      //  throw new InvalidDomainDataException("Invalid RefreshToken ExpireDate");
     }
   }
 }
