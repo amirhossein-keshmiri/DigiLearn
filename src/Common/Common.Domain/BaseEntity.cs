@@ -6,7 +6,8 @@
     public DateTime CreationDate { get; set; }
     public BaseEntity()
     {
-      Id = Guid.NewGuid();
+      //Id = Guid.NewGuid();
+      Id = new Guid();
       CreationDate = DateTime.Now;
     }
   }
