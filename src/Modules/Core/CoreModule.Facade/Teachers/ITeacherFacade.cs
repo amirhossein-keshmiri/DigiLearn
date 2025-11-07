@@ -53,7 +53,6 @@ namespace CoreModule.Facade.Teachers
     public async Task<TeacherDto?> GetByUserId(Guid userId)
     {
       return await _mediator.Send(new GetTeacherByUserIdQuery(userId));
-
     }
 
     public async Task<List<TeacherDto>> GetList()

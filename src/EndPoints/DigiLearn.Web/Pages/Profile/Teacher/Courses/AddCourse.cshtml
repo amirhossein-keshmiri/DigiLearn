@@ -1,0 +1,622 @@
+﻿@page
+@using CoreModule.Domain.Courses.Enums
+@using CoreModule.Facade.Categories
+@model DigiLearn.Web.Pages.Profile.Teacher.Courses.AddCourseModel
+@inject ICourseCategoryFacade _CategoryFacade
+@{
+  Layout = "Shared/_Layout";
+  ViewData["BreadcrumbTitle"] = "Add New Course";
+  ViewData["BreadcrumbItem"] = "Add New Course";
+  var categories = await _CategoryFacade.GetMainCategories();
+}
+
+<!-- Breadcrumb -->
+<partial name="_ProfileBreadcrumb" />
+<!-- /Breadcrumb -->
+<!-- Course add -->
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="add-course-item">
+          <div class="wizard">
+            <ul class="form-wizard-steps" id="progressbar2">
+              <li class="progress-active">
+                <div class="profile-step">
+                  <span class="dot-active mb-2">
+                    <span class="number">01</span>
+                    <span class="tickmark"><i class="fa-solid fa-check"></i></span>
+                  </span>
+                  <div class="step-section">
+                    <p>Course Information</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="profile-step">
+                  <span class="dot-active mb-2">
+                    <span class="number">02</span>
+                    <span class="tickmark"><i class="fa-solid fa-check"></i></span>
+                  </span>
+                  <div class="step-section">
+                    <p>Course Media</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <form method="post" enctype="multipart/form-data">
+            <div class="initialization-form-set">
+              <fieldset class="form-inner wizard-form-card" id="first">
+                <div class="title">
+                  <h5>Basic Information</h5>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="input-block">
+                      <label class="form-label">Course Title<span class="text-danger ms-1">*</span></label>
+                      <input type="text" class="form-control" asp-for="Title">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-block">
+                      <label class="form-label">Course Slug<span class="text-danger ms-1">*</span></label>
+                      <input type="text" class="form-control" asp-for="Slug">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-block">
+                      <label class="form-label">Course Category<span class="text-danger ms-1">*</span></label>
+                      <select class="select form-control" asp-for="CategoryId">
+                        <option>Select</option>
+                        @foreach (var item in categories)
+                        {
+                          <option value="@item.Id">@item.Title</option>
+                        }
+                      </select>
+                      <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-block">
+                      <label class="form-label">Course Sub Category<span class="text-danger ms-1">*</span></label>
+                      <select class="select form-control" asp-for="SubCategoryId">
+                        <option>Select</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-block">
+                      <label class="form-label" asp-for="CourseLevel">Course Level<span class="text-danger ms-1">*</span></label>
+                      <select class="select form-control" asp-for="CourseLevel">
+                        <option>Select</option>
+                        <option value="@CourseLevel.Beginner">Beginner </option>
+                        <option value="@CourseLevel.Intermediate">Intermediate</option>
+                        <option value="@CourseLevel.Expert">Expert</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-block mb-2">
+                      <label class="form-label">Course Price ($)<span class="text-danger ms-1">*</span></label>
+                      <input type="text" class="form-control" asp-for="Price">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="input-block">
+                      <label class="form-label">Course Description<span class="text-danger ms-1">*</span></label>
+                      <textarea asp-for="Description" id="summernote" class="form-control summernote"></textarea>
+                      <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="add-form-btn widget-next-btn submit-btn d-flex justify-content-end mb-0">
+                  <div class="btn-left">
+                    <a href="javascript:void(0);" class="btn main-btn next_btns">Next <i class="isax isax-arrow-right-3 ms-1"></i></a>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="form-inner wizard-form-card">
+                <div class="title">
+                  <h5>Course Media</h5>
+                  <p>Intro Course overview provider type. (.mp4, YouTube, Vimeo etc.)</p>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="input-block">
+                      <div class="row align-items-center">
+                        <div class="col-md-12">
+                          <label class="form-label">Course Thumbnail<span class="text-danger ms-1">*</span></label>
+                        </div>
+                        <div class="col-md-10">
+                          <input type="text" class="form-control" id="filename-display" placeholder="No File Selected" readonly>
+                        </div>
+                        <div class="col-md-2 d-grid">
+                          @* <label for="upload-img-input" class="file-upload-btn text-center">Upload File</label> *@
+                          <label for="ImageFile" class="file-upload-btn text-center">Upload File</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="upload-img-section d-flex align-items-center justify-content-center" id="upload-img-section">
+                      @* <input type="file" asp-for="ImageFile" id="upload-img-input" name="Thumbnail" style="display: none;" accept="image/jpeg, image/png, image/gif, image/webp"> *@
+                      <input type="file" asp-for="ImageFile" style="display: none;" accept="image/jpeg, image/png, image/gif, image/webp">
+                      <div class="preview-container" style="width: 100%; max-width: 300px; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden;margin-right:15px;">
+                          <img id="preview-image" src="" alt="Preview" class="img-preview">
+                       </div>
+                      <div class="upload-content">
+                        <span class="d-flex align-items-center justify-content-center mb-1">
+                          <i class="isax isax-image5 text-secondary fs-24 text-center" id="upload-icon"></i>
+                        </span>
+                        <p class="text-center fw-medium mb-1" id="upload-text">Upload Image</p>
+                        <span class="text-center">JPEG, PNG, GIF, and WebP formats, up to 2 MB</span>
+                        <button type="button" id="remove-preview-btn" class="btn btn-sm btn-outline-danger mt-2" style="display: none;">
+                          <i class="isax isax-trash me-1"></i> Remove Image
+                        </button>
+                      </div>
+                    </div>
+                    <hr class="mt-4 mb-4">
+                  </div>
+                  <div class="col-md-12 mt-5">
+                    <div class="input-block">
+                      <div class="row align-items-center">
+                        <div class="col-md-12">
+                          <label class="form-label">Intro Video<span class="text-danger ms-1">*</span></label>
+                        </div>
+                        <div class="col-md-10">
+                          <input type="text" class="form-control" id="video-filename-display" placeholder="No File Selected" readonly>
+                        </div>
+                        <div class="col-md-2 d-grid">
+                          <label for="upload-video-input" class="file-upload-btn text-center">Upload File</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="upload-video-section d-flex align-items-center justify-content-center" id="upload-video-section">
+                      <input type="file" id="upload-video-input" name="IntroVideo" style="display: none;" accept="video/mp4,video/webm,video/ogg">
+                      <div class="upload-content">
+                        <span class="d-flex align-items-center justify-content-center mb-1" id="video-upload-icon">
+                          <i class="isax isax-video-play text-secondary fs-24 text-center"></i>
+                        </span>
+                        <div class="preview-container" style="width: 100%; max-width: 300px; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                          <img id="video-preview-image" src="" alt="Video Thumbnail" class="img-preview" style="display: none;">
+                        </div>
+                        <span id="video-duration" class="text-muted mt-1" style="display: none;"></span>
+                        <p class="text-center fw-medium mb-1" id="video-upload-text">Upload Video</p>
+                        <span class="text-center">MP4, WebM, OGG formats, up to 50 MB</span>
+                        <button type="button" id="remove-video-btn" class="btn btn-sm btn-outline-danger mt-2" style="display: none;">
+                          <i class="isax isax-trash me-1"></i> Remove Video
+                        </button>
+                        <div id="video-loading" class="text-center mt-2" style="display: none;">
+                          <i class="isax isax-loading-3 text-secondary fs-20"></i> Generating preview...
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="add-form-btn widget-next-btn submit-btn">
+                  <div class="btn-left">
+                    <a href="javascript:void(0);" class="btn btn-light main-btn prev_btns"><i class="isax isax-arrow-left-2 me-1"></i>Prev</a>
+                  </div>
+                  <div class="btn-left">
+                    <button type="submit" class="btn btn-secondary main-btn next_btns">Submit Course</button>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Course watch -->
+<!-- Toast Container -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div id="uploadSuccessToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="isax isax-tick-circle5 me-2"></i> File uploaded successfully!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
+  <div id="uploadErrorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="isax isax-close-circle me-2"></i> Error: Invalid file or size too large.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+<!-- /Toast Container -->
+<!-- success -->
+<div class="modal fade modal-default" id="success">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div class="text-center">
+          <div class="text-success h1 mb-2">
+            <i class="isax isax-tick-circle5"></i>
+          </div>
+          <h5 class="mb-2">Congratulations! Course Submitted</h5>
+          <p class="mb-3">You’ve successfully Submitted the Course & its under the review, Once the course is reviewed by the reviewer it will go live.</p>
+          <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
+            <a href="instructor-dashboard.html" class="btn btn-secondary"><i class="isax isax-arrow-left-2 me-1"></i>Back to Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /success -->
+@section ProfileSectionMeta {
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
+
+  <!-- Bootstrap Tagsinput CSS -->
+  <link rel="stylesheet" href="/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
+
+  <!-- Summernote JS -->
+  <link rel="stylesheet" href="/assets/plugins/summernote/summernote-lite.min.css">
+  <style>
+    .img-preview {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .preview-container {
+      width: 100%;
+      max-width: 300px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px dashed #ddd;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    #remove-preview-btn {
+      display: none;
+      margin-top: 10px;
+      padding: 4px 10px;
+      font-size: 0.875rem;
+    }
+
+    .upload-video-section.drag-over {
+      background-color: #f0f0f0;
+      border: 2px dashed #007bff;
+    }
+
+    #video-preview-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .toast {
+      min-width: 300px;
+      max-width: 400px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .toast-body {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .toast .btn-close {
+      padding: 0.5rem 0.75rem;
+    }
+  </style>
+}
+@section ProfileSectionScripts {
+  <!-- Select2 JS -->
+  <script src="/assets/plugins/select2/js/select2.min.js"></script>
+
+  <!-- Bootstrap Tagsinput JS -->
+  <script src="/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
+  <!-- Summernote JS -->
+  <script src="/assets/plugins/summernote/summernote-lite.min.js"></script>
+}
+@section Scripts {
+  <partial name="_ValidationScriptsPartial" />
+  <script src="/assets/global/clientValidation.js"></script>
+
+  <script>
+    // === SUBCATEGORY DROPDOWN ===
+    $(document).ready(function () {
+        $("#CategoryId").change(function () {
+            var id = $(this).val();
+            $.ajax({
+                url: "/ajax/getCategoryChildren?id=" + id,
+                method: "get"
+            }).done(function (data) {
+                $("#SubCategoryId").html('<option value="">Select</option>' + data);
+            });
+        });
+    });
+
+    // === IMAGE UPLOAD LOGIC ===
+    document.addEventListener('DOMContentLoaded', function () {
+        const imgSection = document.getElementById('upload-img-section');
+        // const imgInput = document.getElementById('upload-img-input');
+        const imgInput = document.getElementById('ImageFile');
+        const imgFilenameDisplay = document.getElementById('filename-display');
+        const imgPreviewImage = document.getElementById('preview-image');
+        const imgUploadIcon = document.getElementById('upload-icon');
+        const imgUploadText = document.getElementById('upload-text');
+        const removeImgBtn = document.getElementById('remove-preview-btn');
+
+        if (!imgSection || !imgInput || !imgPreviewImage) {
+            console.error('Image upload elements not found.');
+            return;
+        }
+
+        if (imgInput.dataset.initialized) return;
+        imgInput.dataset.initialized = 'true';
+
+        imgSection.addEventListener('click', function () {
+            imgInput.click();
+        });
+
+        imgInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) {
+                resetImageUI();
+                return;
+            }
+            processImageFile(file);
+        });
+
+        imgSection.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            imgSection.classList.add('drag-over');
+        });
+
+        imgSection.addEventListener('dragleave', function () {
+            imgSection.classList.remove('drag-over');
+        });
+
+        imgSection.addEventListener('drop', function (e) {
+            e.preventDefault();
+            imgSection.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                processImageFile(file);
+            }
+        });
+
+        removeImgBtn?.addEventListener('click', function () {
+            imgInput.value = '';
+            resetImageUI();
+        });
+
+        function processImageFile(file) {
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                showErrorToast('Only JPEG, PNG, GIF, and WebP images are allowed.');
+                imgInput.value = '';
+                resetImageUI();
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                showErrorToast('File size must be under 2 MB.');
+                imgInput.value = '';
+                resetImageUI();
+                return;
+            }
+
+            showSuccessToast(file.name);
+
+            imgFilenameDisplay.value = file.name;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                imgPreviewImage.src = event.target.result;
+                imgPreviewImage.style.display = 'block';
+                imgUploadIcon.style.display = 'none';
+                imgUploadText.style.display = 'none';
+                removeImgBtn.style.display = 'inline-block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetImageUI() {
+            imgPreviewImage.src = '';
+            imgPreviewImage.style.display = 'none';
+            imgUploadIcon.style.display = 'block';
+            imgUploadText.style.display = 'block';
+            imgFilenameDisplay.value = 'No File Selected';
+            removeImgBtn.style.display = 'none';
+        }
+    });
+
+    // === VIDEO UPLOAD LOGIC ===
+    document.addEventListener('DOMContentLoaded', function () {
+        const videoSection = document.getElementById('upload-video-section');
+        const videoInput = document.getElementById('upload-video-input');
+        const videoFilenameDisplay = document.getElementById('video-filename-display');
+        const videoPreviewImage = document.getElementById('video-preview-image');
+        const videoUploadIcon = document.getElementById('video-upload-icon');
+        const videoUploadText = document.getElementById('video-upload-text');
+        const removeVideoBtn = document.getElementById('remove-video-btn');
+        const videoLoading = document.getElementById('video-loading');
+        const videoDuration = document.getElementById('video-duration');
+
+        if (!videoSection || !videoInput || !videoPreviewImage) {
+            console.error('Video upload elements not found.');
+            return;
+        }
+
+        if (videoInput.dataset.initialized) return;
+        videoInput.dataset.initialized = 'true';
+
+        videoSection.addEventListener('click', function () {
+            videoInput.click();
+        });
+
+        videoInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) {
+                resetVideoUI();
+                return;
+            }
+            processVideoFile(file);
+        });
+
+        videoSection.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            videoSection.classList.add('drag-over');
+        });
+
+        videoSection.addEventListener('dragleave', function () {
+            videoSection.classList.remove('drag-over');
+        });
+
+        videoSection.addEventListener('drop', function (e) {
+            e.preventDefault();
+            videoSection.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                processVideoFile(file);
+            }
+        });
+
+        removeVideoBtn?.addEventListener('click', function () {
+            videoInput.value = '';
+            resetVideoUI();
+        });
+
+        function processVideoFile(file) {
+            const validTypes = ['video/mp4', 'video/webm', 'video/ogg'];
+            if (!validTypes.includes(file.type)) {
+                showErrorToast('Only MP4, WebM, or OGG videos are allowed.');
+                videoInput.value = '';
+                resetVideoUI();
+                return;
+            }
+
+            if (file.size > 50 * 1024 * 1024) {
+                showErrorToast('Video size must be under 50 MB.');
+                videoInput.value = '';
+                resetVideoUI();
+                return;
+            }
+
+            videoFilenameDisplay.value = file.name;
+            videoLoading.style.display = 'block';
+
+            try {
+                generateVideoThumbnail(file);
+            } catch (err) {
+                console.error('Error generating video thumbnail:', err);
+                showErrorToast('Could not generate preview. Please try another video.');
+                resetVideoUI();
+            }
+
+            showSuccessToast(file.name, true);
+        }
+
+        function generateVideoThumbnail(file) {
+            const video = document.createElement('video');
+            const url = URL.createObjectURL(file);
+
+            video.addEventListener('error', function () {
+                console.error('Failed to load video for thumbnail generation.');
+                showErrorToast('Could not generate preview for this video.');
+                resetVideoUI();
+                URL.revokeObjectURL(url);
+            });
+
+            video.addEventListener('canplaythrough', function () {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const thumbnailDataUrl = canvas.toDataURL('image/jpeg');
+                videoPreviewImage.src = thumbnailDataUrl;
+                videoPreviewImage.style.display = 'block';
+                videoUploadIcon.style.display = 'none';
+                videoUploadText.style.display = 'none';
+                removeVideoBtn.style.display = 'inline-block';
+                videoLoading.style.display = 'none';
+
+                const duration = Math.floor(video.duration);
+                const mins = Math.floor(duration / 60);
+                const secs = duration % 60;
+                const durationText = `${mins}:${secs.toString().padStart(2, '0')}`;
+                videoDuration.textContent = `Duration: ${durationText}`;
+                videoDuration.style.display = 'block';
+
+                URL.revokeObjectURL(url);
+            });
+
+            video.src = url;
+            video.load();
+        }
+
+        function resetVideoUI() {
+            videoPreviewImage.src = '';
+            videoPreviewImage.style.display = 'none';
+            videoUploadIcon.style.display = 'block';
+            videoUploadText.style.display = 'block';
+            videoFilenameDisplay.value = 'No File Selected';
+            removeVideoBtn.style.display = 'none';
+            videoLoading.style.display = 'none';
+            videoDuration.textContent = ``;
+            videoDuration.style.display = 'none';
+        }
+    });
+
+    // === TOAST NOTIFICATIONS ===
+    function showSuccessToast(filename, isVideo = false) {
+        const toastEl = document.getElementById('uploadSuccessToast');
+        if (!toastEl) return;
+
+        const toastBody = toastEl.querySelector('.toast-body');
+        const icon = isVideo ? 'isax-video-play' : 'isax-tick-circle5';
+        const msg = isVideo ? `"${filename}" video uploaded!` : `"${filename}" uploaded successfully!`;
+        toastBody.innerHTML = `<i class="isax ${icon} me-2"></i> ${msg}`;
+
+        const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+        toast.show();
+    }
+
+    function showErrorToast(message) {
+        const toastEl = document.getElementById('uploadErrorToast');
+        if (!toastEl) return;
+
+        const toastBody = toastEl.querySelector('.toast-body');
+        toastBody.innerHTML = `<i class="isax isax-close-circle me-2"></i> ${message}`;
+
+        const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+        toast.show();
+    }
+  </script>
+}

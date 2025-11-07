@@ -18,5 +18,6 @@ namespace CoreModule.Application.Courses.Create
     public int Price { get; set; }
     public SeoData SeoData { get; set; }
     public CourseLevel CourseLevel { get; set; }
+    public CourseActionStatus Status { get; set; }
   }
 }

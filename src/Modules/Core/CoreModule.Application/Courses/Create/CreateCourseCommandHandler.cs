@@ -40,7 +40,7 @@ namespace CoreModule.Application.Courses.Create
 
       var course = new Domain.Courses.Models.Course(request.TeacherId, request.CategoryId, request.SubCategoryId, 
                                                     request.Title, request.Slug, request.Description, imageName, videoPath,
-                                                    request.Price, request.SeoData, request.CourseLevel, _domainService)
+                                                    request.Price, request.SeoData, request.CourseLevel, request.Status, _domainService)
       {
         Id = courseId
       };

@@ -24,75 +24,78 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 
-  <!-- iconsax css -->
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+
+  <!-- Feather CSS -->
+  <link rel="stylesheet" href="/assets/css/feather.css">
+
+  <!-- Iconsax CSS -->
   <link rel="stylesheet" href="/assets/css/iconsax.css">
 
   @await RenderSectionAsync("ProfileSectionMeta", false)
 
-  <!-- Slick CSS -->
-  <link rel="stylesheet" href="/assets/plugins/slick/slick.css">
-  <link rel="stylesheet" href="/assets/plugins/slick/slick-theme.css">
-
-  <!-- tabler icon css -->
-  <link rel="stylesheet" href="/assets/plugins/tabler-icons/tabler-icons.css">
-
-  <!-- aos css -->
-  <link rel="stylesheet" href="/assets/plugins/aos/aos.css">
-
-  <!-- fontawsome -->
-  <link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
-  <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
-
-  <!-- owl carousel css file -->
-  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-
-  <!-- style.css file -->
+  <!-- Main CSS -->
   <link rel="stylesheet" href="/assets/css/style.css">
-  @await RenderSectionAsync("meta", false)
 
 </head>
 <body>
+
+  <!-- Main Wrapper -->
   <div class="main-wrapper">
+
     <!-- Header -->
     <partial name="_Header" />
     <!-- /Header -->
+    <!-- Breadcrumb -->
+    <partial name="_ProfileBreadcrumb" />
+    <!-- /Breadcrumb -->
 
-    @await RenderSectionAsync("Slideshow", required: false)
-    @RenderBody()
+    <div class="content">
+      <div class="container">
+        <!-- profile box -->
+        @await Component.InvokeAsync("TeacherInfo")
+        <!-- profile box -->
+
+        <div class="row">
+
+          <!-- sidebar -->
+          <partial name="_TeacherProfileSideBar" />
+          <!-- sidebar -->
+          @RenderBody()
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <partial name="_Footer" />
     <!-- /Footer -->
-
+    <div id="token-value">
+      @Html.AntiForgeryToken()
+    </div>
   </div>
-
-  <!-- import jquery -->
+  <!-- /Main Wrapper -->
+  <!-- jQuery -->
   <script data-cfasync="false" src="/assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script src="/assets/js/jquery-3.7.1.min.js"></script>
-  <script src="/assets/js/jquery.waypoints.js"></script>
-  <script src="/assets/js/jquery.counterup.min.js"></script>
 
-  <!-- import bootstrap bundle -->
+  <!-- Bootstrap Core JS -->
   <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
   @await RenderSectionAsync("ProfileSectionScripts", false)
 
-  <!-- import aos -->
-  <script src="/assets/plugins/aos/aos.js"></script>
+  <!-- Sticky Sidebar JS -->
+  <script src="/assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+  <script src="/assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
 
-  <!-- Slick Slider -->
-  <script src="/assets/plugins/slick/slick.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/assets/js/global.js"></script>
 
-  <!-- import font awsome -->
-  <script src="/assets/plugins/fontawesome/js/fontawesome.min.js"></script>
-
-  <!-- import owl carousel js -->
-  <script src="/assets/js/owl.carousel.min.js"></script>
-
-  <!-- import script.js -->
+  <!-- Custom JS -->
   <script src="/assets/js/script.js"></script>
-
-  <script src="/assets/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="f0de12f7ccfa137ab179a43e-|49" defer></script>
+  <partial name="_ValidationScriptsPartial" />
+  <script src="/assets/global/clientValidation.js"></script>
   @await RenderSectionAsync("Scripts", required: false)
 </body>
 

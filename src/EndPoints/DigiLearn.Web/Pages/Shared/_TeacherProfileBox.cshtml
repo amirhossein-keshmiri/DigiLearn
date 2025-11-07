@@ -1,0 +1,31 @@
+﻿@model UserDto
+@using DigiLearn.Web.Infrastructure
+@using UserModule.Core
+@using UserModule.Core.Queries._DTOs
+@{
+}
+<div class="instructor-profile">
+	<div class="instructor-profile-bg">
+		<img src="/assets/img/bg/card-bg-01.png" class="instructor-profile-bg-1" alt="">
+	</div>
+	<div class="row align-items-center row-gap-3">
+		<div class="col-md-6">
+			<div class="d-flex align-items-center">
+				<span class="avatar flex-shrink-0 avatar-xxl avatar-rounded me-3 border border-white border-3 position-relative">
+          <img src="@UserModuleDirectories.GetUserAvatar(@Model!.Avatar)" alt="img">
+					<span class="verify-tick"><i class="isax isax-verify5"></i></span>
+				</span>
+				<div>
+          <h5 class="mb-1 text-white d-inline-flex align-items-center">@Model.Name @Model.Family<a href="instructor-profile.html" class="link-light fs-16 ms-2"><i class="isax isax-edit-2"></i></a></h5>
+					<p class="text-light">Instructor</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="d-flex align-items-center flex-wrap gap-3 justify-content-md-end">
+        <a href="/profile/teacher/courses/addcourse" class="btn btn-white rounded-pill">Add New Course</a>
+        <a href="/profile" class="btn btn-secondary rounded-pill">Student Dashboard</a>
+			</div>
+		</div>
+	</div>
+</div>

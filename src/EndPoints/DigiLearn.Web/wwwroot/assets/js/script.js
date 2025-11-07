@@ -1834,51 +1834,51 @@ Version      : 1.0
 		  });
 		  
 			
-		  // upload img 
-		  document.addEventListener("DOMContentLoaded", function() {
-			const uploadSection = document.getElementById("upload-img-section");
-			const fileInput = document.getElementById("upload-img-input");
+		 // // upload img 
+		 // document.addEventListener("DOMContentLoaded", function() {
+			//const uploadSection = document.getElementById("upload-img-section");
+			//const fileInput = document.getElementById("upload-img-input");
 		  
-			if (uploadSection && fileInput) {
-			  // Open file input when clicking the section
-			  uploadSection.addEventListener("click", function() {
-				fileInput.click();
-			  });
+			//if (uploadSection && fileInput) {
+			//  // Open file input when clicking the section
+			//  uploadSection.addEventListener("click", function() {
+			//	fileInput.click();
+			//  });
 		  
-			  // Handle file input change
-			  fileInput.addEventListener("change", function() {
-				handleFileUpload(fileInput.files[0]);
-			  });
+			//  // Handle file input change
+			//  fileInput.addEventListener("change", function() {
+			//	handleFileUpload(fileInput.files[0]);
+			//  });
 		  
-			  // Drag and drop functionality
-			  uploadSection.addEventListener("dragover", function(event) {
-				event.preventDefault();
-				uploadSection.classList.add("drag-over");
-			  });
+			//  // Drag and drop functionality
+			//  uploadSection.addEventListener("dragover", function(event) {
+			//	event.preventDefault();
+			//	uploadSection.classList.add("drag-over");
+			//  });
 		  
-			  uploadSection.addEventListener("dragleave", function() {
-				uploadSection.classList.remove("drag-over");
-			  });
+			//  uploadSection.addEventListener("dragleave", function() {
+			//	uploadSection.classList.remove("drag-over");
+			//  });
 		  
-			  uploadSection.addEventListener("drop", function(event) {
-				event.preventDefault();
-				uploadSection.classList.remove("drag-over");
-				const file = event.dataTransfer.files[0];
-				if (file) {
-				  handleFileUpload(file);
-				}
-			  });
+			//  uploadSection.addEventListener("drop", function(event) {
+			//	event.preventDefault();
+			//	uploadSection.classList.remove("drag-over");
+			//	const file = event.dataTransfer.files[0];
+			//	if (file) {
+			//	  handleFileUpload(file);
+			//	}
+			//  });
 		  
-			  // Function to handle file upload (basic example)
-			  function handleFileUpload(file) {
-				if (file && file.size <= 2 * 1024 * 1024) {
-				  alert(`File "${file.name}" uploaded successfully.`);
-				} else {
-				  alert("File size exceeds 2 MB or invalid format.");
-				}
-			  }
-			}
-		  });
+			//  // Function to handle file upload (basic example)
+			//  function handleFileUpload(file) {
+			//	if (file && file.size <= 2 * 1024 * 1024) {
+			//	  alert(`File "${file.name}" uploaded successfully.`);
+			//	} else {
+			//	  alert("File size exceeds 2 MB or invalid format.");
+			//	}
+			//  }
+			//}
+		 // });
 
 		  // like botton
 		  document.addEventListener("DOMContentLoaded", function() {

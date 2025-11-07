@@ -1,0 +1,107 @@
+﻿@page "{courseId}"
+@model DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections.IndexModel
+@{
+  Layout = "Shared/_TeacherProfileLayout";
+  ViewData["BreadcrumbTitle"] = "Courses" + $"`{Model.Course.Title}`";
+  ViewData["BreadcrumbItem"] = "Sections";
+}
+<div class="col-lg-9">
+  <div class="d-flex align-items-center justify-content-between flex-wrap page-title">
+    <h5>Sections</h5>
+    <a asp-page="Add" asp-route-courseId="@Model.Course.Id" class="btn btn-secondary rounded-pill"><i class="isax isax-add-circle me-2 fs-10"></i>Add Section</a>
+  </div>
+
+@*   <div class="title">
+    <div class="row align-items-center row-gap-2">
+      <div class="col-md-6">
+        <h5 class="mb-0">Curriculum</h5>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <a href="javascript:void(0);" class="btn add-edit-btn d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#add-topic"><i class="isax isax-add-circle5 me-1"></i> Add New Topic</a>
+      </div>
+    </div>
+  </div> *@
+  <div>
+    <div class="accordions-items-seperate" id="accordionSpacingExample">
+@*       <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSpacingOne">
+          <a href="javascript:void(0);" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#SpacingOne" aria-expanded="false" aria-controls="SpacingOne">
+            <span class="d-flex align-items-center mb-0"><i class="isax isax-menu-15 me-2"></i>Title Title</span>
+          </a>
+        </h2>
+        <div id="SpacingOne" class="accordion-collapse collapse show" aria-labelledby="headingSpacingOne" data-bs-parent="#accordionSpacingExample">
+          <div class="accordion-body">
+            <div class="d-flex align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
+              <div class="d-flex align-items-center">
+                <span><i class="isax isax-play-circle5 text-success fs-24 me-1"></i></span>
+                <p class="fw-medium text-gray-5 mb-0">Describe SEO Engine</p>
+              </div>
+              <div class="d-flex align-items-center">
+                <a href="javascript:void(0);" class="edit-btn1"><i class="isax isax-edit-25 fs-16"></i></a>
+                <a href="javascript:void(0);" class="delete-btn1"><i class="isax isax-trash fs-16"></i></a>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
+              <div class="d-flex align-items-center">
+                <span><i class="isax isax-play-circle5 text-success fs-24 me-1"></i></span>
+                <p class="fw-medium text-gray-5 mb-0">Know about all marketing</p>
+              </div>
+              <div class="d-flex align-items-center">
+                <a href="javascript:void(0);" class="edit-btn1"><i class="isax isax-edit-25 fs-16"></i></a>
+                <a href="javascript:void(0);" class="delete-btn1"><i class="isax isax-trash fs-16"></i></a>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <a href="javascript:void(0);" class="btn add-edit-btn d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#add-lesson"><i class="isax isax-add-circle5 me-2"></i>Add Lesson</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+ *@
+      @foreach (var item in Model.Course.Sections.OrderBy(d=>d.DisplayOrder))
+      {
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingSpacing_@item.Id">
+            <a href="javascript:void(0);" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#Spacing_@item.Id" aria-expanded="false" aria-controls="Spacing_@item.Id">
+              <span class="d-flex align-items-center mb-0"><i class="isax isax-menu-15 me-2"></i>@item.Title</span>
+            </a>
+          </h2>
+          <div id="Spacing_@item.Id" class="accordion-collapse collapse show" aria-labelledby="headingSpacing_@item.Id" data-bs-parent="#accordionSpacingExample">
+            <div class="accordion-body">
+              <div class="d-flex align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
+                <div class="d-flex align-items-center">
+                  <span><i class="isax isax-play-circle5 text-success fs-24 me-1"></i></span>
+                  <p class="fw-medium text-gray-5 mb-0">Describe SEO Engine</p>
+                </div>
+                <div class="d-flex align-items-center">
+                  <a href="javascript:void(0);" class="edit-btn1"><i class="isax isax-edit-25 fs-16"></i></a>
+                  <a href="javascript:void(0);" class="delete-btn1"><i class="isax isax-trash fs-16"></i></a>
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
+                <div class="d-flex align-items-center">
+                  <span><i class="isax isax-play-circle5 text-success fs-24 me-1"></i></span>
+                  <p class="fw-medium text-gray-5 mb-0">Know about all marketing</p>
+                </div>
+                <div class="d-flex align-items-center">
+                  <a href="javascript:void(0);" class="edit-btn1"><i class="isax isax-edit-25 fs-16"></i></a>
+                  <a href="javascript:void(0);" class="delete-btn1"><i class="isax isax-trash fs-16"></i></a>
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <a href="javascript:void(0);" class="btn add-edit-btn d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#add-lesson"><i class="isax isax-add-circle5 me-2"></i>Add Lesson</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      }
+    </div>
+  </div>
+
+
+</div>

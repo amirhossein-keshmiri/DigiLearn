@@ -13,7 +13,7 @@ namespace CoreModule.Domain.Courses.Models
       
     }
     public Course(Guid teacherId, Guid categoryId, Guid subCategoryId, string title, string slug, string description, string imageName, string? videoName, int price,
-                  SeoData seoData, CourseLevel courseLevel, ICourseDomainService domainService)
+                  SeoData seoData, CourseLevel courseLevel, CourseActionStatus status, ICourseDomainService domainService)
     {
       Guard(title, description, imageName, slug);
 
@@ -33,6 +33,7 @@ namespace CoreModule.Domain.Courses.Models
       SeoData = seoData;
       CourseLevel = courseLevel;
       CourseStatus = CourseStatus.StartSoon;
+      Status = status;
 
       Sections = new();
     }
@@ -50,6 +51,7 @@ namespace CoreModule.Domain.Courses.Models
 
     public CourseLevel CourseLevel { get; private set; }
     public CourseStatus CourseStatus { get; private set; }
+    public CourseActionStatus Status { get; set; }
 
     public List<Section> Sections { get; private set; }
 
@@ -83,6 +85,7 @@ namespace CoreModule.Domain.Courses.Models
         throw new InvalidDomainDataException("title Is Exist");
 
       Sections.Add(new Section(Id, title, displayOrder));
+      //LastUpdate = DateTime.UtcNow;
     }
     public void EditSection(Guid sectionId, int displayOrder, string title)
     {
