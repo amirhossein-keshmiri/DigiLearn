@@ -1,4 +1,5 @@
-﻿using CoreModule.Domain.Courses.Models;
+﻿using CoreModule.Application.Courses.Sections.AddSection;
+using CoreModule.Domain.Courses.Models;
 using CoreModule.Facade.Courses;
 using CoreModule.Facade.Teachers;
 using CoreModule.Query._DTOs;
@@ -23,13 +24,13 @@ namespace DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections
     public CourseDto Course { get; set; }
 
     [BindProperty]
-    [Display(Name = "عنوان")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
+    [Display(Name = "Title")]
+    [Required(ErrorMessage = "Please Insert {0}")]
     public string Title { get; set; }
 
     [BindProperty]
-    [Display(Name = "ترتیب نمایش")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
+    [Display(Name = "Display Order")]
+    [Required(ErrorMessage = "Please Insert {0}")]
     public int DisplayOrder { get; set; }
 
     public async Task<IActionResult> OnGet(Guid courseId)
@@ -45,14 +46,16 @@ namespace DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections
       return Page();
     }
 
-    //public async Task<IActionResult> OnPostAddSection()
-    //{
-    //  //var result = await _courseFacade.AddSection(new AddCourseSectionCommand()
-    //  //{
-    //  //  Title = Title,
-    //  //  DisplayOrder = DisplayOrder,
-    //  //  CourseId = courseId,
-    //  //});
-    //}
+    public async Task<IActionResult> OnPostAddSection(Guid courseId)
+    {
+      var result = await _courseFacade.AddSection(new AddCourseSectionCommand()
+      {
+        Title = Title,
+        DisplayOrder = DisplayOrder,
+        CourseId = courseId,
+      });
+
+      return RedirectAndShowAlert(result, RedirectToPage("Index", new { courseId }));
+    }
   }
 }

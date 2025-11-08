@@ -4,6 +4,10 @@ using DigiLearn.Web.Infrastructure.RazorUtils;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
+//===============================================================
+//< !--THIS DOESNOT USE, I USE MODAL INSTEAD INSIDE SECTION INDEX
+//===============================================================
+
 namespace DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections
 {
   [BindProperties]
@@ -16,12 +20,12 @@ namespace DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections
       _courseFacade = courseFacade;
     }
 
-    [Display(Name = "عنوان")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
+    [Display(Name = "Title")]
+    [Required(ErrorMessage = "Please Insert {0}")]
     public string Title { get; set; }
 
-    [Display(Name = "ترتیب نمایش")]
-    [Required(ErrorMessage = "{0} را وارد کنید")]
+    [Display(Name = "Display Order")]
+    [Required(ErrorMessage = "Please Insert {0}")]
     public int DisplayOrder { get; set; }
     public void OnGet()
     {
