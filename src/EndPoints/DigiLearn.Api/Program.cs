@@ -12,11 +12,16 @@ using System.Text.Json.Serialization;
 using CoreModule.Config;
 using Common.Application.FileUtil.Interfaces;
 using Common.Application.FileUtil.Services;
+using Microsoft.Extensions.Options;
+using DigiLearn.Api.Infrastructure.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<ILocalFileService, LocalFileService>();
 builder.Services.AddScoped<IFtpFileService, FtpFileService>();
+
+// Register the TeacherApiActionFilter as a scoped service
+builder.Services.AddScoped<TeacherApiActionFilter>();
 
 // Add services to the container.
 
@@ -46,6 +51,26 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
+  option.SwaggerDoc("v1", new OpenApiInfo
+  {
+    Title = "DigiLearn API",
+    Version = "v1",
+    Description = "API for DigiLearn Management",
+    Contact = new OpenApiContact
+    {
+      Name = "DigiLearn Support",
+      Email = "support@digilearn.com"
+    }
+  });
+
+  // Include XML comments for better documentation
+  var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+  var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+  if (File.Exists(xmlPath))
+  {
+    option.IncludeXmlComments(xmlPath);
+  }
+
   option.SchemaFilter<EnumSchemaFilter>();
   var jwtSecurityScheme = new OpenApiSecurityScheme
   {
@@ -69,6 +94,9 @@ builder.Services.AddSwaggerGen(option =>
     {
         { jwtSecurityScheme, Array.Empty<string>() }
     });
+
+  // Support for file uploads in Swagger UI
+  option.OperationFilter<SwaggerFileOperationFilter>();
 });
 
 builder.Services.AddHttpContextAccessor();
@@ -100,7 +128,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
   app.UseSwagger();
-  app.UseSwaggerUI();
+  app.UseSwaggerUI(options =>
+  {
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "DigiLearn API v1");
+    options.RoutePrefix = "swagger"; // Access Swagger UI at /swagger
+  });
 }
 
 app.Use(async (context, next) =>
