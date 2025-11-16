@@ -146,6 +146,7 @@ app.Use(async (context, next) =>
 });
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 // Enable CORS with the specified policy
 app.UseCors("ReactAppPolicy");
