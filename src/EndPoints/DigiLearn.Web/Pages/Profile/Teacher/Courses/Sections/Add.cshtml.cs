@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 //===============================================================
-//< !--THIS DOESNOT USE, I USE MODAL INSTEAD INSIDE SECTION INDEX
+//  THIS DOESNOT USE, I USE MODAL INSTEAD INSIDE SECTION INDEX
 //===============================================================
 
 namespace DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections

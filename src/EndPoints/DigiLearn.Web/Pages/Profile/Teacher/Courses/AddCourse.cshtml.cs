@@ -52,7 +52,7 @@ namespace DigiLearn.Web.Pages.Profile.Teacher.Courses
     public IFormFile ImageFile { get; set; }
 
     [Display(Name = "ویدئو معرفی دوره")]
-    [FileType("mp4", ErrorMessage = "ویدبئو معرفی نامعتبر است")]
+    [FileType("mp4", ErrorMessage = "ویدیوی معرفی نامعتبر است")]
     public IFormFile? VideoFile { get; set; }
 
     [Display(Name = "قیمت (0=رایگان(")]

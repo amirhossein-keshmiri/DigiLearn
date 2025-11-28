@@ -1,4 +1,5 @@
 ﻿@page "{courseId}"
+@using DigiLearn.Web.DTOs.Teacher.Courses
 @model DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections.IndexModel
 @{
   Layout = "Shared/_TeacherProfileLayout";
@@ -32,29 +33,46 @@
                 </h2>
                 <div id="Spacing_@item.Id" class="accordion-collapse collapse" aria-labelledby="headingSpacing_@item.Id" data-bs-parent="#accordionSpacingExample">
                   <div class="accordion-body">
-                    <div class="d-flex align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
-                      <div class="d-flex align-items-center">
-                        <span><i class="isax isax-play-circle5 text-success fs-24 me-1"></i></span>
-                        <p class="fw-medium text-gray-5 mb-0">Describe SEO Engine</p>
+                    @foreach (var episode in item.Episodes)
+                    {
+                      <div class="align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex align-items-center">
+                            <span><i class="isax isax-play-circle5 text-success fs-24 me-1"></i></span>
+                            <p class="fw-medium text-gray-5 mb-0">@episode.Title</p>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <a href="javascript:void(0);" class="edit-btn1"><i class="isax isax-edit-25 fs-16"></i></a>
+                            <a href="javascript:void(0);" class="delete-btn1"><i class="isax isax-trash fs-16"></i></a>
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                          <span class="d-inline-flex fs-12 align-items-center me-2 pe-2 border-end">
+                            <i class="isax isax-video-circle me-1 text-gray-9 fw-bold"></i>
+                            @if (episode.IsActive)
+                            {
+                              <span>Active</span>
+                            }
+                            else
+                            {
+                              <span>In-Active</span>
+                            }
+                          </span>
+                          <span class="d-inline-flex fs-12 align-items-center"><i class="isax isax-clock me-1 text-gray-9 fw-bold"></i>@episode.TimeSpan Hours</span>
+                        </div>
                       </div>
-                      <div class="d-flex align-items-center">
-                        <a href="javascript:void(0);" class="edit-btn1"><i class="isax isax-edit-25 fs-16"></i></a>
-                        <a href="javascript:void(0);" class="delete-btn1"><i class="isax isax-trash fs-16"></i></a>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between bg-white p-2 border rounded-3 mb-3">
-                      <div class="d-flex align-items-center">
-                        <span><i class="isax isax-play-circle5 text-success fs-24 me-1"></i></span>
-                        <p class="fw-medium text-gray-5 mb-0">Know about all marketing</p>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <a href="javascript:void(0);" class="edit-btn1"><i class="isax isax-edit-25 fs-16"></i></a>
-                        <a href="javascript:void(0);" class="delete-btn1"><i class="isax isax-trash fs-16"></i></a>
-                      </div>
-                    </div>
+
+                    }
                     <div class="d-flex align-items-center justify-content-between">
                       <div class="d-flex align-items-center">
-                        <a href="javascript:void(0);" class="btn add-edit-btn d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#add-lesson"><i class="isax isax-add-circle5 me-2"></i>Add Lesson</a>
+                        @* <a asp-page="Episodes/Add" asp-route-courseId="@Model.Course.Id" asp-route-sectionId="@item.Id" class="btn add-edit-btn d-inline-flex align-items-center"><i class="isax isax-add-circle5 me-2"></i>Add Lesson</a> *@
+                        <a href="javascript:void(0);"
+                           class="btn add-edit-btn d-inline-flex align-items-center open-add-lesson"
+                           data-section-id="@item.Id"
+                           data-bs-toggle="modal"
+                           data-bs-target="#add-lesson">
+                          <i class="isax isax-add-circle5 me-2"></i>Add Lesson
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -69,7 +87,7 @@
   </div>
 </div>
 
-<!-- Add topic -->
+<!-- Add Section -->
 <div class="modal fade" id="add-topic">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -84,12 +102,12 @@
           <div class="input-block">
             @* <label class="form-label">Add Title<span class="text-danger ms-1">*</span></label> *@
             @* <input type="text" class="form-control"> *@
-            <editor-row for="Title" />
+            <editor-row for="AddSectionRequest.Title" />
           </div>
           <div class="input-block">
             @* <label class="form-label">DisplayOrder<span class="text-danger ms-1">*</span></label> *@
             @* <input type="text" class="form-control"> *@
-            <editor-row for="DisplayOrder" />
+            <editor-row for="AddSectionRequest.DisplayOrder" />
           </div>
         </div>
         <div class="modal-footer">
@@ -100,4 +118,411 @@
     </div>
   </div>
 </div>
-<!-- /Add topic -->
+<!-- /Add Section -->
+<!-- Add lesson -->
+<div class="modal fade" id="add-lesson">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>New Episode</h5>
+        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <i class="isax isax-close-circle5"></i>
+        </button>
+      </div>
+      <form method="post" asp-page-handler="AddEpisode" enctype="multipart/form-data">
+        <input type="hidden" name="sectionId" value="" />
+        <div class="modal-body">
+          <div class="input-block mb-4">
+            @* Input for Title *@
+            <editor-row for="AddEpisodeRequest.Title" />
+          </div>
+          <div class="input-block mb-4">
+            @* Input for EnglishTitle *@
+            <editor-row for="AddEpisodeRequest.EnglishTitle" />
+          </div>
+          <div class="input-block mb-4">
+            @* Input for TimeSpan *@
+            @Html.EditorFor(f => f.AddEpisodeRequest.TimeSpan)
+          </div>
+          <div class="col-md-12 mb-4">
+            <div class="input-block">
+              <div class="row align-items-center">
+                <div class="col-md-12">
+                  <label class="form-label">Episode Video<span class="text-danger ms-1">*</span></label>
+                </div>
+                <div class="col-md-12">
+                  <input type="text" class="form-control" id="episode-video-filename" placeholder="No File Selected" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 d-grid mt-2">
+              <label for="upload-video-input" class="file-upload-btn text-center">Upload File</label>
+            </div>
+          </div>
+
+          <div class="col-md-12 mb-4">
+            <div class="upload-video-section d-flex align-items-center justify-content-center" id="upload-video-section">
+              <input type="file" id="upload-video-input" asp-for="AddEpisodeRequest.VideoFile" style="display: none;" accept="video/mp4">
+              <div class="upload-content">
+                <span class="d-flex align-items-center justify-content-center mb-1" id="video-upload-icon">
+                  <i class="isax isax-video-play text-secondary fs-24 text-center"></i>
+                </span>
+                <div class="preview-container" style="width: 100%; max-width: 300px; height: 150px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                  <img id="video-preview-image" src="" alt="Video Thumbnail" class="img-preview" style="display: none;">
+                </div>
+                <span id="video-duration" class="text-muted mt-1" style="display: none;"></span>
+                <p class="text-center fw-medium mb-1" id="video-upload-text">Upload Video</p>
+                <span class="text-center">MP4 up to 200 MB</span>
+                <button type="button" id="remove-video-btn" class="btn btn-sm btn-outline-danger mt-2" style="display: none;">
+                  <i class="isax isax-trash me-1"></i> Remove Video
+                </button>
+                <div id="video-loading" class="text-center mt-2" style="display: none;">
+                  <i class="isax isax-loading-3 text-secondary fs-20"></i> Generating preview...
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="input-block mb-4">
+            @* Input for AttachmentFile *@
+            @Html.EditorFor(f => f.AddEpisodeRequest.AttachmentFile)
+          </div>
+          @* <div class="d-flex align-items-center">
+            <div class="form-check me-3">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" checked>
+              <label class="form-check-label" for="flexRadioDefault4">
+                free
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5">
+              <label class="form-check-label" for="flexRadioDefault5">
+                Premium
+              </label>
+            </div>
+          </div> *@
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn me-2 btn-light" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-secondary">Add New</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Add lesson -->
+<!-- Toast Container -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div id="uploadSuccessToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="isax isax-tick-circle5 me-2"></i> File uploaded successfully!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
+  <div id="uploadErrorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="isax isax-close-circle me-2"></i> Error: Invalid file or size too large.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+<!-- /Toast Container -->
+@section ProfileSectionMeta {
+
+  <style>
+    .field-validation-error {
+      color: red;
+    }
+
+    .file-upload-btn {
+      display: inline-block;
+      padding: 11px 16px;
+      font-size: 14px;
+      color: var(--white);
+      background: #392C7D;
+      border: none;
+      font-weight: 500;
+      border-radius: 5px;
+      cursor: pointer;
+      border-radius: 40px;
+    }
+
+    .img-preview {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .preview-container {
+      width: 100%;
+      max-width: 300px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px dashed #ddd;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    #remove-preview-btn {
+      display: none;
+      margin-top: 10px;
+      padding: 4px 10px;
+      font-size: 0.875rem;
+    }
+
+    .upload-video-section.drag-over {
+      background-color: #f0f0f0;
+      border: 2px dashed #007bff;
+    }
+
+    #video-preview-image {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .toast {
+      min-width: 300px;
+      max-width: 400px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .toast-body {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .toast .btn-close {
+      padding: 0.5rem 0.75rem;
+    }
+  </style>
+}
+
+@section Scripts {
+  <script>
+    document.addEventListener("click", function (e) {
+        if (e.target.closest(".open-add-lesson")) {
+            let btn = e.target.closest(".open-add-lesson");
+            let sectionId = btn.getAttribute("data-section-id");
+            document.querySelector("input[name='sectionId']").value = sectionId;
+        }
+    });
+
+    // Prevent form submit if no video is selected
+    document.querySelector('#add-lesson form').addEventListener('submit', function (e) {
+        const fileInput = document.getElementById('upload-video-input');
+        const fileNameDisplay = document.getElementById('episode-video-filename');
+
+        // If no file selected and display still says "No File Selected"
+        if (!fileInput.files || fileInput.files.length === 0 ||
+            fileNameDisplay.value === '' ||
+            fileNameDisplay.value === 'No File Selected') {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Show custom error
+            showErrorToast('Episode Video is required.');
+
+            // add red border + message under the input
+            fileNameDisplay.style.borderColor = 'red';
+            fileNameDisplay.style.backgroundColor = '#ffebee';
+
+            // Optional: add a small error text
+            let errorMsg = document.getElementById('video-required-error');
+            if (!errorMsg) {
+                errorMsg = document.createElement('small');
+                errorMsg.id = 'video-required-error';
+                errorMsg.style.color = 'red';
+                errorMsg.textContent = 'Episode Video is required';
+                fileNameDisplay.parentNode.appendChild(errorMsg);
+            }
+        }
+    });
+
+    // === VIDEO UPLOAD LOGIC ===
+    document.addEventListener('DOMContentLoaded', function () {
+        const videoSection = document.getElementById('upload-video-section');
+        const videoInput = document.getElementById('upload-video-input');
+        const videoFilenameDisplay = document.getElementById('episode-video-filename');
+        const videoPreviewImage = document.getElementById('video-preview-image');
+        const videoUploadIcon = document.getElementById('video-upload-icon');
+        const videoUploadText = document.getElementById('video-upload-text');
+        const removeVideoBtn = document.getElementById('remove-video-btn');
+        const videoLoading = document.getElementById('video-loading');
+        const videoDuration = document.getElementById('video-duration');
+
+        if (!videoSection || !videoInput || !videoPreviewImage) {
+            console.error('Video upload elements not found.');
+            return;
+        }
+
+        if (videoInput.dataset.initialized) return;
+        videoInput.dataset.initialized = 'true';
+
+        videoSection.addEventListener('click', function () {
+            videoInput.click();
+        });
+
+        videoInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) {
+                resetVideoUI();
+                return;
+            }
+            processVideoFile(file);
+        });
+
+        videoSection.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            videoSection.classList.add('drag-over');
+        });
+
+        videoSection.addEventListener('dragleave', function () {
+            videoSection.classList.remove('drag-over');
+        });
+
+        videoSection.addEventListener('drop', function (e) {
+            e.preventDefault();
+            videoSection.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                processVideoFile(file);
+            }
+        });
+
+        removeVideoBtn?.addEventListener('click', function () {
+            videoInput.value = '';
+            resetVideoUI();
+        });
+
+        function processVideoFile(file) {
+            const validTypes = ['video/mp4'];
+            if (!validTypes.includes(file.type)) {
+                showErrorToast('Only MP4 videos is allowed.');
+                videoInput.value = '';
+                resetVideoUI();
+                return;
+            }
+
+            if (file.size > 200 * 1024 * 1024) {
+                showErrorToast('Video size must be under 200 MB.');
+                videoInput.value = '';
+                resetVideoUI();
+                return;
+            }
+
+            videoFilenameDisplay.value = file.name;
+            videoLoading.style.display = 'block';
+
+            try {
+                generateVideoThumbnail(file);
+            } catch (err) {
+                console.error('Error generating video thumbnail:', err);
+                showErrorToast('Could not generate preview. Please try another video.');
+                resetVideoUI();
+            }
+
+            showSuccessToast(file.name, true);
+        }
+
+        function generateVideoThumbnail(file) {
+            const video = document.createElement('video');
+            const url = URL.createObjectURL(file);
+
+            video.addEventListener('error', function () {
+                console.error('Failed to load video for thumbnail generation.');
+                showErrorToast('Could not generate preview for this video.');
+                resetVideoUI();
+                URL.revokeObjectURL(url);
+            });
+
+            video.addEventListener('canplaythrough', function () {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const thumbnailDataUrl = canvas.toDataURL('image/jpeg');
+                videoPreviewImage.src = thumbnailDataUrl;
+                videoPreviewImage.style.display = 'block';
+                videoUploadIcon.style.display = 'none';
+                videoUploadText.style.display = 'none';
+                removeVideoBtn.style.display = 'inline-block';
+                videoLoading.style.display = 'none';
+
+                const duration = Math.floor(video.duration);
+                const mins = Math.floor(duration / 60);
+                const secs = duration % 60;
+                const durationText = `${mins}:${secs.toString().padStart(2, '0')}`;
+                videoDuration.textContent = `Duration: ${durationText}`;
+                videoDuration.style.display = 'block';
+
+                URL.revokeObjectURL(url);
+            });
+
+            video.src = url;
+            video.load();
+        }
+
+        function resetVideoUI() {
+            videoPreviewImage.src = '';
+            videoPreviewImage.style.display = 'none';
+            videoUploadIcon.style.display = 'block';
+            videoUploadText.style.display = 'block';
+            videoFilenameDisplay.value = 'No File Selected';
+            removeVideoBtn.style.display = 'none';
+            videoLoading.style.display = 'none';
+            videoDuration.textContent = ``;
+            videoDuration.style.display = 'none';
+        }
+    });
+
+    // === TOAST NOTIFICATIONS ===
+    function showSuccessToast(filename, isVideo = false) {
+        const toastEl = document.getElementById('uploadSuccessToast');
+        if (!toastEl) return;
+
+        const toastBody = toastEl.querySelector('.toast-body');
+        const icon = isVideo ? 'isax-video-play' : 'isax-tick-circle5';
+        const msg = isVideo ? `"${filename}" video uploaded!` : `"${filename}" uploaded successfully!`;
+        toastBody.innerHTML = `<i class="isax ${icon} me-2"></i> ${msg}`;
+
+        const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+        toast.show();
+    }
+
+    function showErrorToast(message) {
+        const toastEl = document.getElementById('uploadErrorToast');
+        if (!toastEl) return;
+
+        const toastBody = toastEl.querySelector('.toast-body');
+        toastBody.innerHTML = `<i class="isax isax-close-circle me-2"></i> ${message}`;
+
+        const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+        toast.show();
+    }
+  </script>
+}

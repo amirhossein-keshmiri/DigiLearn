@@ -1,8 +1,10 @@
-﻿using CoreModule.Application.Courses.Sections.AddSection;
+﻿using CoreModule.Application.Courses.Episodes.AddEpisode;
+using CoreModule.Application.Courses.Sections.AddSection;
 using CoreModule.Domain.Courses.Models;
 using CoreModule.Facade.Courses;
 using CoreModule.Facade.Teachers;
 using CoreModule.Query._DTOs;
+using DigiLearn.Web.DTOs.Teacher.Courses;
 using DigiLearn.Web.Infrastructure;
 using DigiLearn.Web.Infrastructure.RazorUtils;
 using Microsoft.AspNetCore.Mvc;
@@ -24,14 +26,10 @@ namespace DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections
     public CourseDto Course { get; set; }
 
     [BindProperty]
-    [Display(Name = "Title")]
-    [Required(ErrorMessage = "Please Insert {0}")]
-    public string Title { get; set; }
+    public AddSectionRequest AddSectionRequest { get; set; }
 
     [BindProperty]
-    [Display(Name = "Display Order")]
-    [Required(ErrorMessage = "Please Insert {0}")]
-    public int DisplayOrder { get; set; }
+    public AddEpisodeRequest AddEpisodeRequest { get; set; }
 
     public async Task<IActionResult> OnGet(Guid courseId)
     {
@@ -50,9 +48,26 @@ namespace DigiLearn.Web.Pages.Profile.Teacher.Courses.Sections
     {
       var result = await _courseFacade.AddSection(new AddCourseSectionCommand()
       {
-        Title = Title,
-        DisplayOrder = DisplayOrder,
+        Title = AddSectionRequest.Title,
+        DisplayOrder = AddSectionRequest.DisplayOrder,
         CourseId = courseId,
+      });
+
+      return RedirectAndShowAlert(result, RedirectToPage("Index", new { courseId }));
+    }
+
+    public async Task<IActionResult> OnPostAddEpisode(Guid courseId, Guid sectionId)
+    {
+      var result = await _courseFacade.AddEpisode(new AddCourseEpisodeCommand()
+      {
+        Title = AddEpisodeRequest.Title,
+        AttachmentFile = AddEpisodeRequest.AttachmentFile,
+        VideoFile = AddEpisodeRequest.VideoFile,
+        IsActive = false,
+        CourseId = courseId,
+        EnglishTitle = AddEpisodeRequest.EnglishTitle,
+        TimeSpan = AddEpisodeRequest.TimeSpan,
+        SectionId = sectionId,
       });
 
       return RedirectAndShowAlert(result, RedirectToPage("Index", new { courseId }));
