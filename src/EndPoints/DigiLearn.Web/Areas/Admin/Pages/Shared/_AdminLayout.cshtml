@@ -2,116 +2,114 @@
 <html lang="fa" data-textdirection="rtl" dir="rtl">
 <!-- BEGIN: Head-->
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>@ViewData["title"]</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/admin/assets/images/ico/favicon.ico">
-    <meta name="theme-color" content="#5A8DEE">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <title>@ViewData["title"]</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/admin/assets/images/ico/favicon.ico">
+  <meta name="theme-color" content="#5A8DEE">
 
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/charts/apexcharts.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/extensions/swiper.min.css">
-    <!-- END: Vendor CSS-->
+  <!-- BEGIN: Vendor CSS-->
+  <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/vendors.min.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/charts/apexcharts.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/extensions/swiper.min.css">
+  <!-- END: Vendor CSS-->
+  @*//Date Picker*@
+  <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/pickers/pickadate/pickadate.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/pickers/daterange/daterangepicker.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/pickers/datepicker-jalali/bootstrap-datepicker.min.css">
 
-    @*//Date Picker*@
-    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/pickers/pickadate/pickadate.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/pickers/daterange/daterangepicker.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/vendors/css/pickers/datepicker-jalali/bootstrap-datepicker.min.css">
-
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="/admin/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/css/themes/semi-dark-layout.css">
-    <!-- END: Theme CSS-->
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="/admin/assets/css/core/menu/menu-types/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="/admin/assets/css/pages/dashboard-ecommerce.css">
-    <link rel="stylesheet" type="text/css" href="/admin/css/custom.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <!-- END: Page CSS-->
+  <!-- BEGIN: Theme CSS-->
+  <link rel="stylesheet" type="text/css" href="/admin/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/css/bootstrap-extended.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/css/colors.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/css/components.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/css/themes/dark-layout.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/css/themes/semi-dark-layout.css">
+  <!-- END: Theme CSS-->
+  <!-- BEGIN: Page CSS-->
+  <link rel="stylesheet" type="text/css" href="/admin/assets/css/core/menu/menu-types/vertical-menu.css">
+  <link rel="stylesheet" type="text/css" href="/admin/assets/css/pages/dashboard-ecommerce.css">
+  <link rel="stylesheet" type="text/css" href="/admin/css/custom.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <!-- END: Page CSS-->
 
 </head>
 <!-- END: Head-->
 <!-- BEGIN: Body-->
 <body class="vertical-layout vertical-menu-modern semi-dark-layout 2-columns  navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="semi-dark-layout">
-    <div class="modal fade" id="defaultModal" tabindex="-1" aria-labelledby="editAddressModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editAddressModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                </div>
-            </div>
+  <div class="modal fade" id="defaultModal" tabindex="-1" aria-labelledby="editAddressModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editAddressModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-    </div>
-
-    <div class="header-navbar-shadow"></div>
-    <!-- BEGIN: Header-->
-    <partial name="_Header" />
-    <!-- END: Header-->
-    <!-- BEGIN: Main Menu-->
-    <partial name="_SideBar" />
-    <!-- END: Main Menu-->
-    <!-- BEGIN: Content-->
-    <div class="app-content content">
-        <div class="content-overlay"></div>
-        <div class="content-wrapper">
-            <div class="content-body">
-            @RenderBody()
-            </div>
+        <div class="modal-body">
         </div>
+      </div>
     </div>
-    <!-- END: Content-->
-    <!-- demo chat-->
-    <div class="sidenav-overlay"></div>
-    <div class="drag-target"></div>
+  </div>
 
-    <!-- BEGIN: Vendor JS-->
-    <script src="/admin/assets/vendors/js/vendors.min.js"></script>
-    <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
-    <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js"></script>
-    <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
-    <!-- BEGIN Vendor JS-->
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="/admin/assets/vendors/js/charts/apexcharts.min.js"></script>
-    <script src="/admin/assets/vendors/js/extensions/swiper.min.js"></script>
-    <!-- END: Page Vendor JS-->
-
-    @*//Date Picker*@
-    <script src="/admin/assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
-    <script src="/admin/assets/vendors/js/pickers/datepicker-jalali/bootstrap-datepicker.min.js"></script>
-    <script src="/admin/assets/vendors/js/pickers/datepicker-jalali/bootstrap-datepicker.fa.min.js"></script>
-
-    <!-- BEGIN: Theme JS-->
-    <script src="/admin/assets/js/scripts/configs/vertical-menu-dark.js"></script>
-    <script src="/admin/assets/js/core/app-menu.js"></script>
-    <script src="/admin/assets/js/core/app.js"></script>
-    <script src="/admin/assets/js/scripts/components.js"></script>
-    <script src="/admin/assets/js/scripts/footer.js"></script>
-    <script src="/admin/assets/js/scripts/customizer.js"></script>
-    <script src="/assets/js/plugins/sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="/global/global.js"></script>
-    <script src="/admin/assets/js/custom.js"></script>
-    <partial name="Shared/_ValidationScriptsPartial" />
-    <script src="/global/clientValidation.js"></script>
-
-    <!-- END: Theme JS-->
-    <div id="ajax-token">
-        @Html.AntiForgeryToken()
+  <div class="header-navbar-shadow"></div>
+  <!-- BEGIN: Header-->
+  <partial name="_Header" />
+  <!-- END: Header-->
+  <!-- BEGIN: Main Menu-->
+  <partial name="_SideBar" />
+  <!-- END: Main Menu-->
+  <!-- BEGIN: Content-->
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+      <div class="content-body">
+        @RenderBody()
+      </div>
     </div>
+  </div>
+  <!-- END: Content-->
+  <!-- demo chat-->
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+  <div id="token-value">
+    @Html.AntiForgeryToken()
+  </div>
 
-    @await RenderSectionAsync("Scripts",false)
+  <!-- BEGIN: Vendor JS-->
+  <script src="/admin/assets/vendors/js/vendors.min.js"></script>
+  <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
+  <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js"></script>
+  <script src="/admin/assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+  <!-- BEGIN Vendor JS-->
+  <!-- BEGIN: Page Vendor JS-->
+  <script src="/admin/assets/vendors/js/charts/apexcharts.min.js"></script>
+  <script src="/admin/assets/vendors/js/extensions/swiper.min.js"></script>
+  <!-- END: Page Vendor JS-->
+  @*//Date Picker*@
+  <script src="/admin/assets/vendors/js/pickers/daterange/daterangepicker.js"></script>
+  <script src="/admin/assets/vendors/js/pickers/datepicker-jalali/bootstrap-datepicker.min.js"></script>
+  <script src="/admin/assets/vendors/js/pickers/datepicker-jalali/bootstrap-datepicker.fa.min.js"></script>
+
+  <!-- BEGIN: Theme JS-->
+  <script src="/admin/assets/js/scripts/configs/vertical-menu-dark.js"></script>
+  <script src="/admin/assets/js/core/app-menu.js"></script>
+  <script src="/admin/assets/js/core/app.js"></script>
+  <script src="/admin/assets/js/scripts/components.js"></script>
+  <script src="/admin/assets/js/scripts/footer.js"></script>
+  <script src="/admin/assets/js/scripts/customizer.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="/assets/js/global.js"></script>
+  <script src="/admin/assets/js/custom.js"></script>
+  <partial name="Shared/_ValidationScriptsPartial" />
+  <script src="/assets/global/clientValidation.js"></script>
+
+  <!-- END: Theme JS-->
+
+  @await RenderSectionAsync("Scripts", false)
 </body>
 <!-- END: Body-->
 </html>
