@@ -1,3 +1,5 @@
+using CoreModule.Application.Courses.Episodes.AcceptEpisode;
+using CoreModule.Application.Courses.Episodes.DeleteEpisode;
 using CoreModule.Facade.Courses;
 using CoreModule.Query._DTOs;
 using DigiLearn.Web.Infrastructure.RazorUtils;
@@ -25,6 +27,17 @@ namespace DigiLearn.Web.Areas.Admin.Pages.Courses.Sections
 
       Course = course;
       return Page();
+    }
+
+    public async Task<IActionResult> OnPostAccept(Guid courseId, Guid episodeId)
+    {
+      return await AjaxTryCatch(
+          () => _courseFacade.AcceptEpisode(new AcceptCourseEpisodeCommand(courseId, episodeId)));
+    }
+    public async Task<IActionResult> OnPostDelete(Guid courseId, Guid episodeId)
+    {
+      return await AjaxTryCatch(
+          () => _courseFacade.DeleteEpisode(new DeleteCourseEpisodeCommand(courseId, episodeId)));
     }
   }
 }

@@ -132,15 +132,23 @@ namespace CoreModule.Domain.Courses.Models
     }
     public void AcceptEpisode(Guid episodeId)
     {
-      //var section = Sections.FirstOrDefault(f => f.Episodes.Any(e => e.Id == episodeId && e.IsActive == false));
-      //if (section == null)
-      //  throw new InvalidDomainDataException();
-
       var section = Sections.FirstOrDefault(f => f.Episodes.Any(e => e.Id == episodeId && e.IsActive == false)) ?? throw new InvalidDomainDataException();
       var episode = section.Episodes.First(f => f.Id == episodeId);
 
       episode.ToggleStatus();
       LastUpdate = DateTime.Now;
+    }
+
+    public Episode DeleteEpisode(Guid episodeId)
+    {
+      var section = Sections.FirstOrDefault(f => f.Episodes.Any(e => e.Id == episodeId));
+      if (section == null)
+        throw new InvalidDomainDataException();
+
+      var episode = section.Episodes.First(f => f.Id == episodeId);
+
+      section.Episodes.Remove(episode);
+      return episode;
     }
 
     void Guard(string title, string description, string imageName, string slug)
