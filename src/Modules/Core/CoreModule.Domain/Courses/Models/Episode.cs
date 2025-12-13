@@ -34,6 +34,18 @@ namespace CoreModule.Domain.Courses.Models
       IsActive = !IsActive;
     }
 
+    public void Edit(string title, bool isActive, TimeSpan timeSpan, string? attachmentName)
+    {
+      NullOrEmptyDomainDataException.CheckString(title, nameof(title));
+      Title = title;
+      IsActive = isActive;
+      TimeSpan = timeSpan;
+      if (string.IsNullOrWhiteSpace(attachmentName) == false)
+      {
+        AttachmentName = attachmentName;
+      }
+    }
+
     void Guard(string videoName, string englishTitle, string title)
     {
       NullOrEmptyDomainDataException.CheckString(videoName, nameof(videoName));
