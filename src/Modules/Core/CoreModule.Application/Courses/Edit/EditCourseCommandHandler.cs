@@ -27,11 +27,12 @@ namespace CoreModule.Application.Courses.Edit
       {
         return OperationResult.NotFound();
       }
+
       var imageName = course.ImageName;
       string? videoPath = course.VideoName;
-
       var oldVideoFileName = course.VideoName;
-      var oldImageNameFileName = course.ImageName;
+      var oldImageFileName = course.ImageName;
+
       if (request.VideoFile != null)
       {
         if (request.VideoFile.IsValidMp4File() == false)
@@ -42,18 +43,19 @@ namespace CoreModule.Application.Courses.Edit
         videoPath = await _localFileService.SaveFileAndGenerateName(request.VideoFile, CoreModuleDirectories.CourseDemo(course.Id));
       }
 
-      if (request.ImageFile.IsImage())
+      if (request.ImageFile != null && request.ImageFile.IsImage())
       {
         imageName = await _localFileService.SaveFileAndGenerateName(request.ImageFile!, CoreModuleDirectories.CourseImage);
       }
 
       course.Edit(request.Title, request.Description, imageName, videoPath,
           request.Price,
-          request.SeoData, request.CourseLevel, request.CourseStatus, request.CategoryId, request.SubCategoryId, request.Slug,
+          request.SeoData, request.CourseLevel, request.CourseStatus, request.CategoryId, request.SubCategoryId, request.Slug, request.CourseActionStatus,
           _domainService);
+
       await _repository.Save();
 
-      DeleteOldFiles(oldImageNameFileName, oldVideoFileName,
+      DeleteOldFiles(oldImageFileName, oldVideoFileName,
          request.VideoFile != null,
          request.ImageFile != null, course);
 
@@ -67,7 +69,7 @@ namespace CoreModule.Application.Courses.Edit
         _localFileService.DeleteFile(CoreModuleDirectories.CourseDemo(course.Id), video);
       }
 
-      if (isUploadNewImage)
+      if (isUploadNewImage && !string.IsNullOrWhiteSpace(image))
       {
         _localFileService.DeleteFile(CoreModuleDirectories.CourseImage, image);
       }

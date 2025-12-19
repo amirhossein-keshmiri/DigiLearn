@@ -1,0 +1,214 @@
+﻿@page "{courseId:guid}"
+@using CoreModule.Domain.Courses.Enums
+@using CoreModule.Facade.Categories
+@model DigiLearn.Web.Areas.Admin.Pages.Courses.EditModel
+@inject ICourseCategoryFacade _CategoryFacade
+@{
+  ViewData["title"] = "ویرایش دوره";
+  ViewData["selected"] = "courses_index";
+  var categories = await _CategoryFacade.GetMainCategories();
+}
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">ویرایش دوره: @Model.Title</h4>
+  </div>
+  <form class="card-body row" method="post" enctype="multipart/form-data">
+    
+    <input type="hidden" asp-for="ExistingImageName" />
+    <input type="hidden" asp-for="ExistingVideoName" />
+
+    <div class="col-md-6">
+      @Html.EditorFor(f => f.Title)
+    </div>
+    <div class="col-md-6">
+      @Html.EditorFor(f => f.Slug)
+    </div>
+    <div class="col-md-6">
+      @Html.EditorFor(f => f.Price)
+    </div>
+    <div class="col-md-6">
+      <label asp-for="ActionStatus"></label>
+      <select asp-for="ActionStatus" class="form-control">
+        <option value="@CourseActionStatus.Active">فعال</option>
+        <option value="@CourseActionStatus.DeActive">غیرفعال</option>
+        <option value="@CourseActionStatus.Pending">درحال برسی</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label asp-for="CategoryId"></label>
+      <select asp-for="CategoryId" class="form-control" id="CategoryId">
+        <option value="">انتخاب کنید</option>
+        @foreach (var item in categories)
+        {
+          <option value="@item.Id" selected="@(item.Id == Model.CategoryId)">@item.Title</option>
+        }
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label asp-for="SubCategoryId"></label>
+      <select asp-for="SubCategoryId" class="form-control" id="SubCategoryId">
+        <option value="">انتخاب کنید</option>
+        @{
+          var selectedCategory = categories.FirstOrDefault(f => f.Id == Model.CategoryId);
+          if (selectedCategory != null)
+          {
+            foreach (var child in selectedCategory.Children)
+            {
+              <option value="@child.Id" selected="@(child.Id == Model.SubCategoryId)">@child.Title</option>
+            }
+          }
+        }
+      </select>
+    </div>
+    <div class="col-md-12">
+      @Html.EditorFor(f => f.Description)
+    </div>
+    <div class="col-md-6">
+      <label asp-for="CourseLevel"></label>
+      <select asp-for="CourseLevel" class="form-control">
+        <option value="@CourseLevel.Beginner">مقدماتی</option>
+        <option value="@CourseLevel.Intermediate">از مقدماتی تا پیشرفته</option>
+        <option value="@CourseLevel.Expert">پیشرفته</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label asp-for="CourseStatus"></label>
+      <select asp-for="CourseStatus" class="form-control">
+        <option value="@CourseStatus.StartSoon">شروع دوره به زودی</option>
+        <option value="@CourseStatus.Completed">تمام شده</option>
+        <option value="@CourseStatus.InProgress">درحال برگزاری</option>
+      </select>
+    </div>
+
+    <!-- Image Upload Section with Preview -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label asp-for="ImageFile" class="font-weight-bold"></label>
+        @if (!string.IsNullOrEmpty(Model.ExistingImageUrl))
+        {
+          <div class="mb-3 p-3 border rounded bg-light">
+            <p class="text-muted small mb-2"><strong>تصویر فعلی:</strong></p>
+            <div class="position-relative d-inline-block">
+              <img src="@Model.ExistingImageUrl"
+                   alt="@Model.ExistingImageName"
+                   class="img-thumbnail shadow-sm"
+                   style="max-width: 250px; max-height: 250px; object-fit: cover;" />
+              <span class="badge badge-info position-absolute" style="bottom: 5px; right: 5px;">
+                @Model.ExistingImageName
+              </span>
+            </div>
+          </div>
+        }
+        @Html.EditorFor(f => f.ImageFile)
+        <small class="form-text text-muted">
+          <i class="fas fa-info-circle"></i>
+          @(string.IsNullOrEmpty(Model.ExistingImageUrl) ? "یک تصویر انتخاب کنید" : "برای تغییر تصویر، فایل جدید را انتخاب کنید. در غیر این صورت تصویر فعلی حفظ می‌شود.")
+        </small>
+      </div>
+    </div>
+
+    <!-- Video Upload Section with Preview -->
+    <div class="col-md-6">
+      <div class="form-group">
+        <label asp-for="VideoFile" class="font-weight-bold"></label>
+        @if (!string.IsNullOrEmpty(Model.ExistingVideoUrl))
+        {
+          <div class="mb-3 p-3 border rounded bg-light">
+            <p class="text-muted small mb-2"><strong>ویدیوی معرفی فعلی:</strong></p>
+            <video controls class="img-thumbnail shadow-sm" style="max-width: 100%; max-height: 250px;">
+              <source src="@Model.ExistingVideoUrl" type="video/mp4">
+              مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+            </video>
+            <p class="small text-info mt-2 mb-0">
+              <i class="fas fa-file-video"></i>
+              @Model.ExistingVideoName
+            </p>
+          </div>
+        }
+        else
+        {
+          <div class="alert alert-warning small">
+            <i class="fas fa-exclamation-triangle"></i>
+            این دوره ویدیوی معرفی ندارد.
+          </div>
+        }
+        @Html.EditorFor(f => f.VideoFile)
+        <small class="form-text text-muted">
+          <i class="fas fa-info-circle"></i>
+          @(string.IsNullOrEmpty(Model.ExistingVideoUrl)
+                    ? "یک ویدیوی معرفی انتخاب کنید (اختیاری)"
+                    : "برای تغییر ویدیو، فایل جدید را انتخاب کنید. در غیر این صورت ویدیوی فعلی حفظ می‌شود.")
+        </small>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <hr class="my-3" />
+    </div>
+
+    <div class="col-md-12 d-flex mt-2 justify-content-between align-items-center">
+      <a href="/Admin/Courses/Index" class="btn btn-secondary">
+        <i class="fas fa-arrow-right"></i> بازگشت
+      </a>
+      <button type="submit" class="btn btn-primary btn-lg">
+        <i class="fas fa-save"></i> ذخیره تغییرات
+      </button>
+    </div>
+  </form>
+</div>
+
+@section Scripts
+{
+  <script>
+    $(document).ready(function() {
+      // Handle category change
+      $("#CategoryId").change(function () {
+        var id = $(this).val();
+        if (!id) {
+          $("#SubCategoryId").html('<option value="">انتخاب کنید</option>');
+          return;
+        }
+
+        $.ajax({
+          url: "/ajax/getCategoryChildren?id=" + id,
+          method: "get",
+          beforeSend: function() {
+            $("#SubCategoryId").html('<option value="">در حال بارگذاری...</option>');
+          }
+        }).done(function (data) {
+          $("#SubCategoryId").html(data);
+        }).fail(function() {
+          $("#SubCategoryId").html('<option value="">خطا در بارگذاری</option>');
+          alert('خطا در دریافت زیردسته‌بندی‌ها');
+        });
+      });
+
+      // Preview image before upload
+      $('input[name="ImageFile"]').change(function(e) {
+        var file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            var preview = '<div class="mt-2"><img src="' + e.target.result + '" class="img-thumbnail" style="max-width: 250px;"><p class="small text-success mt-1">پیش‌نمایش تصویر جدید</p></div>';
+            $('input[name="ImageFile"]').closest('.form-group').find('.mt-2').remove();
+            $('input[name="ImageFile"]').after(preview);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Show video file name when selected
+      $('input[name="VideoFile"]').change(function(e) {
+        var file = e.target.files[0];
+        if (file) {
+          var fileName = file.name;
+          var fileSize = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+          var info = '<p class="small text-success mt-1"><i class="fas fa-check-circle"></i> فایل انتخاب شده: ' + fileName + ' (' + fileSize + ')</p>';
+          $('input[name="VideoFile"]').closest('.form-group').find('.text-success').remove();
+          $('input[name="VideoFile"]').after(info);
+        }
+      });
+    });
+  </script>
+}

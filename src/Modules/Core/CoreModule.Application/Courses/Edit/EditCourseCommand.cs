@@ -20,5 +20,6 @@ namespace CoreModule.Application.Courses.Edit
 
     public CourseLevel CourseLevel { get; set; }
     public CourseStatus CourseStatus { get; set; }
+    public CourseActionStatus CourseActionStatus { get; set; }
   }
 }
