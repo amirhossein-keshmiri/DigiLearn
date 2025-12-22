@@ -56,13 +56,13 @@ var selected = ViewData["selected"]?.ToString() ?? "";
       <li class="nav-item ">
         <a href="javascript:void(0)">
           <i class="menu-livicon" data-icon="Users"></i>
-          <span class="menu-title" data-i18n="Dashboard">Orders Management</span>
+          <span class="menu-title" data-i18n="Dashboard">Teachers Management</span>
         </a>
         <ul class="menu-content">
-          <li class="@(selected == "orders" ? "active" : null)">
-            <a href="/admin/orders">
+          <li class="@(selected == "teachers" ? "active" : null)">
+            <a href="/admin/teachers">
               <i class="bx bx-left-arrow-alt"></i>
-              <span class="menu-item" data-i18n="eCommerce"> Orders </span>
+              <span class="menu-item" data-i18n="eCommerce"> Teachers </span>
             </a>
           </li>
           <li class="@(selected == "shippingmethods" ? "active" : null)">
