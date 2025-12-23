@@ -34,6 +34,7 @@ namespace DigiLearn.Web.Areas.Admin.Pages.Teachers
         TeacherId = id
       }));
     }
+
     public async Task<IActionResult> OnPostReject(Guid id, string description)
     {
       var result = await _teacherFacade.RejectRequest(new RejectTeacherRequestCommand()

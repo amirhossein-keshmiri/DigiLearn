@@ -1,4 +1,5 @@
 ﻿using Common.Application;
+using CoreModule.Domain.Teachers.Events;
 using CoreModule.Domain.Teachers.Repositories;
 using MediatR;
 
@@ -24,6 +25,11 @@ namespace CoreModule.Application.Teachers.RejectRequest
       await _repository.Save();
 
       //Send Event
+      await _mediator.Publish(new RejectTeacherRequestEvent()
+      {
+        Description = request.Description,
+        UserId = teacher.UserId
+      }, cancellationToken);
 
       return OperationResult.Success();
     }
