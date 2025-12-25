@@ -53,7 +53,7 @@ var selected = ViewData["selected"]?.ToString() ?? "";
           </li>
         </ul>
       </li>
-      <li class="nav-item ">
+      @* <li class="nav-item ">
         <a href="javascript:void(0)">
           <i class="menu-livicon" data-icon="Users"></i>
           <span class="menu-title" data-i18n="Dashboard">Teachers Management</span>
@@ -71,12 +71,24 @@ var selected = ViewData["selected"]?.ToString() ?? "";
               <span class="menu-item" data-i18n="Analytics">Delivery Approach</span>
             </a>
           </li>
-        </ul>
-      </li>
-      <li class="nav-item @(selected == "banners" ? "active" : null)">
+        </ul> 
+      </li> *@
+@*       <li class="nav-item @(selected == "banners" ? "active" : null)">
         <a href="/admin/banners">
           <i class="menu-livicon" data-icon="box"></i>
           <span class="menu-title" data-i18n="File Manager">Banners Management</span>
+        </a>
+      </li> *@
+      <li class="nav-item @(selected == "teachers" ? "active" : null)">
+        <a href="/admin/teachers">
+          <i class="menu-livicon" data-icon="Users"></i>
+          <span class="menu-title" data-i18n="Dashboard">Teachers Management</span>
+        </a>
+      </li>
+      <li class="nav-item @(selected == "tickets" ? "active" : null)">
+        <a href="/admin/tickets">
+          <i class="menu-livicon" data-icon="box"></i>
+          <span class="menu-title" data-i18n="File Manager">Tickets Management</span>
         </a>
       </li>
       <li class="nav-item ">

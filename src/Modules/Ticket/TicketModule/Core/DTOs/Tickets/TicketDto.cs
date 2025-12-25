@@ -1,4 +1,6 @@
-﻿namespace TicketModule.Core.DTOs.Tickets
+﻿using TicketModule.Data.Entities;
+
+namespace TicketModule.Core.DTOs.Tickets
 {
   public class TicketDto
   {
@@ -14,7 +16,7 @@
 
     public string Text { get; set; }
 
-    //public TicketStatus Status { get; set; }
+    //public TicketStatus TicketStatus { get; set; }
 
     //public TicketPriority Priority { get; set; }
 
