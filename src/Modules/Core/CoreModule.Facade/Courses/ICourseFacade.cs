@@ -6,6 +6,8 @@ using CoreModule.Application.Courses.Episodes.AddEpisode;
 using CoreModule.Application.Courses.Episodes.DeleteEpisode;
 using CoreModule.Application.Courses.Episodes.EditEpisode;
 using CoreModule.Application.Courses.Sections.AddSection;
+using CoreModule.Application.Courses.Sections.DeleteSection;
+using CoreModule.Application.Courses.Sections.EditSection;
 using CoreModule.Query._DTOs;
 using CoreModule.Query.Courses.Episodes.GetById;
 using CoreModule.Query.Courses.GetByFilter;
@@ -19,6 +21,8 @@ namespace CoreModule.Facade.Courses
     Task<OperationResult> Create(CreateCourseCommand command);
     Task<OperationResult> Edit(EditCourseCommand command);
     Task<OperationResult> AddSection(AddCourseSectionCommand command);
+    Task<OperationResult> EditSection(EditCourseSectionCommand command);
+    Task<OperationResult> DeleteSection(DeleteCourseSectionCommand command);
     Task<OperationResult> AddEpisode(AddCourseEpisodeCommand command);
     Task<OperationResult> AcceptEpisode(AcceptCourseEpisodeCommand command);
     Task<OperationResult> DeleteEpisode(DeleteCourseEpisodeCommand command);
@@ -48,6 +52,14 @@ namespace CoreModule.Facade.Courses
       return await _mediator.Send(command);
     }
     public async Task<OperationResult> AddSection(AddCourseSectionCommand command)
+    {
+      return await _mediator.Send(command);
+    }
+    public async Task<OperationResult> EditSection(EditCourseSectionCommand command)
+    {
+      return await _mediator.Send(command);
+    }
+    public async Task<OperationResult> DeleteSection(DeleteCourseSectionCommand command)
     {
       return await _mediator.Send(command);
     }

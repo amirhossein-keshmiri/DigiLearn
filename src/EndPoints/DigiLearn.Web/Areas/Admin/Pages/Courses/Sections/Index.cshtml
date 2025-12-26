@@ -1,4 +1,4 @@
-﻿ @page "{courseId}/{handler?}"
+﻿@page "{courseId}/{handler?}"
 @model DigiLearn.Web.Areas.Admin.Pages.Courses.Sections.IndexModel
 @{
   ViewData["title"] = "Course Sections Management - " + Model.Course.Title;
@@ -7,13 +7,31 @@
 }
 <h2>@ViewData["title"]</h2>
 <div class="collapsible">
-  @foreach (var item in Model.Course.Sections)
+  @foreach (var item in Model.Course.Sections.OrderBy(d => d.DisplayOrder))
   {
     <div class="card collapse-header">
-      <div id="c_@item.Id" class="card-header" data-toggle="collapse" role="button" data-target="#r_@item.Id" aria-controls="r_@item.Id" aria-expanded="false">
-        <span class="collapse-title">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="collapse-title"
+              data-toggle="collapse"
+              role="button"
+              data-target="#r_@item.Id"
+              aria-controls="r_@item.Id"
+              aria-expanded="false">
           @item.Title
         </span>
+
+        <div class="btn-group btn-group-sm">
+          <a href="javascript:void(0);"
+             class="btn add-edit-btn d-inline-flex align-items-center"
+             data-toggle="modal"
+             data-target="#edit-section"
+             data-section-id="@item.Id"
+             data-section-title="@item.Title"
+             data-section-order="@item.DisplayOrder">
+            ✏️
+          </a>
+          <delete-item url="@Url.Page("Index", "DeleteSection", new { courseId = item.CourseId, sectionId = item.Id })" class="btn btn-outline-danger btn-sm">🗑️</delete-item>
+        </div>
       </div>
       <div id="r_@item.Id" role="tabpanel" aria-labelledby="c_@item.Id" class="collapse">
         <table class="table table-bordered mb-0">
@@ -71,3 +89,140 @@
     </div>
   }
 </div>
+
+<!-- Edit Section Modal -->
+<div class="modal fade" id="edit-section" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>ویرایش بخش</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" asp-page-handler="EditSection">
+        <input type="hidden" name="sectionId" id="sectionId" />
+        <input type="hidden" name="courseId" value="@Model.Course.Id" />
+
+        <div class="modal-body">
+          <div class="input-block">
+            <editor-row for="EditSectionRequest.Title" />
+          </div>
+          <div class="input-block">
+            <editor-row for="EditSectionRequest.DisplayOrder" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-dismiss="modal">لغو</button>
+          <button type="submit" class="btn btn-secondary">ویرایش بخش</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" style="position: fixed; top: 20px; left: 20px; z-index: 9999;">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000">
+    <div class="toast-header">
+      <strong class="mr-auto" id="toast-title">اعلان</strong>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body" id="toast-message">
+      پیام
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+  <script>
+    // === TOAST NOTIFICATIONS ===
+    function showToast(title, message, type = 'success') {
+      var toastEl = $('#liveToast');
+      var toastHeader = toastEl.find('.toast-header');
+
+      toastHeader.removeClass('bg-success bg-danger bg-warning bg-info text-white');
+
+      if (type === 'success') {
+        toastHeader.addClass('bg-success text-white');
+      } else if (type === 'error') {
+        toastHeader.addClass('bg-danger text-white');
+      } else if (type === 'warning') {
+        toastHeader.addClass('bg-warning');
+      } else if (type === 'info') {
+        toastHeader.addClass('bg-info text-white');
+      }
+
+      $('#toast-title').text(title);
+      $('#toast-message').html(message);
+
+      toastEl.toast({
+        autohide: true,
+        delay: 4000
+      });
+      toastEl.toast('show');
+    }
+
+    $(document).ready(function() {
+      // Populate modal when shown
+      $('#edit-section').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var sectionId = button.data('section-id');
+        var sectionTitle = button.data('section-title');
+        var sectionOrder = button.data('section-order');
+
+        var modal = $(this);
+        modal.find('#sectionId').val(sectionId);
+        modal.find('input[name="EditSectionRequest.Title"]').val(sectionTitle);
+        modal.find('input[name="EditSectionRequest.DisplayOrder"]').val(sectionOrder);
+      });
+
+      // Handle form submission
+      $('#edit-section form').on('submit', function(e) {
+        e.preventDefault();
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+          type: 'POST',
+          url: url,
+          data: form.serialize(),
+          success: function(response) {
+            var result = JSON.parse(response);
+
+            if (result.Status === 200) { // Success
+              $('#edit-section').modal('hide');
+              showToast(
+                result.Title || 'موفق',
+                result.Message || 'بخش با موفقیت ویرایش شد',
+                'success'
+              );
+
+              setTimeout(function() {
+                location.reload();
+              }, 1500);
+            } else if (result.Status === 10) { // Error
+              showToast(
+                result.Title || 'خطا',
+                result.Message || 'خطایی رخ داده است',
+                'error'
+              );
+            } else if (result.Status === 404) { // NotFound
+              showToast(
+                result.Title || 'یافت نشد',
+                result.Message || 'منبع یافت نشد',
+                'warning'
+              );
+            }
+          },
+          error: function(xhr, status, error) {
+            showToast('خطا', 'خطایی در پردازش درخواست رخ داده است', 'error');
+          }
+        });
+      });
+    });
+  </script>
+}

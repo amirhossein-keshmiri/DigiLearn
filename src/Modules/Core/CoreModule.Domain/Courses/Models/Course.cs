@@ -172,6 +172,15 @@ namespace CoreModule.Domain.Courses.Models
       return section.Episodes.FirstOrDefault(f => f.Id == episodeId);
     }
 
+    public Section? GetSectionById(Guid sectionId)
+    {
+      var section = Sections.FirstOrDefault(f => f.Id == sectionId);
+      if (section == null)
+        return null;
+
+      return section;
+    }
+
     void Guard(string title, string description, string imageName, string slug)
     {
       NullOrEmptyDomainDataException.CheckString(title, nameof(title));

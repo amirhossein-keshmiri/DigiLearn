@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Courses\Sections\EditSection\" />
-    <Folder Include="Courses\Sections\DeleteSection\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common.Application\Common.Application.csproj" />
     <ProjectReference Include="..\CoreModule.Domain\CoreModule.Domain.csproj" />
   </ItemGroup>
