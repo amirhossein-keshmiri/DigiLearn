@@ -19,7 +19,8 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services
        .InitUserModule(builder.Configuration)
        .InitTicketModule(builder.Configuration)
-       .InitCoreModule(builder.Configuration);
+       .InitCoreModule(builder.Configuration)
+       .RegisterWebDependencies();
 
 CommonBootstrapper.RegisterCommonApplication(builder.Services);
 builder.Services.AddJwtAuthentication(builder.Configuration);

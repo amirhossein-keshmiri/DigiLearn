@@ -1,4 +1,6 @@
-﻿using DigiLearn.Web.Infrastructure.RazorUtils;
+﻿using Common.EventBus.Abstractions;
+using Common.EventBus.RabbitMQ;
+using DigiLearn.Web.Infrastructure.RazorUtils;
 
 namespace DigiLearn.Web.Infrastructure;
 
@@ -8,6 +10,7 @@ public static class RegisterDependencyServices
     {
         services.AddHttpContextAccessor();
 
+        services.AddSingleton<IEventBus, EventBusRabbitMQ>();
         services.AddTransient<IRenderViewToString, RenderViewToString>();
         services.AddAutoMapper(typeof(RegisterDependencyServices).Assembly);
 
