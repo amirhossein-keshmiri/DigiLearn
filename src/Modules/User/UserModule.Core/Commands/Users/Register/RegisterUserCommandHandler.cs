@@ -1,7 +1,10 @@
 ﻿using Common.Application;
 using Common.Application.SecurityUtil;
 using Common.Domain.Utils;
+using Common.EventBus.Abstractions;
+using Common.EventBus.Events;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
 using UserModule.Data.Entities;
 using UserModule.Data.Entities.Users;
 
@@ -10,9 +13,11 @@ namespace UserModule.Core.Commands.Users.Register
   public class RegisterUserCommandHandler : IBaseCommandHandler<RegisterUserCommand, Guid>
   {
     private readonly UserContext _userContext;
-    public RegisterUserCommandHandler(UserContext userContext)
+    private readonly IEventBus _eventBus;
+    public RegisterUserCommandHandler(UserContext userContext, IEventBus eventBus)
     {
       _userContext = userContext;
+      _eventBus = eventBus;
     }
     public async Task<OperationResult<Guid>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
@@ -31,6 +36,17 @@ namespace UserModule.Core.Commands.Users.Register
 
       _userContext.Add(user);
       await _userContext.SaveChangesAsync(cancellationToken);
+
+      _eventBus.Publish(new UserRegistered()
+      {
+        Id = user.Id,
+        Name = user.Name,
+        Family = user.Family,
+        PhoneNumber = user.PhoneNumber,
+        Password = user.Password,
+        Email = user.Email,
+        Avatar = user.Avatar,
+      }, null, Exchanges.UserTopicExchange, ExchangeType.Topic, "user.registered"); // if using ExchangeType.Direct we need to fill the queue name
 
       return OperationResult<Guid>.Success(user.Id);
     }

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.EventBus\Common.EventBus.csproj" />
     <ProjectReference Include="..\..\..\Common\Common.Query\Common.Query.csproj" />
     <ProjectReference Include="..\UserModule.Data\UserModule.Data.csproj" />
   </ItemGroup>
