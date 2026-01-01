@@ -1,13 +1,14 @@
 ﻿using CoreModule.Domain.Categories.Repositories;
 using CoreModule.Domain.Courses.Repositories;
 using CoreModule.Domain.Teachers.Repositories;
+using CoreModule.Infrastructure.EventHandlers;
+using CoreModule.Infrastructure.Persistent;
 using CoreModule.Infrastructure.Persistent.Categories;
 using CoreModule.Infrastructure.Persistent.Courses;
 using CoreModule.Infrastructure.Persistent.Teachers;
-using CoreModule.Infrastructure.Persistent;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CoreModule.Infrastructure
 {
@@ -18,6 +19,8 @@ namespace CoreModule.Infrastructure
       services.AddScoped<ICourseRepository, CourseRepository>();
       services.AddScoped<ICourseCategoryRepository, CourseCategoryRepository>();
       services.AddScoped<ITeacherRepository, TeacherRepository>();
+
+      services.AddHostedService<UserRegisteredEventHandler>();
 
       services.AddDbContext<CoreModuleEfContext>(option =>
       {
